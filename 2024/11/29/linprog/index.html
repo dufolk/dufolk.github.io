@@ -19,12 +19,12 @@
   <meta name="author" content="Dufolk">
   <meta name="keywords" content="">
   
-    <meta name="description" content="使用线性规划求解Minimax问题最近工作中涉及到一个在零和博弈中求解Minimax的问题，算出的纯策略解效果并不好，于是想试试用线性规划来求解混合策略均衡解。 线性规划主要解决的问题为：$$\min_{x}c^Tx \quad\text{s.t.} \left {\begin{array}{l}Ax\le b \A_{eq} x &#x3D; b_{eq}  \lb \le x \le ub\e">
+    <meta name="description" content="使用线性规划求解Minimax问题 最近工作中涉及到一个在零和博弈中求解Minimax的问题，算出的纯策略解效果并不好，于是想试试用线性规划来求解混合策略均衡解。 线性规划主要解决的问题为： \min_{x}c^Tx \quad \text{s.t.} \left \{\begin{array}{l} Ax\le b \\ A_{eq} x &#x3D; b_{eq}  \\ lb \le x \le ub">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用线性规划求解Minimax问题">
 <meta property="og:url" content="http://example.com/2024/11/29/linprog/index.html">
 <meta property="og:site_name" content="Coding&#x2F;Algorithm日记">
-<meta property="og:description" content="使用线性规划求解Minimax问题最近工作中涉及到一个在零和博弈中求解Minimax的问题，算出的纯策略解效果并不好，于是想试试用线性规划来求解混合策略均衡解。 线性规划主要解决的问题为：$$\min_{x}c^Tx \quad\text{s.t.} \left {\begin{array}{l}Ax\le b \A_{eq} x &#x3D; b_{eq}  \lb \le x \le ub\e">
+<meta property="og:description" content="使用线性规划求解Minimax问题 最近工作中涉及到一个在零和博弈中求解Minimax的问题，算出的纯策略解效果并不好，于是想试试用线性规划来求解混合策略均衡解。 线性规划主要解决的问题为： \min_{x}c^Tx \quad \text{s.t.} \left \{\begin{array}{l} Ax\le b \\ A_{eq} x &#x3D; b_{eq}  \\ lb \le x \le ub">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-11-28T17:15:42.000Z">
 <meta property="article:modified_time" content="2024-11-28T17:19:44.383Z">
@@ -45,6 +45,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -236,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          1.9k 字
         
       </span>
     
@@ -298,105 +300,163 @@
             
               <div class="markdown-body">
                 
-                <h1 id="使用线性规划求解Minimax问题"><a href="#使用线性规划求解Minimax问题" class="headerlink" title="使用线性规划求解Minimax问题"></a>使用线性规划求解Minimax问题</h1><p>最近工作中涉及到一个在零和博弈中求解Minimax的问题，算出的纯策略解效果并不好，于是想试试用线性规划来求解混合策略均衡解。</p>
-<p>线性规划主要解决的问题为：<br>$$<br>\min_{x}c^Tx \quad<br>\text{s.t.} \left {\begin{array}{l}<br>Ax\le b \<br>A_{eq} x &#x3D; b_{eq}  \<br>lb \le x \le ub<br>\end{array}\right.,<br>$$其中$c$为价值向量，$A$和$b$为线性不等式约束，$A_{eq}$和$b_{eq}$为线性等式约束，$lb$和$ub$为变量下界和上界。</p>
-<p>在Python中可以使用<code>scipy.optimize.linprog</code>来求解线性规划问题。</p>
-<!-- 代码块 -->
+                <h1>使用线性规划求解Minimax问题</h1>
+<p>最近工作中涉及到一个在零和博弈中求解Minimax的问题，算出的纯策略解效果并不好，于是想试试用线性规划来求解混合策略均衡解。</p>
+<p>线性规划主要解决的问题为：</p>
+<p class='katex-block katex-error ' title='ParseError: KaTeX parse error: Can&#039;t use function &#039;$&#039; in math mode at position 126: …array}\right.,
+$̲$其中$c$为价值向量，$A$…'>\min_{x}c^Tx \quad
+\text{s.t.} \left \{\begin{array}{l}
+Ax\le b \\
+A_{eq} x = b_{eq}  \\
+lb \le x \le ub
+\end{array}\right.,
+$$其中$c$为价值向量，$A$和$b$为线性不等式约束，$A_{eq}$和$b_{eq}$为线性等式约束，$lb$和$ub$为变量下界和上界。
+
+在Python中可以使用`scipy.optimize.linprog`来求解线性规划问题。
+
+&lt;!-- 代码块 --&gt;
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">scipy.optimize.linprog(c, A_ub=<span class="hljs-literal">None</span>, b_ub=<span class="hljs-literal">None</span>, A_eq=<span class="hljs-literal">None</span>, b_eq=<span class="hljs-literal">None</span>, bounds=<span class="hljs-literal">None</span>, method=<span class="hljs-string">&#x27;simplex&#x27;</span>, callback=<span class="hljs-literal">None</span>, options=<span class="hljs-literal">None</span>)<br></code></pre></td></tr></table></figure>
-<p>其中method是求解器的类型，比如单纯形法simplex。</p>
-<h4 id="案例："><a href="#案例：" class="headerlink" title="案例："></a>案例：</h4><p>$$<br>\min_{x}f&#x3D;-1 \times x_0 + 4 \times x_1 \<br>\text{s.t.} \left{\begin{array}{l}<br>-3 \times x_0 + 1 \times x_1 \le 6 \<br>1 \times x_0 + 2 \times x_1 \le 4  \<br>x_1 \ge -3<br>\end{array}\right.<br>$$</p>
-<p>用代码求解：</p>
+其中method是求解器的类型，比如单纯形法simplex。
+
+#### 案例：
+</p>
+<p>\min_{x}f=-1 \times x_0 + 4 \times x_1 \<br>
+\text{s.t.} \left{\begin{array}{l}<br>
+-3 \times x_0 + 1 \times x_1 \le 6 \<br>
+1 \times x_0 + 2 \times x_1 \le 4  \<br>
+x_1 \ge -3<br>
+\end{array}\right.</p>
+<p class='katex-block katex-error ' title='ParseError: KaTeX parse error: Can&#039;t use function &#039;$&#039; in math mode at position 47: …-code￼2--&gt;
+最优解为$̲f=22$，$x_0=10$，…'>
+用代码求解：
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> scipy.optimize <span class="hljs-keyword">import</span> linprog<br>c = [-<span class="hljs-number">1</span>, <span class="hljs-number">4</span>]<br>A = [[-<span class="hljs-number">3</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]]<br>b = [<span class="hljs-number">6</span>, <span class="hljs-number">4</span>]<br>x0_bounds = (<span class="hljs-literal">None</span>, <span class="hljs-literal">None</span>)<br>x1_bounds = (-<span class="hljs-number">3</span>, <span class="hljs-literal">None</span>)<br>res = linprog(c, A_ub=A, b_ub=b, bounds=(x0_bounds, x1_bounds), method=<span class="hljs-string">&#x27;simplex&#x27;</span>)<br></code></pre></td></tr></table></figure>
-<p>运行结果：</p>
+运行结果：
 <figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs subunit">message: Optimization terminated successfully.<br><span class="hljs-keyword">success: </span>True<br>status: 0<br>    fun: <span class="hljs-string">-22</span>.0<br>    x: [ 1.000e<span class="hljs-string">+01</span> <span class="hljs-string">-3</span>.000e<span class="hljs-string">+00</span>]<br>    nit: 5<br></code></pre></td></tr></table></figure>
-<p>最优解为$f&#x3D;22$，$x_0&#x3D;10$，$x_1&#x3D;-3$。<br>对于最大值问题，只需将其转化为最小值问题即可。</p>
-<h3 id="Minimax问题"><a href="#Minimax问题" class="headerlink" title="Minimax问题"></a>Minimax问题</h3><p>在零和博弈中，玩家的目标是最大化自己的收益，同时最小化对手的收益。换句话说，是在考虑对手选取其最优策略时，使其收益尽可能小，即求解双方收益的Minimax问题。</p>
-<h3 id="Maximin-和-Minimax-的区别"><a href="#Maximin-和-Minimax-的区别" class="headerlink" title="Maximin 和 Minimax 的区别"></a><strong>Maximin 和 Minimax 的区别</strong></h3><p><strong>Maximin</strong> 和 <strong>Minimax</strong> 是博弈论和决策理论中两种基础策略，用于分析对抗性决策问题。它们的主要区别在于计算的目标和视角：</p>
-<hr>
-<h4 id="1-Maximin-策略"><a href="#1-Maximin-策略" class="headerlink" title="1. Maximin 策略"></a><strong>1. Maximin 策略</strong></h4><ul>
-<li><p><strong>定义</strong>: 决策者假设对手会采取对自己最不利的策略，因此选择自己所有行动中收益的最小值中的最大值。</p>
-</li>
-<li><p><strong>目标</strong>: 保证自己的“最坏情况”收益尽可能大。</p>
-</li>
-<li><p><strong>步骤</strong>:</p>
-<ol>
-<li>对于自己每个策略，计算在对手的所有可能反应下，自己能获得的<strong>最小收益</strong>。</li>
-<li>从这些最小收益中选择<strong>最大值</strong>。</li>
-</ol>
-<p><strong>数学表达</strong>:<br>如果玩家 1 的收益矩阵为 ( M )，玩家 2 的策略为 ( j )，则：</p>
-<p>[<br>\text{Maximin} &#x3D; \max_{i} \min_{j} M[i, j]<br>]</p>
-</li>
-</ul>
-<hr>
-<h4 id="2-Minimax-策略"><a href="#2-Minimax-策略" class="headerlink" title="2. Minimax 策略"></a><strong>2. Minimax 策略</strong></h4><ul>
-<li><p><strong>定义</strong>: 决策者假设对手会采取对自己最有利的策略，因此选择对手所有行动中收益的最大值中的最小值（即对手将最大化伤害自己）。</p>
-</li>
-<li><p><strong>目标</strong>: 限制对手的“最优策略”给自己带来的损害。</p>
-</li>
-<li><p><strong>步骤</strong>:</p>
-<ol>
-<li>对于对手的每个策略，计算自己所有可能反应下对手能获得的<strong>最大收益</strong>。</li>
-<li>从这些最大收益中选择<strong>最小值</strong>。</li>
-</ol>
-<p><strong>数学表达</strong>:<br>如果玩家 1 的收益矩阵为 (M )，玩家 1 的策略为 ( i )，则：</p>
-<p>[<br>\text{Minimax} &#x3D; \min_{j} \max_{i} M[i,j]<br>]</p>
-</li>
-</ul>
-<hr>
-<h4 id="直观理解"><a href="#直观理解" class="headerlink" title="直观理解"></a><strong>直观理解</strong></h4><ul>
-<li><strong>Maximin</strong>: “我考虑所有最坏的可能情况，然后从中选择对我最不坏的一种策略。”</li>
-<li><strong>Minimax</strong>: “我假设对手会选择最优策略来伤害我，然后我尽量限制对手的收益。”</li>
-</ul>
-<hr>
-<h4 id="无鞍点时"><a href="#无鞍点时" class="headerlink" title="无鞍点时:"></a><strong>无鞍点时</strong>:</h4><ul>
-<li>如果博弈没有鞍点（例如收益矩阵不对称或无纯策略解），则 Maximin 和 Minimax 不相等。<ul>
-<li>此时需要引入<strong>混合策略</strong>，通过概率分布计算期望收益，使得 Maximin 和 Minimax 相等（即纳什均衡）。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<table>
-<thead>
-<tr>
-<th><strong>策略</strong></th>
-<th><strong>目标</strong></th>
-<th><strong>数学表达</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Maximin</strong></td>
-<td>最大化自己在最坏情况下的收益</td>
-<td>( \max_{i} \min_{j} A[i,j] )</td>
-</tr>
-<tr>
-<td><strong>Minimax</strong></td>
-<td>最小化对手在最优策略下能获得的收益（即限制对手的最大收益）</td>
-<td>( \min_{j} \max_{i} A[i,j] )</td>
-</tr>
-</tbody></table>
-<p>对于零和博弈的Minimax问题，可以将其转化为线性规划问题来求解。<br>玩家1（最大化玩家）的线性规划形式：<br>$$<br>\max <em>{x} v \text { s.t. }\left{\begin{array}{ll}<br>\sum</em>{i&#x3D;1}^{n} x_{i} a_{i j} \geq v &amp; \forall j \in{1,2, \ldots, m} \<br>\sum_{i&#x3D;1}^{n} x_{i}&#x3D;1 &amp; \<br>x_{i} \geq 0 &amp; \forall i \in{1,2, \ldots, n}<br>\end{array}\right.<br>$$<br>其中：</p>
+最优解为$f=22$，$x_0=10$，$x_1=-3$。
+对于最大值问题，只需将其转化为最小值问题即可。
+
+### Minimax问题
+在零和博弈中，玩家的目标是最大化自己的收益，同时最小化对手的收益。换句话说，是在考虑对手选取其最优策略时，使其收益尽可能小，即求解双方收益的Minimax问题。
+
+### **Maximin 和 Minimax 的区别**
+**Maximin** 和 **Minimax** 是博弈论和决策理论中两种基础策略，用于分析对抗性决策问题。它们的主要区别在于计算的目标和视角：
+
+---
+
+#### **1. Maximin 策略**
+- **定义**: 决策者假设对手会采取对自己最不利的策略，因此选择自己所有行动中收益的最小值中的最大值。
+- **目标**: 保证自己的“最坏情况”收益尽可能大。
+- **步骤**:
+  1. 对于自己每个策略，计算在对手的所有可能反应下，自己能获得的**最小收益**。
+  2. 从这些最小收益中选择**最大值**。
+  
+  **数学表达**:  
+  如果玩家 1 的收益矩阵为 \( M \)，玩家 2 的策略为 \( j \)，则：
+
+  \[
+  \text{Maximin} = \max_{i} \min_{j} M[i, j]
+  \]
+
+---
+
+#### **2. Minimax 策略**
+- **定义**: 决策者假设对手会采取对自己最有利的策略，因此选择对手所有行动中收益的最大值中的最小值（即对手将最大化伤害自己）。
+- **目标**: 限制对手的“最优策略”给自己带来的损害。
+- **步骤**:
+  1. 对于对手的每个策略，计算自己所有可能反应下对手能获得的**最大收益**。
+  2. 从这些最大收益中选择**最小值**。
+  
+  **数学表达**:  
+  如果玩家 1 的收益矩阵为 \(M \)，玩家 1 的策略为 \( i \)，则：
+
+  \[
+  \text{Minimax} = \min_{j} \max_{i} M[i,j]
+  \]
+---
+#### **直观理解**
+- **Maximin**: “我考虑所有最坏的可能情况，然后从中选择对我最不坏的一种策略。”
+- **Minimax**: “我假设对手会选择最优策略来伤害我，然后我尽量限制对手的收益。”
+
+---
+#### **无鞍点时**:
+- 如果博弈没有鞍点（例如收益矩阵不对称或无纯策略解），则 Maximin 和 Minimax 不相等。
+  - 此时需要引入**混合策略**，通过概率分布计算期望收益，使得 Maximin 和 Minimax 相等（即纳什均衡）。
+---
+| **策略**       | **目标**                                                      | **数学表达**                         |
+|-----------------|--------------------------------------------------------------|--------------------------------------|
+| **Maximin**    | 最大化自己在最坏情况下的收益                                   | \( \max_{i} \min_{j} A[i,j] \)       |
+| **Minimax**    | 最小化对手在最优策略下能获得的收益（即限制对手的最大收益）     | \( \min_{j} \max_{i} A[i,j] \)       |
+
+对于零和博弈的Minimax问题，可以将其转化为线性规划问题来求解。
+玩家1（最大化玩家）的线性规划形式：
+</p>
+<p>\max <em>{x} v \text { s.t. }\left{\begin{array}{ll}<br>
+\sum</em>{i=1}^{n} x_{i} a_{i j} \geq v &amp; \forall j \in{1,2, \ldots, m} \<br>
+\sum_{i=1}^{n} x_{i}=1 &amp; \<br>
+x_{i} \geq 0 &amp; \forall i \in{1,2, \ldots, n}<br>
+\end{array}\right.</p>
+<p class='katex-block katex-error ' title='ParseError: KaTeX parse error: Can&#039;t use function &#039;$&#039; in math mode at position 7: 其中：
+- $̲x = [x_1, x_2, …'>其中：
+- $x = [x_1, x_2, \dots, x_n]$ 是玩家1的混合策略概率分布（需要满足非负性和总和为1的约束）。
+- $a_{ij}$ 是收益矩阵，对应玩家1在策略$i$和玩家2在策略$j$时的收益。
+- $v$ 是玩家1的最小收益（即最大化的目标）。
+
+玩家2（最小化玩家）的线性规划形式可以表示为：
+</p>
+<p>\min <em>{y} w \text { s.t. }\left{\begin{array}{ll}<br>
+\sum</em>{j=1}^{m} y_{j} a_{i j} \leq w &amp; \forall i \in{1,2, \ldots, n} \<br>
+\sum_{j=1}^{m} y_{j}=1 &amp; \<br>
+y_{j} \geq 0 &amp; \forall j \in{1,2, \ldots, m}<br>
+\end{array}\right.</p>
+<p class='katex-block katex-error ' title='ParseError: KaTeX parse error: Can&#039;t use function &#039;$&#039; in math mode at position 7: 其中：
+- $̲y = [y_1, y_2, …'>其中：
+- $y = [y_1, y_2, \dots, y_m]$ 是玩家2的混合策略概率分布。
+- $w$ 是玩家2的最大收益（即最小化的目标）。
+#### 将两者统一为一个线性规划问题
+通过对偶性原理，零和博弈的 Minimax 问题可以简化为单个线性规划问题。这里以玩家1为主的最大化问题为例，将其转化为标准的线性规划问题：
+</p>
+<p>\min <em>{v’,x} v’ \text { s.t. }\left{\begin{array}{ll}<br>
+-\sum</em>{i=1}^{n} x_{i} a_{i j} \leq v’ &amp; \forall j \in{1,2, \ldots, m} \<br>
+\sum_{i=1}^{n} x_{i}=1 &amp; \<br>
+x_{i} \geq 0 &amp; \forall i \in{1,2, \ldots, n}<br>
+\end{array}\right.</p>
+<p class='katex-block katex-error ' title='ParseError: KaTeX parse error: Can&#039;t use function &#039;$&#039; in math mode at position 3: 其中$̲v&#039;$即为玩家1的最小收益的相…'>其中$v&#039;$即为玩家1的最小收益的相反数。
+#### 示例代码
+假设收益矩阵为：</p>
+<p>A = \begin{bmatrix}<br>
+3 &amp; 2 &amp;1 \<br>
+0 &amp; 1 &amp;4<br>
+\end{bmatrix}$$<br>
+其中，玩家 1 有 2 种策略，玩家 2 有 3 种策略。通过线性规划求解玩家 1 的最优混合策略及其最小收益。<br>
+玩家1的最大化问题是：$$<br>
+\max_{v,x}v \quad \text{s.t.}\left{\begin{array}{l}<br>
+3x_1+0x_2\geq v \<br>
+2x_1+1x_2\geq v\<br>
+1x_1+4x_2\geq v\<br>
+x_1+x_2=1\<br>
+x_1\geq 0, x_2 \geq 0<br>
+\end{array}\right.$$<br>
+通过上述统一式，将其转化为标准形式：$$<br>
+\min_{v’,x}v’ \quad \text{s.t.}\left{\begin{array}{l}<br>
+-3x_1-0x_2\leq v’ \<br>
+-2x_1-1x_2\leq v’\<br>
+-1x_1-4x_2\leq v’\<br>
+x_1+x_2=1\<br>
+x_1\geq 0, x_2 \geq 0<br>
+\end{array}\right.$$<br>
+使用Python中的<code>scipy.optimize.linprog</code>求解：</p>
 <ul>
-<li>$x &#x3D; [x_1, x_2, \dots, x_n]$ 是玩家1的混合策略概率分布（需要满足非负性和总和为1的约束）。</li>
-<li>$a_{ij}$ 是收益矩阵，对应玩家1在策略$i$和玩家2在策略$j$时的收益。</li>
-<li>$v$ 是玩家1的最小收益（即最大化的目标）。</li>
+<li>c 为目标函数系数，这里为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0, 0, 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span>。</li>
+<li>A_ub 为不等式约束系数矩阵，这里为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mo stretchy="false">[</mo><mo>−</mo><mn>3</mn><mo separator="true">,</mo><mn>0</mn><mo separator="true">,</mo><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo separator="true">,</mo><mo stretchy="false">[</mo><mo>−</mo><mn>2</mn><mo separator="true">,</mo><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo separator="true">,</mo><mo stretchy="false">[</mo><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mo>−</mo><mn>4</mn><mo separator="true">,</mo><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[[-3, 0, -1], [-2, -1, -1], [-1, -4, -1]]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[[</span><span class="mord">−</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mopen">[</span><span class="mord">−</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mopen">[</span><span class="mord">−</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">−</span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mclose">]]</span></span></span></span>。</li>
+<li>b_ub 为不等式约束右侧常数向量，这里为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0, 0, 0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">]</span></span></span></span>。</li>
+<li>A_eq 为等式约束系数矩阵，这里为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">]</mo><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[[1, 1, 0]]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">]]</span></span></span></span>。</li>
+<li>b_eq 为等式约束右侧常数向量，这里为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span></span></span></span>。</li>
+<li>bounds 为变量的上下界，这里为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>N</mi><mi>o</mi><mi>n</mi><mi>e</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>N</mi><mi>o</mi><mi>n</mi><mi>e</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mo stretchy="false">(</mo><mi>N</mi><mi>o</mi><mi>n</mi><mi>e</mi><mo separator="true">,</mo><mi>N</mi><mi>o</mi><mi>n</mi><mi>e</mi><mo stretchy="false">)</mo><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[(0, None), (0, None), (None, None)]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mclose">)]</span></span></span></span>。</li>
 </ul>
-<p>玩家2（最小化玩家）的线性规划形式可以表示为：<br>$$<br>\min <em>{y} w \text { s.t. }\left{\begin{array}{ll}<br>\sum</em>{j&#x3D;1}^{m} y_{j} a_{i j} \leq w &amp; \forall i \in{1,2, \ldots, n} \<br>\sum_{j&#x3D;1}^{m} y_{j}&#x3D;1 &amp; \<br>y_{j} \geq 0 &amp; \forall j \in{1,2, \ldots, m}<br>\end{array}\right.<br>$$<br>其中：</p>
-<ul>
-<li>$y &#x3D; [y_1, y_2, \dots, y_m]$ 是玩家2的混合策略概率分布。</li>
-<li>$w$ 是玩家2的最大收益（即最小化的目标）。</li>
-</ul>
-<h4 id="将两者统一为一个线性规划问题"><a href="#将两者统一为一个线性规划问题" class="headerlink" title="将两者统一为一个线性规划问题"></a>将两者统一为一个线性规划问题</h4><p>通过对偶性原理，零和博弈的 Minimax 问题可以简化为单个线性规划问题。这里以玩家1为主的最大化问题为例，将其转化为标准的线性规划问题：<br>$$<br>\min <em>{v’,x} v’ \text { s.t. }\left{\begin{array}{ll}<br>-\sum</em>{i&#x3D;1}^{n} x_{i} a_{i j} \leq v’ &amp; \forall j \in{1,2, \ldots, m} \<br>\sum_{i&#x3D;1}^{n} x_{i}&#x3D;1 &amp; \<br>x_{i} \geq 0 &amp; \forall i \in{1,2, \ldots, n}<br>\end{array}\right.<br>$$<br>其中$v’$即为玩家1的最小收益的相反数。</p>
-<h4 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h4><p>假设收益矩阵为：$$<br>A &#x3D; \begin{bmatrix}<br> 3 &amp; 2 &amp;1 \<br> 0 &amp; 1 &amp;4<br>\end{bmatrix}$$<br>其中，玩家 1 有 2 种策略，玩家 2 有 3 种策略。通过线性规划求解玩家 1 的最优混合策略及其最小收益。<br>玩家1的最大化问题是：$$<br>\max_{v,x}v \quad \text{s.t.}\left{\begin{array}{l}<br>3x_1+0x_2\geq v \<br>2x_1+1x_2\geq v\<br>1x_1+4x_2\geq v\<br>x_1+x_2&#x3D;1\<br>x_1\geq 0, x_2 \geq 0<br>\end{array}\right.$$<br>通过上述统一式，将其转化为标准形式：$$<br>\min_{v’,x}v’ \quad \text{s.t.}\left{\begin{array}{l}<br>-3x_1-0x_2\leq v’ \<br>-2x_1-1x_2\leq v’\<br>-1x_1-4x_2\leq v’\<br>x_1+x_2&#x3D;1\<br>x_1\geq 0, x_2 \geq 0<br>\end{array}\right.$$<br>使用Python中的<code>scipy.optimize.linprog</code>求解：</p>
-<ul>
-<li>c 为目标函数系数，这里为 $[0, 0, 1]$。</li>
-<li>A_ub 为不等式约束系数矩阵，这里为 $[[-3, 0, -1], [-2, -1, -1], [-1, -4, -1]]$。</li>
-<li>b_ub 为不等式约束右侧常数向量，这里为 $[0, 0, 0]$。</li>
-<li>A_eq 为等式约束系数矩阵，这里为 $[[1, 1, 0]]$。</li>
-<li>b_eq 为等式约束右侧常数向量，这里为 $[1]$。</li>
-<li>bounds 为变量的上下界，这里为 $[(0, None), (0, None), (None, None)]$。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> scipy.optimize <span class="hljs-keyword">import</span> linprog<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 玩家 1 的收益矩阵</span><br>A = [[<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>],<br>     [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>]]<br><br><span class="hljs-comment"># 矩阵转置以满足线性不等式 -A^T*x-v &lt;= 0 的形式</span><br>A_ub = -<span class="hljs-number">1</span> * np.array(A).T  <span class="hljs-comment"># 转置后取负号</span><br>A_ub = np.c_[A_ub, -<span class="hljs-number">1</span> * np.ones(<span class="hljs-built_in">len</span>(A[<span class="hljs-number">0</span>]))]<br>b_ub = [<span class="hljs-number">0</span>] * <span class="hljs-built_in">len</span>(A[<span class="hljs-number">0</span>])    <span class="hljs-comment"># 对应每列的约束</span><br><br><span class="hljs-comment"># x 的线性规划约束</span><br>c = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]             <span class="hljs-comment"># 最小化 v</span><br>A_eq = [[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>]]         <span class="hljs-comment"># x1 + x2 = 1</span><br>b_eq = [<span class="hljs-number">1</span>]                 <span class="hljs-comment"># 概率和为 1</span><br>bounds = [(<span class="hljs-number">0</span>, <span class="hljs-literal">None</span>), (<span class="hljs-number">0</span>, <span class="hljs-literal">None</span>), (<span class="hljs-literal">None</span>, <span class="hljs-literal">None</span>)]  <span class="hljs-comment"># x1, x2 &gt;= 0，无上下界约束</span><br><br><span class="hljs-comment"># 使用线性规划求解</span><br>res = linprog(c, A_ub=A_ub, b_ub=b_ub, A_eq=A_eq, b_eq=b_eq, bounds=bounds, method=<span class="hljs-string">&#x27;simplex&#x27;</span>)<br><br><span class="hljs-comment"># 输出结果</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Optimal value (v):&quot;</span>, -res.fun)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Optimal strategy for Player 1 (x):&quot;</span>, res.x[:<span class="hljs-number">2</span>])<br></code></pre></td></tr></table></figure>
-输出：<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Optimal</span> value (v): <span class="hljs-number">1</span>.<span class="hljs-number">75</span><br><span class="hljs-attribute">Optimal</span> strategy for Player <span class="hljs-number">1</span> (x):<span class="hljs-meta"> [0.75 0.25]</span><br></code></pre></td></tr></table></figure>
-即玩家1的最优混合策略为$[0.75, 0.25]$，最小期望收益为$1.75$。</li>
-</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> scipy.optimize <span class="hljs-keyword">import</span> linprog<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 玩家 1 的收益矩阵</span><br>A = [[<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>],<br>     [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>]]<br><br><span class="hljs-comment"># 矩阵转置以满足线性不等式 -A^T*x-v &lt;= 0 的形式</span><br>A_ub = -<span class="hljs-number">1</span> * np.array(A).T  <span class="hljs-comment"># 转置后取负号</span><br>A_ub = np.c_[A_ub, -<span class="hljs-number">1</span> * np.ones(<span class="hljs-built_in">len</span>(A[<span class="hljs-number">0</span>]))]<br>b_ub = [<span class="hljs-number">0</span>] * <span class="hljs-built_in">len</span>(A[<span class="hljs-number">0</span>])    <span class="hljs-comment"># 对应每列的约束</span><br><br><span class="hljs-comment"># x 的线性规划约束</span><br>c = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]             <span class="hljs-comment"># 最小化 v</span><br>A_eq = [[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>]]         <span class="hljs-comment"># x1 + x2 = 1</span><br>b_eq = [<span class="hljs-number">1</span>]                 <span class="hljs-comment"># 概率和为 1</span><br>bounds = [(<span class="hljs-number">0</span>, <span class="hljs-literal">None</span>), (<span class="hljs-number">0</span>, <span class="hljs-literal">None</span>), (<span class="hljs-literal">None</span>, <span class="hljs-literal">None</span>)]  <span class="hljs-comment"># x1, x2 &gt;= 0，无上下界约束</span><br><br><span class="hljs-comment"># 使用线性规划求解</span><br>res = linprog(c, A_ub=A_ub, b_ub=b_ub, A_eq=A_eq, b_eq=b_eq, bounds=bounds, method=<span class="hljs-string">&#x27;simplex&#x27;</span>)<br><br><span class="hljs-comment"># 输出结果</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Optimal value (v):&quot;</span>, -res.fun)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Optimal strategy for Player 1 (x):&quot;</span>, res.x[:<span class="hljs-number">2</span>])<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Optimal</span> value (v): <span class="hljs-number">1</span>.<span class="hljs-number">75</span><br><span class="hljs-attribute">Optimal</span> strategy for Player <span class="hljs-number">1</span> (x):<span class="hljs-meta"> [0.75 0.25]</span><br></code></pre></td></tr></table></figure>
+<p>即玩家1的最优混合策略为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0.75</mn><mo separator="true">,</mo><mn>0.25</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0.75, 0.25]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0.75</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.25</span><span class="mclose">]</span></span></span></span>，最小期望收益为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.75</mn></mrow><annotation encoding="application/x-tex">1.75</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1.75</span></span></span></span>。</p>
 
                 
               </div>
@@ -578,7 +638,6 @@
 
   
   
-
 
 
 
@@ -798,49 +857,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script defer src="/js/leancloud.js" ></script>
 
