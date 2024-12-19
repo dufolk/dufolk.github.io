@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://dufolk.github.io/img/snake/cover.png">
 <meta property="article:published_time" content="2024-12-19T06:54:55.000Z">
-<meta property="article:modified_time" content="2024-12-19T06:54:55.964Z">
+<meta property="article:modified_time" content="2024-12-19T07:10:36.043Z">
 <meta property="article:author" content="Dufolk">
 <meta property="article:tag" content="理论学习">
 <meta name="twitter:card" content="summary_large_image">
@@ -302,7 +302,7 @@
             
               <div class="markdown-body">
                 
-                <p>在完成了贪吃蛇游戏的基本功能后，我们将尝试实现一个能自主学习玩贪吃蛇的AI智能体。本节我们通过实现前文提到的Q-learning算法，进一步直接体会强化学习的实现与训练过程。</p>
+                <p>在完成了贪吃蛇游戏的基本功能后，我们将尝试实现一个能自主学习玩贪吃蛇的AI智能体。本节我们通过实现<a href="https://dufolk.github.io/2024/12/19/snake-1/">前文</a>提到的Q-learning算法，进一步直接体会强化学习的实现与训练过程。</p>
 <h3 id="状态建模">状态建模</h3>
 <p>在Q-learning算法中，核心是维护一个用于表示动作价值的Q-table。在贪吃蛇游戏中，我们可以直观的将状态简化为以下特征。</p>
 <ul>
@@ -348,7 +348,7 @@ Q-learning算法的初始化主要包括<span class="katex"><span class="katex-m
 <p>当游戏结束时（如蛇撞到墙壁或自身），智能体会输出当前回合的得分，并将游戏环境重置，开始下一轮训练。通过不断循环这一过程，智能体能够在多次训练中逐步提高表现。最终，智能体可以在没有人工干预的情况下高效地玩贪吃蛇游戏。<br>
 图1展示了Q-learning算法得分随轮次变化的折线图。横轴表示训练的轮次，纵轴表示每轮游戏的得分。从图中可以观察到，随着训练轮次的增加，智能体的平均得分呈现出逐渐上升的趋势，表明Q-learning算法在不断优化其策略，逐步学会如何在游戏中表现得更好。<br>
 在训练初期（前200轮），智能体的得分较低且波动较大，说明智能体对环境的探索较多，策略还处于随机尝试阶段。随着训练的进行，智能体逐步积累经验，其得分逐渐提高并趋于稳定。在中后期（约800轮之后），得分的波动性依然存在，但整体水平明显提升，最高得分接近35分。</p>
-<img src="/2024/12/19/snake-2/fig1.png" srcset="/img/loading.gif" lazyload  alt="Q-learning算法得分随轮次变化折线图" width="300" style="display: block; margin: 0 auto;"/> 
+<img src="/2024/12/19/snake-2/fig1.png" srcset="/img/loading.gif" lazyload  alt="Q-learning算法得分随轮次变化折线图" width="500" style="display: block; margin: 0 auto;"/> 
 <p style="text-align: center;">图1 Q-learning算法得分随轮次变化折线图</p>
                 
               </div>
@@ -438,6 +438,12 @@ Q-learning算法的初始化主要包括<span class="katex"><span class="katex-m
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2024/12/19/snake-3/" title="基于强化学习的贪吃蛇游戏(四)——基于DQN算法的智能体">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">基于强化学习的贪吃蛇游戏(四)——基于DQN算法的智能体</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
