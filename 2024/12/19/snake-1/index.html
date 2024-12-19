@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://dufolk.github.io/img/snake/cover.png">
 <meta property="article:published_time" content="2024-12-19T06:39:00.000Z">
-<meta property="article:modified_time" content="2024-12-19T07:15:35.134Z">
+<meta property="article:modified_time" content="2024-12-19T07:23:47.904Z">
 <meta property="article:author" content="Dufolk">
 <meta property="article:tag" content="理论学习">
 <meta name="twitter:card" content="summary_large_image">
@@ -238,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k 字
+          3.1k 字
         
       </span>
     
@@ -307,8 +307,8 @@
 <h3 id="游戏初始化">游戏初始化</h3>
 <p>在游戏初始化阶段，我们使用PyGame创建游戏窗口并设置基本参数，如窗口大小、背景颜色以及帧率控制器。<br>
 我们设置窗口大小为 像素，并设置每个单元格的大小为 像素。这样，我们就建立了一个 的游戏场景供蛇活动。接着我们初始化屏幕填充颜色为黑色，并调用pygame.display.update()实现界面刷新。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pygame<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    pygame.init()  <span class="hljs-comment"># 初始化 PyGame  </span><br>    screen_size = (SCREEN_X, SCREEN_Y)  <span class="hljs-comment"># 窗口大小  </span><br>    screen = pygame.display.set_mode(screen_size)  <span class="hljs-comment"># 创建窗口  </span><br>    clock = pygame.time.Clock()  <span class="hljs-comment"># 帧率控制器  </span><br>    screen.fill((<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 设置背景颜色为黑色  </span><br>    pygame.display.set_caption(<span class="hljs-string">&quot;人工智能程序设计教学示例&quot;</span>)  <span class="hljs-comment"># 设置窗口标题  </span><br></code></pre></td></tr></table></figure>
-<p>对于一个完整的游戏来说，参数的设置是必不可少的。这些参数往往是一些常数，决定了游戏的运行方式。在这里我们需要设置画面的宽和高，并对每一个单元格的尺寸进行基本的设置。同时，在游戏中，我们也需要对“上”、“下”、“左”、“右”四个方向进行基本的设置。考虑到这些设置应该全局同一，我们单独创建一个config.py文件用于存储这些设置。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pygame<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    pygame.init()  <span class="hljs-comment"># 初始化 PyGame  </span><br>    screen_size = (SCREEN_X, SCREEN_Y)  <span class="hljs-comment"># 窗口大小  </span><br>    screen = pygame.display.set_mode(screen_size)  <span class="hljs-comment"># 创建窗口  </span><br>    clock = pygame.time.Clock()  <span class="hljs-comment"># 帧率控制器  </span><br>    screen.fill((<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 设置背景颜色为黑色  </span><br>    pygame.display.set_caption(<span class="hljs-string">&quot;人工智能游戏&quot;</span>)  <span class="hljs-comment"># 设置窗口标题  </span><br></code></pre></td></tr></table></figure>
+<p>对于一个完整的游戏来说，参数的设置是必不可少的。这些参数往往是一些常数，决定了游戏的运行方式。在这里我们需要设置画面的宽和高，并对每一个单元格的尺寸进行基本的设置。同时，在游戏中，我们也需要对“上”、“下”、“左”、“右”四个方向进行基本的设置。考虑到这些设置应该全局统一，我们单独创建一个config.py文件用于存储这些设置。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 定义画板大小  </span><br>SCREEN_X = <span class="hljs-number">600</span>  <br>SCREEN_Y = <span class="hljs-number">600</span>  <br>UNIT = <span class="hljs-number">50</span>  <br><br><span class="hljs-comment"># 定义方向</span><br>DIRECTION = [<span class="hljs-string">&#x27;up&#x27;</span>, <span class="hljs-string">&#x27;down&#x27;</span>, <span class="hljs-string">&#x27;left&#x27;</span>, <span class="hljs-string">&#x27;right&#x27;</span>]<br>DIRECTIONS = &#123;<span class="hljs-string">&#x27;up&#x27;</span>: (<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>), <span class="hljs-string">&#x27;down&#x27;</span>: (<span class="hljs-number">0</span>, <span class="hljs-number">1</span>), <span class="hljs-string">&#x27;left&#x27;</span>: (-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>), <span class="hljs-string">&#x27;right&#x27;</span>: (<span class="hljs-number">1</span>, <span class="hljs-number">0</span>)&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="蛇的实现">蛇的实现</h3>
 <p>我们通过创建一个Snake类来实现蛇的逻辑，包括蛇的初始化、移动、增长、方向控制以及死亡检测等功能。为了让整个项目结构更清晰，我们单独创建snake.py来存储Snake类。</p>
