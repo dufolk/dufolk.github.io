@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://dufolk.github.io/img/snake/cover.png">
 <meta property="article:published_time" content="2024-12-19T06:39:00.000Z">
-<meta property="article:modified_time" content="2024-12-19T06:39:00.572Z">
+<meta property="article:modified_time" content="2024-12-19T07:15:35.134Z">
 <meta property="article:author" content="Dufolk">
 <meta property="article:tag" content="理论学习">
 <meta name="twitter:card" content="summary_large_image">
@@ -301,8 +301,9 @@
               <div class="markdown-body">
                 
                 <h3 id="贪吃蛇游戏实现">贪吃蛇游戏实现</h3>
-<p>在本项目中，我们使用PyGame库来实现贪吃蛇游戏的可视化界面和基本交互逻辑。PyGame 是一个基于 Python 的跨平台游戏开发库，专为构建 2D 游戏而设计。它提供了一系列简单易用的工具与模块，用于处理游戏开发中的各种核心功能，如 图形绘制、声音播放、用户输入交互和事件管理等。PyGame 基于 SDL（Simple DirectMedia Layer）库开发，能够高效地管理低层次的多媒体操作，同时保持了 Python 语言的简洁和可读性。在贪吃蛇项目中，PyGame 的灵活性和高效性使其成为一个理想的选择，尤其是在快速构建游戏原型时。<br>
-在实现贪吃蛇游戏时，我们将其分为多个模块，包括画面初始化、蛇的逻辑、食物生成、奖励与状态更新等部分</p>
+<p>在本项目中，我们使用PyGame库来实现贪吃蛇游戏的可视化界面和基本交互逻辑。PyGame 是一个基于 Python 的跨平台游戏开发库，专为构建 2D 游戏而设计。它提供了一系列简单易用的工具与模块，用于处理游戏开发中的各种核心功能，如 图形绘制、声音播放、用户输入交互和事件管理等。PyGame 基于 SDL（Simple DirectMedia Layer）库开发，能够高效地管理低层次的多媒体操作，同时保持了 Python 语言的简洁和可读性。在贪吃蛇项目中，PyGame 的灵活性和高效性使其成为一个理想的选择，尤其是在快速构建游戏原型时。</p>
+<span id="more"></span>
+<p>在实现贪吃蛇游戏时，我们将其分为多个模块，包括画面初始化、蛇的逻辑、食物生成、奖励与状态更新等部分</p>
 <h3 id="游戏初始化">游戏初始化</h3>
 <p>在游戏初始化阶段，我们使用PyGame创建游戏窗口并设置基本参数，如窗口大小、背景颜色以及帧率控制器。<br>
 我们设置窗口大小为 像素，并设置每个单元格的大小为 像素。这样，我们就建立了一个 的游戏场景供蛇活动。接着我们初始化屏幕填充颜色为黑色，并调用pygame.display.update()实现界面刷新。</p>

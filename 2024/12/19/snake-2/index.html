@@ -19,16 +19,16 @@
   <meta name="author" content="Dufolk">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在完成了贪吃蛇游戏的基本功能后，我们将尝试实现一个能自主学习玩贪吃蛇的AI智能体。本节我们通过实现前文提到的Q-learning算法，进一步直接体会强化学习的实现与训练过程。 状态建模 在Q-learning算法中，核心是维护一个用于表示动作价值的Q-table。在贪吃蛇游戏中，我们可以直观的将状态简化为以下特征。  食物相对于蛇头所处的方位：（上&#x2F;中&#x2F;下，左&#x2F;中&#x2F;右）。上&#x2F;中&#x2F;下与左&#x2F;中&#x2F;右分别">
+    <meta name="description" content="在完成了贪吃蛇游戏的基本功能后，我们将尝试实现一个能自主学习玩贪吃蛇的AI智能体。本节我们通过实现前文提到的Q-learning算法，进一步直接体会强化学习的实现与训练过程。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于强化学习的贪吃蛇游戏(三)——基于Q-learning算法的智能体">
 <meta property="og:url" content="http://dufolk.github.io/2024/12/19/snake-2/index.html">
 <meta property="og:site_name" content="Coding&#x2F;Algorithm日记">
-<meta property="og:description" content="在完成了贪吃蛇游戏的基本功能后，我们将尝试实现一个能自主学习玩贪吃蛇的AI智能体。本节我们通过实现前文提到的Q-learning算法，进一步直接体会强化学习的实现与训练过程。 状态建模 在Q-learning算法中，核心是维护一个用于表示动作价值的Q-table。在贪吃蛇游戏中，我们可以直观的将状态简化为以下特征。  食物相对于蛇头所处的方位：（上&#x2F;中&#x2F;下，左&#x2F;中&#x2F;右）。上&#x2F;中&#x2F;下与左&#x2F;中&#x2F;右分别">
+<meta property="og:description" content="在完成了贪吃蛇游戏的基本功能后，我们将尝试实现一个能自主学习玩贪吃蛇的AI智能体。本节我们通过实现前文提到的Q-learning算法，进一步直接体会强化学习的实现与训练过程。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://dufolk.github.io/img/snake/cover.png">
 <meta property="article:published_time" content="2024-12-19T06:54:55.000Z">
-<meta property="article:modified_time" content="2024-12-19T07:10:36.043Z">
+<meta property="article:modified_time" content="2024-12-19T07:15:08.574Z">
 <meta property="article:author" content="Dufolk">
 <meta property="article:tag" content="理论学习">
 <meta name="twitter:card" content="summary_large_image">
@@ -303,6 +303,7 @@
               <div class="markdown-body">
                 
                 <p>在完成了贪吃蛇游戏的基本功能后，我们将尝试实现一个能自主学习玩贪吃蛇的AI智能体。本节我们通过实现<a href="https://dufolk.github.io/2024/12/19/snake-1/">前文</a>提到的Q-learning算法，进一步直接体会强化学习的实现与训练过程。</p>
+<span id="more"></span>
 <h3 id="状态建模">状态建模</h3>
 <p>在Q-learning算法中，核心是维护一个用于表示动作价值的Q-table。在贪吃蛇游戏中，我们可以直观的将状态简化为以下特征。</p>
 <ul>
