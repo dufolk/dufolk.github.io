@@ -22,7 +22,7 @@
     <meta name="description" content="Dufolk的个人博客">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Coding&#x2F;Algorithm日记">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://dufolk.github.io/index.html">
 <meta property="og:site_name" content="Coding&#x2F;Algorithm日记">
 <meta property="og:description" content="Dufolk的个人博客">
 <meta property="og:locale" content="zh_CN">
@@ -63,7 +63,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"a5SSXXtCxO91qRKFkjVQMkDi-MdYXbMMI","app_key":"4AKbD6prikTmwFEX320HpvXv","server_url":null,"path":"window.location.pathname","ignore_local":false,"security":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"dufolk.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"a5SSXXtCxO91qRKFkjVQMkDi-MdYXbMMI","app_key":"4AKbD6prikTmwFEX320HpvXv","server_url":null,"path":"window.location.pathname","ignore_local":false,"security":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -175,6 +175,18 @@
             </li>
           
         
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
@@ -239,6 +251,402 @@
   <div class="row mx-auto index-card">
     
     
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/12/22/snake-4/" target="_self">
+          <img src="/img/snake/cover.png" srcset="/img/loading.gif" lazyload alt="基于强化学习的贪吃蛇游戏(五)——智能体结构优化">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/12/22/snake-4/" target="_self">
+          基于强化学习的贪吃蛇游戏(五)——智能体结构优化
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2024/12/22/snake-4/" target="_self">
+        <div>
+          在上一篇文章中,我们使用DQN算法实现了一个基于深度神经网络的强化学习智能体。虽然通过神经网络的函数近似突破了Q-learning算法的局限性,但当前的实现仍然存在一些改进空间。本文将从状态建模和网络结构两个角度对智能体进行优化,以进一步提升智能体的学习效果。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-12-22 17:06" pubdate>
+              2024-12-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A7%91%E7%A0%94/" class="category-chain-item">科研</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0/">#理论学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/12/19/snake-3/" target="_self">
+          <img src="/img/snake/cover.png" srcset="/img/loading.gif" lazyload alt="基于强化学习的贪吃蛇游戏(四)——基于DQN算法的智能体">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/12/19/snake-3/" target="_self">
+          基于强化学习的贪吃蛇游戏(四)——基于DQN算法的智能体
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2024/12/19/snake-3/" target="_self">
+        <div>
+          在上一节中，我们通过Q-learning算法实现了一个能够自主学习玩贪吃蛇的强化学习智能体。虽然Q-learning算法在小规模的状态空间中表现良好，但它的局限性也非常明显。由于Q-table的大小随状态空间的增长呈指数级扩展，在面对更复杂或连续的环境时，Q-learning会因存储和计算的限制而难以适用。而贪吃蛇游戏的状态空间虽然经过简化，但仍然存在较大的扩展潜力。 在本章中，我们将基于前文提到
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-12-19 15:11" pubdate>
+              2024-12-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A7%91%E7%A0%94/" class="category-chain-item">科研</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0/">#理论学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/12/19/snake-2/" target="_self">
+          <img src="/img/snake/cover.png" srcset="/img/loading.gif" lazyload alt="基于强化学习的贪吃蛇游戏(三)——基于Q-learning算法的智能体">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/12/19/snake-2/" target="_self">
+          基于强化学习的贪吃蛇游戏(三)——基于Q-learning算法的智能体
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2024/12/19/snake-2/" target="_self">
+        <div>
+          在完成了贪吃蛇游戏的基本功能后，我们将尝试实现一个能自主学习玩贪吃蛇的AI智能体。本节我们通过实现前文提到的Q-learning算法，进一步直接体会强化学习的实现与训练过程。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-12-19 14:54" pubdate>
+              2024-12-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A7%91%E7%A0%94/" class="category-chain-item">科研</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0/">#理论学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/12/19/snake-1/" target="_self">
+          <img src="/img/snake/cover.png" srcset="/img/loading.gif" lazyload alt="基于强化学习的贪吃蛇游戏(二)——贪吃蛇游戏实现">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/12/19/snake-1/" target="_self">
+          基于强化学习的贪吃蛇游戏(二)——贪吃蛇游戏实现
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2024/12/19/snake-1/" target="_self">
+        <div>
+          贪吃蛇游戏实现 在本项目中，我们使用PyGame库来实现贪吃蛇游戏的可视化界面和基本交互逻辑。PyGame 是一个基于 Python 的跨平台游戏开发库，专为构建 2D 游戏而设计。它提供了一系列简单易用的工具与模块，用于处理游戏开发中的各种核心功能，如 图形绘制、声音播放、用户输入交互和事件管理等。PyGame 基于 SDL（Simple DirectMedia Layer）库开发，能够高效地管
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-12-19 14:39" pubdate>
+              2024-12-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A7%91%E7%A0%94/" class="category-chain-item">科研</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0/">#理论学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/12/19/snake-0/" target="_self">
+          <img src="/img/snake/cover.png" srcset="/img/loading.gif" lazyload alt="基于强化学习的贪吃蛇游戏(一)——强化学习基础">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/12/19/snake-0/" target="_self">
+          基于强化学习的贪吃蛇游戏(一)——强化学习基础
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2024/12/19/snake-0/" target="_self">
+        <div>
+          最近在帮导师完成他教材的编纂，其中我的部分是使用强化学习来完成贪吃蛇游戏。在博客里记录下整个过程。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-12-19 10:55" pubdate>
+              2024-12-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A7%91%E7%A0%94/" class="category-chain-item">科研</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0/">#理论学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/12/18/buildhelp/" target="_self">
+          个人主页搭建备忘录
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/12/18/buildhelp/" target="_self">
+        <div>
+          在这里记录一下主页的搭建过程，以免日后遗忘。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-12-18 22:20" pubdate>
+              2024-12-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%85%B6%E4%BB%96/" class="category-chain-item">其他</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%80%E6%9C%AF%E6%97%A5%E8%AE%B0/">#技术日记</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
@@ -250,7 +658,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2024/11/29/linprog/" target="_self">
         <div>
-          使用线性规划求解Minimax问题 最近工作中涉及到一个在零和博弈中求解Minimax的问题，算出的纯策略解效果并不好，于是想试试用线性规划来求解混合策略均衡解。
+          最近工作中涉及到一个在零和博弈中求解Minimax的问题，算出的纯策略解效果并不好，于是想试试用线性规划来求解混合策略均衡解。
         </div>
       </a>
 
