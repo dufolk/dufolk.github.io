@@ -1,0 +1,19 @@
+::selection {
+    background: #ffffff00;
+    color: #05c5b9;
+  }
+  
+  .icon {
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
+  
+  pre::selection, pre ::selection {
+    background: #fff;
+  }
+  
+  [data-user-color-scheme='dark'] pre::selection, [data-user-color-scheme='dark'] pre ::selection {
+    background: #424858;
+    color: #fff;
+  }
