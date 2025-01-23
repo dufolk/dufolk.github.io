@@ -1,0 +1,799 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dufolk">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="贪吃蛇游戏实现 在本项目中，我们使用PyGame库来实现贪吃蛇游戏的可视化界面和基本交互逻辑。PyGame 是一个基于 Python 的跨平台游戏开发库，专为构建 2D 游戏而设计。它提供了一系列简单易用的工具与模块，用于处理游戏开发中的各种核心功能，如 图形绘制、声音播放、用户输入交互和事件管理等。PyGame 基于 SDL（Simple DirectMedia Layer）库开发，能够高效地管">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于强化学习的贪吃蛇游戏(二)——贪吃蛇游戏实现">
+<meta property="og:url" content="http://dufolk.github.io/2024/12/19/snake-1/index.html">
+<meta property="og:site_name" content="随机过程集">
+<meta property="og:description" content="贪吃蛇游戏实现 在本项目中，我们使用PyGame库来实现贪吃蛇游戏的可视化界面和基本交互逻辑。PyGame 是一个基于 Python 的跨平台游戏开发库，专为构建 2D 游戏而设计。它提供了一系列简单易用的工具与模块，用于处理游戏开发中的各种核心功能，如 图形绘制、声音播放、用户输入交互和事件管理等。PyGame 基于 SDL（Simple DirectMedia Layer）库开发，能够高效地管">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://dufolk.github.io/img/snake/cover.png">
+<meta property="article:published_time" content="2024-12-19T06:39:00.000Z">
+<meta property="article:modified_time" content="2024-12-29T12:54:46.793Z">
+<meta property="article:author" content="Dufolk">
+<meta property="article:tag" content="理论学习">
+<meta property="article:tag" content="贪吃蛇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://dufolk.github.io/img/snake/cover.png">
+  
+  
+  
+  <title>基于强化学习的贪吃蛇游戏(二)——贪吃蛇游戏实现 - 随机过程集</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/scrollAnimation.css">
+<link rel="stylesheet" href="/css/selection.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dufolk.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"a5SSXXtCxO91qRKFkjVQMkDi-MdYXbMMI","app_key":"4AKbD6prikTmwFEX320HpvXv","server_url":null,"path":"window.location.pathname","ignore_local":false,"security":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>随机过程集</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>本人</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/page_banner.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">基于强化学习的贪吃蛇游戏(二)——贪吃蛇游戏实现</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-19 14:39" pubdate>
+          2024年12月19日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">基于强化学习的贪吃蛇游戏(二)——贪吃蛇游戏实现</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="贪吃蛇游戏实现">贪吃蛇游戏实现</h3>
+<p>在本项目中，我们使用PyGame库来实现贪吃蛇游戏的可视化界面和基本交互逻辑。PyGame 是一个基于 Python 的跨平台游戏开发库，专为构建 2D 游戏而设计。它提供了一系列简单易用的工具与模块，用于处理游戏开发中的各种核心功能，如 图形绘制、声音播放、用户输入交互和事件管理等。PyGame 基于 SDL（Simple DirectMedia Layer）库开发，能够高效地管理低层次的多媒体操作，同时保持了 Python 语言的简洁和可读性。在贪吃蛇项目中，PyGame 的灵活性和高效性使其成为一个理想的选择，尤其是在快速构建游戏原型时。</p>
+<span id="more"></span>
+<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mtext>😄</mtext></msub><mtext>😅</mtext><mo>=</mo><mtext>💧</mtext></mrow><annotation encoding="application/x-tex">\log_{😄}😅=💧
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9386em;vertical-align:-0.2441em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:-0.2441em;"><span style="top:-2.4559em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">😄</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2441em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">😅</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0em;"></span><span class="mord">💧</span></span></span></span></span></p>
+<p>在实现贪吃蛇游戏时，我们将其分为多个模块，包括画面初始化、蛇的逻辑、食物生成、奖励与状态更新等部分</p>
+<h3 id="游戏初始化">游戏初始化</h3>
+<p>在游戏初始化阶段，我们使用PyGame创建游戏窗口并设置基本参数，如窗口大小、背景颜色以及帧率控制器。<br>
+我们设置窗口大小为 像素，并设置每个单元格的大小为 像素。这样，我们就建立了一个 的游戏场景供蛇活动。接着我们初始化屏幕填充颜色为黑色，并调用pygame.display.update()实现界面刷新。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pygame<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    pygame.init()  <span class="hljs-comment"># 初始化 PyGame  </span><br>    screen_size = (SCREEN_X, SCREEN_Y)  <span class="hljs-comment"># 窗口大小  </span><br>    screen = pygame.display.set_mode(screen_size)  <span class="hljs-comment"># 创建窗口  </span><br>    clock = pygame.time.Clock()  <span class="hljs-comment"># 帧率控制器  </span><br>    screen.fill((<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 设置背景颜色为黑色  </span><br>    pygame.display.set_caption(<span class="hljs-string">&quot;人工智能游戏&quot;</span>)  <span class="hljs-comment"># 设置窗口标题  </span><br></code></pre></td></tr></table></figure>
+<p>对于一个完整的游戏来说，参数的设置是必不可少的。这些参数往往是一些常数，决定了游戏的运行方式。在这里我们需要设置画面的宽和高，并对每一个单元格的尺寸进行基本的设置。同时，在游戏中，我们也需要对“上”、“下”、“左”、“右”四个方向进行基本的设置。考虑到这些设置应该全局统一，我们单独创建一个config.py文件用于存储这些设置。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 定义画板大小  </span><br>SCREEN_X = <span class="hljs-number">600</span>  <br>SCREEN_Y = <span class="hljs-number">600</span>  <br>UNIT = <span class="hljs-number">50</span>  <br><br><span class="hljs-comment"># 定义方向</span><br>DIRECTION = [<span class="hljs-string">&#x27;up&#x27;</span>, <span class="hljs-string">&#x27;down&#x27;</span>, <span class="hljs-string">&#x27;left&#x27;</span>, <span class="hljs-string">&#x27;right&#x27;</span>]<br>DIRECTIONS = &#123;<span class="hljs-string">&#x27;up&#x27;</span>: (<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>), <span class="hljs-string">&#x27;down&#x27;</span>: (<span class="hljs-number">0</span>, <span class="hljs-number">1</span>), <span class="hljs-string">&#x27;left&#x27;</span>: (-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>), <span class="hljs-string">&#x27;right&#x27;</span>: (<span class="hljs-number">1</span>, <span class="hljs-number">0</span>)&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="蛇的实现">蛇的实现</h3>
+<p>我们通过创建一个Snake类来实现蛇的逻辑，包括蛇的初始化、移动、增长、方向控制以及死亡检测等功能。为了让整个项目结构更清晰，我们单独创建snake.py来存储Snake类。</p>
+<h4 id="蛇的初始化">蛇的初始化</h4>
+<p>在Snake类的初始化阶段，我们通过一个列表存储蛇的身体，每个身体块为一个pygame.Rect对象，初始化方向为右。考虑到蛇身的初始化与蛇吃到食物时蛇身长度的增长均可以视为蛇身长度的增加，我们设计了<code>add_body</code>方法来模块化这些代码。<br>
+在<code>add_body</code>方法中，通过对<code>self.body</code>列表的操作完成在蛇头处加入身体</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pygame<br><span class="hljs-keyword">from</span> config <span class="hljs-keyword">import</span> *<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Snake</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-variable language_">self</span>.direction = <span class="hljs-string">&#x27;right&#x27;</span>  <span class="hljs-comment"># 初始方向  </span><br>        <span class="hljs-variable language_">self</span>.body = []  <span class="hljs-comment"># 蛇的身体  </span><br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):  <span class="hljs-comment"># 初始化蛇的长度为 5  </span><br>            <span class="hljs-variable language_">self</span>.add_body(<span class="hljs-variable language_">self</span>.direction)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">add_body</span>(<span class="hljs-params">self, direction</span>):<br>        <span class="hljs-comment"># 在蛇头添加新节点（默认行为）</span><br>        left, top = (<span class="hljs-number">0</span>, <span class="hljs-number">150</span>)<br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.body:<br>            left, top = (<span class="hljs-variable language_">self</span>.body[<span class="hljs-number">0</span>].left, <span class="hljs-variable language_">self</span>.body[<span class="hljs-number">0</span>].top)<br>        new_node = pygame.Rect(left, top, UNIT, UNIT)<br>        <span class="hljs-keyword">if</span> direction == <span class="hljs-string">&#x27;left&#x27;</span>:<br>            new_node.left -= UNIT<br>        <span class="hljs-keyword">elif</span> direction == <span class="hljs-string">&#x27;right&#x27;</span>:<br>            new_node.left += UNIT<br>        <span class="hljs-keyword">elif</span> direction == <span class="hljs-string">&#x27;up&#x27;</span>:<br>            new_node.top -= UNIT<br>        <span class="hljs-keyword">elif</span> direction == <span class="hljs-string">&#x27;down&#x27;</span>:<br>            new_node.top += UNIT<br>        <span class="hljs-variable language_">self</span>.body.insert(<span class="hljs-number">0</span>, new_node)  <span class="hljs-comment"># 插入到蛇头位置</span><br></code></pre></td></tr></table></figure>
+<h4 id="蛇的移动">蛇的移动</h4>
+<p>蛇的移动是贪吃蛇游戏中最基础也最核心的功能。在我们的实现中，蛇的移动采用了一种简单而高效的方法：通过对蛇身体列表的操作来实现移动效果。每当蛇移动时，我们会在移动方向上创建一个新的身体块作为新的蛇头，同时删除蛇尾的最后一个身体块，这样就能实现蛇的前进效果。在此我们仍需考虑的是，蛇并不能原地“回头”，所以我们对蛇的行进方向进行判断，阻止与蛇行进方向相反的转向。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">move</span>(<span class="hljs-params">self, direction</span>):<br>    <span class="hljs-keyword">if</span> (direction == <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> <span class="hljs-variable language_">self</span>.direction != DIRECTION[<span class="hljs-number">0</span>]) <span class="hljs-keyword">or</span> \<br>        (direction == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> <span class="hljs-variable language_">self</span>.direction != DIRECTION[<span class="hljs-number">1</span>]) <span class="hljs-keyword">or</span> \<br>        (direction == <span class="hljs-number">2</span> <span class="hljs-keyword">and</span> <span class="hljs-variable language_">self</span>.direction != DIRECTION[<span class="hljs-number">3</span>]) <span class="hljs-keyword">or</span> \<br>        (direction == <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> <span class="hljs-variable language_">self</span>.direction != DIRECTION[<span class="hljs-number">2</span>]):<br>        <span class="hljs-variable language_">self</span>.direction = DIRECTION[direction]<br>        <span class="hljs-variable language_">self</span>.add_body(<span class="hljs-variable language_">self</span>.direction)  <span class="hljs-comment"># 在方向上添加一个新块  </span><br>        <span class="hljs-variable language_">self</span>.body.pop()  <span class="hljs-comment"># 删除尾部块  </span><br></code></pre></td></tr></table></figure>
+<h4 id="死亡检测">死亡检测</h4>
+<p>在贪吃蛇游戏中，死亡检测是保证游戏规则和游戏结束判定的重要机制。我们需要实时检测两种可能导致游戏结束的情况：边界碰撞和自身碰撞。<br>
+边界碰撞检测。游戏场景有明确的边界，规定了蛇可以活动的范围。我们需要检查蛇头的坐标是否超出了屏幕的范围。一旦超出区域，则表示蛇已撞到边界，游戏结束。<br>
+自身碰撞检测。随着蛇身变长，蛇可能会与自己的身体发生碰撞。我们需要检查蛇头的位置是否与蛇身的任何一个部分重叠。这种检测通过比较蛇头与除蛇头外的所有身体块的位置来实现。一旦发生重叠，则表示蛇已经咬到了自己，游戏结束。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_dead</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-comment"># 判断蛇头是否撞墙  </span><br>    <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.body[<span class="hljs-number">0</span>].x <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(SCREEN_X) <span class="hljs-keyword">or</span> <span class="hljs-variable language_">self</span>.body[<span class="hljs-number">0</span>].y <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(SCREEN_Y):<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>    <span class="hljs-comment"># 判断蛇头是否撞到身体  </span><br>    <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.body[<span class="hljs-number">0</span>] <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.body[<span class="hljs-number">1</span>:]:<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+<p>至此，我们已经完成对Snake类的定义，它具备移动和判断死亡的功能。</p>
+<h3 id="食物的生成">食物的生成</h3>
+<p>我们通过Food类来实现食物的创建和位置管理，确保食物在游戏场景中的合理分布。食物系统的核心是创建一个与蛇身体块大小相同的矩形对象。在游戏开始之前，食物对玩家并不可见，这其实从代码实现上很简单，只要让食物出现在场景的边界之外即可。故食物的初始位置设置在屏幕外（x=-50），表示食物尚未生成。<br>
+当需要在游戏区域内生成食物时，我们调用Food类中的set_food方法。set_food方法会在距离边界50像素以内的区域随机选择一个位置。在生成过程中，系统会检查新生成的食物位置是否与蛇的身体发生重叠，如果发生重叠，则会递归调用set_food方法，直到找到一个合适的位置。<br>
+同样的，为了让整个项目结构清晰，我们创建food.py来存储Food类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pygame<br><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">from</span> config <span class="hljs-keyword">import</span> *<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Food</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-variable language_">self</span>.rect = pygame.Rect(-<span class="hljs-number">50</span>, <span class="hljs-number">0</span>, UNIT, UNIT)  <span class="hljs-comment"># 初始位置屏幕外  </span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">set_food</span>(<span class="hljs-params">self, snake</span>):<br>        all_positions = [pos <span class="hljs-keyword">for</span> pos <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">50</span>, SCREEN_X - <span class="hljs-number">50</span>, UNIT)]<br>        <span class="hljs-variable language_">self</span>.rect.left = random.choice(all_positions)<br>        <span class="hljs-variable language_">self</span>.rect.top = random.choice(all_positions)<br>        <span class="hljs-comment"># 确保食物不会生成在蛇身体上  </span><br>        <span class="hljs-keyword">for</span> body <span class="hljs-keyword">in</span> snake.body:<br>            <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.rect.topleft == body.topleft:<br>                <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.set_food(snake)  <span class="hljs-comment"># 递归调用，直到食物生成在蛇身体外</span><br></code></pre></td></tr></table></figure>
+<h3 id="游戏逻辑">游戏逻辑</h3>
+<p>现在我们已经做好了贪吃蛇游戏所有的准备工作，下一步就是根据游戏规则实现游戏逻辑。<br>
+在编写具体游戏过程之前，我们首先要对我们定义的Snake类和Food实例化，并设置初始食物的位置。此外，我们在游戏开始之前要将得分设置为0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 初始化蛇和食物</span><br>snake = Snake()<br>food = Food()<br>food.set_food(snake)  <span class="hljs-comment"># 随机生成初始食物</span><br>direction = <span class="hljs-number">1</span><br>KEYBOARD_CONTROL = <span class="hljs-literal">True</span> <span class="hljs-comment"># 是否使用键盘控制</span><br>  <br><span class="hljs-comment"># 初始化得分</span><br>score = <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+<p>在做好这些设置之后，我们就可以开始编写整个游戏了。对于一个2D图像游戏，其实是通过每秒高速刷新的画面让玩家观察游戏状态并交互。在程序中，我们通过编写一个循环完成画面的更新与交互判断。</p>
+<h4 id="游戏主循环">游戏主循环</h4>
+<p>游戏主循环是贪吃蛇游戏逻辑的核心部分，负责处理游戏的各种事件、状态更新和画面渲染。其主要流程如图1所示：</p>
+<img src="/2024/12/19/snake-1/fig.png" srcset="/img/loading.gif" lazyload  alt="游戏主循环主要模块流程图" width="500" style="display: block; margin: 0 auto;"/>
+<p style="text-align: center;">图1 游戏主循环主要模块流程图</p>
+<p>在事件处理部分，我们需要对游戏运行中的各种发生的事件进行相应的处理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-keyword">for</span> event <span class="hljs-keyword">in</span> pygame.event.get():  <span class="hljs-comment"># 获取事件</span><br>        <span class="hljs-keyword">if</span> event.<span class="hljs-built_in">type</span> == pygame.QUIT:  <span class="hljs-comment"># 退出游戏</span><br>            pygame.quit()<br>            sys.exit()<br>        <span class="hljs-keyword">if</span> event.<span class="hljs-built_in">type</span> == pygame.KEYDOWN <span class="hljs-keyword">and</span> KEYBOARD_CONTROL:<br>            <span class="hljs-comment"># 控制蛇的方向</span><br>            <span class="hljs-keyword">if</span> event.key == pygame.K_UP:<br>                direction = <span class="hljs-number">0</span><br>            <span class="hljs-keyword">elif</span> event.key == pygame.K_DOWN:<br>                direction = <span class="hljs-number">1</span><br>            <span class="hljs-keyword">elif</span> event.key == pygame.K_LEFT:<br>                direction = <span class="hljs-number">2</span><br>            <span class="hljs-keyword">elif</span> event.key == pygame.K_RIGHT:<br>                direction = <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<p>pygame的事件系统是一个核心机制，通过<code>pygame.event.get()</code>获取事件队列中的所有事件，每个事件都是Event对象，包含type属性表示事件类型。<code>pygame.QUIT</code>是点击窗口关闭按钮时触发的事件类型。通过循环遍历事件队列并检查事件类型，可以响应用户的输入操作。每帧都需要处理事件队列，否则程序会失去响应。当我们使用键盘控制蛇时，我们也需要检测键盘上是否有对应的按键被按下。<code>pygame.KEYDOWN</code>是按下按键的事件，当键盘上有按键被按下时，我们检测是否是方向键，并记录下其对应的移动方向。<br>
+在接收到移动方向之后（或许没有），我们根据方向让蛇进行移动。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 移动蛇</span><br>snake.move(direction)<br></code></pre></td></tr></table></figure>
+<p>贪吃蛇游戏中，每一次蛇的位置发生移动，系统都需要判断是否触发碰撞。当蛇头与食物的位置发生碰撞，我们需要增加蛇的长度，并让食物刷新在新的位置。而如果蛇头与边界或蛇身发生碰撞，游戏就以失败告终了。在这里，我们只需要增加对吃到食物情况的判断，因为我们已经在Snake类中完成了对死亡情况的判断。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 判断是否吃到食物</span><br><span class="hljs-keyword">if</span> snake.body[<span class="hljs-number">0</span>].colliderect(food.rect):  <span class="hljs-comment"># 如果蛇头与食物碰撞</span><br>    snake.body.append(snake.body[-<span class="hljs-number">1</span>].copy())  <span class="hljs-comment"># 增加蛇的长度</span><br>    food.set_food(snake)  <span class="hljs-comment"># 生成新的食物</span><br>    score += <span class="hljs-number">1</span><br><br><span class="hljs-comment"># 判断是否死亡</span><br><span class="hljs-keyword">elif</span> snake.is_dead():<br>    pygame.quit()<br>    sys.exit()<br></code></pre></td></tr></table></figure>
+<h4 id="更新画面">更新画面</h4>
+<p>游戏画面的更新是让游戏生动起来的关键环节。在贪吃蛇游戏中，我们需要绘制背景、蛇、食物和得分显示。pygame提供了丰富的绘图函数来帮助我们完成这些工作。<br>
+首先，我们绘制一个棋盘式的背景，使用深浅两种绿色交替出现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 绘制游戏画面</span><br>screen.fill((<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>))  <span class="hljs-comment"># 清空画面</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(SCREEN_X // UNIT):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(SCREEN_Y // UNIT):<br>        <span class="hljs-keyword">if</span> (i+j) % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>            pygame.draw.rect(screen, (<span class="hljs-number">0</span>, <span class="hljs-number">150</span>, <span class="hljs-number">0</span>), (i * UNIT, j * UNIT, UNIT, UNIT))<br>        <span class="hljs-keyword">else</span>:<br>            pygame.draw.rect(screen, (<span class="hljs-number">0</span>, <span class="hljs-number">180</span>, <span class="hljs-number">0</span>), (i * UNIT, j * UNIT, UNIT, UNIT))<br></code></pre></td></tr></table></figure>
+<p>接下来是游戏中最重要的角色——蛇的绘制。我们为蛇头使用图片来增加游戏的美观度，并根据移动方向旋转蛇头图片。图片应放在同级目录下的image文件夹中，以与游戏主目录进行区分：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i, rect <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(snake.body):<br>    <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span>:<br>        head_file = <span class="hljs-string">&#x27;./image/head.png&#x27;</span>  <span class="hljs-comment"># 加载蛇头图片</span><br>        head_image = pygame.image.load(head_file)<br>        head_image = pygame.transform.scale(head_image, (UNIT, UNIT)) <span class="hljs-comment"># 缩放图片</span><br>        <span class="hljs-comment"># 根据移动方向旋转蛇头</span><br>        <span class="hljs-keyword">if</span> snake.direction == <span class="hljs-string">&#x27;down&#x27;</span>:<br>            head_image = pygame.transform.rotate(head_image, <span class="hljs-number">180</span>)<br>        <span class="hljs-keyword">elif</span> snake.direction == <span class="hljs-string">&#x27;left&#x27;</span>:<br>            head_image = pygame.transform.rotate(head_image, <span class="hljs-number">90</span>)<br>        <span class="hljs-keyword">elif</span> snake.direction == <span class="hljs-string">&#x27;right&#x27;</span>:<br>            head_image = pygame.transform.rotate(head_image, -<span class="hljs-number">90</span>)<br>        screen.blit(head_image, rect) <span class="hljs-comment"># 绘制蛇头</span><br>    <span class="hljs-keyword">else</span>:  <span class="hljs-comment"># 蛇身</span><br>        <span class="hljs-comment"># 使用两种橙色交替绘制蛇身</span><br>        color = (<span class="hljs-number">255</span>, <span class="hljs-number">201</span>, <span class="hljs-number">14</span>) <span class="hljs-keyword">if</span> i &amp; <span class="hljs-number">1</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> (<span class="hljs-number">255</span>, <span class="hljs-number">143</span>, <span class="hljs-number">14</span>)<br>        pygame.draw.rect(screen, color, rect)<br></code></pre></td></tr></table></figure>
+<p>食物使用红色圆形表示，这样可以与方块形状的蛇形成视觉区分：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pygame.draw.circle(screen, (<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), (food.rect.center), <span class="hljs-number">25</span>)  <span class="hljs-comment"># 绘制圆形食物</span><br></code></pre></td></tr></table></figure>
+<p>最后，我们使用pygame的文字渲染功能，在屏幕右上角显示当前得分：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 显示得分</span><br>font = pygame.font.Font(<span class="hljs-literal">None</span>, <span class="hljs-number">36</span>)<br>text = font.render(<span class="hljs-string">f&quot;Score: <span class="hljs-subst">&#123;score&#125;</span>&quot;</span>, <span class="hljs-literal">True</span>, (<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>))<br>screen.blit(text, (<span class="hljs-number">10</span>, <span class="hljs-number">10</span>))<br></code></pre></td></tr></table></figure>
+<p>最后，我们使用pygame的文字渲染功能，在屏幕左上角显示当前得分：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 更新画面</span><br>pygame.display.update()<br>clock.tick(<span class="hljs-number">10</span>)  <span class="hljs-comment"># 控制帧率</span><br></code></pre></td></tr></table></figure>
+<p>通过这些绘制操作，我们实现了游戏画面的完整呈现。<code>pygame.display.update()</code>确保所有绘制内容都显示到屏幕上，而<code>clock.tick()</code>控制游戏运行速度，防止蛇移动过快影响游戏体验。至此，我们就完整的实现了贪吃蛇的游戏内容，玩家可以通过键盘上的方向键进行游戏。游戏画面如图2所示：</p>
+<img src="/2024/12/19/snake-1/fig2.png" srcset="/img/loading.gif" lazyload  alt="游戏运行画面" width="500" style="display: block; margin: 0 auto;"/>
+<p style="text-align: center;">图2 游戏运行画面</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A7%91%E7%A0%94/" class="category-chain-item">科研</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0/" class="print-no-link">#理论学习</a>
+      
+        <a href="/tags/%E8%B4%AA%E5%90%83%E8%9B%87/" class="print-no-link">#贪吃蛇</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>基于强化学习的贪吃蛇游戏(二)——贪吃蛇游戏实现</div>
+      <div>http://dufolk.github.io/2024/12/19/snake-1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Dufolk</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/12/19/snake-2/" title="基于强化学习的贪吃蛇游戏(三)——基于Q-learning算法的智能体">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">基于强化学习的贪吃蛇游戏(三)——基于Q-learning算法的智能体</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/19/snake-0/" title="基于强化学习的贪吃蛇游戏(一)——强化学习基础">
+                        <span class="hidden-mobile">基于强化学习的贪吃蛇游戏(一)——强化学习基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://registry.npmmirror.com/@waline/client/2.15.8/files/dist/waline.css')
+      Fluid.utils.createScript('https://registry.npmmirror.com/@waline/client/2.15.8/files/dist/waline.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://waline-six-iota.vercel.app","path":"window.location.pathname","meta":["nick","mail"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.2.0/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/scrollAnimation.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
