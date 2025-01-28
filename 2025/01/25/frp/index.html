@@ -19,23 +19,24 @@
   <meta name="author" content="Dufolk">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在这里记录一下主页的搭建过程，以免日后遗忘。">
+    <meta name="description" content="用很多次frp工具进行内网穿透了，在这里统一记录一下过程。尤其是在ubuntu下写入系统服务并开机自启并非我能独立写出的，我还是得把服务配置记录在此为妙。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="个人主页搭建备忘录">
-<meta property="og:url" content="http://dufolk.github.io/2024/12/18/buildhelp/index.html">
+<meta property="og:title" content="使用frp通过跳板机实现内网穿透备忘">
+<meta property="og:url" content="http://dufolk.github.io/2025/01/25/frp/index.html">
 <meta property="og:site_name" content="随机过程集">
-<meta property="og:description" content="在这里记录一下主页的搭建过程，以免日后遗忘。">
+<meta property="og:description" content="用很多次frp工具进行内网穿透了，在这里统一记录一下过程。尤其是在ubuntu下写入系统服务并开机自启并非我能独立写出的，我还是得把服务配置记录在此为妙。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-12-18T14:20:23.000Z">
-<meta property="article:modified_time" content="2025-01-24T17:32:30.141Z">
+<meta property="article:published_time" content="2025-01-24T17:13:28.000Z">
+<meta property="article:modified_time" content="2025-01-24T17:32:14.082Z">
 <meta property="article:author" content="Dufolk">
 <meta property="article:tag" content="技术">
-<meta property="article:tag" content="博客">
+<meta property="article:tag" content="内网穿透">
+<meta property="article:tag" content="frp">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>个人主页搭建备忘录 - 随机过程集</title>
+  <title>使用frp通过跳板机实现内网穿透备忘 - 随机过程集</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -231,7 +232,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">个人主页搭建备忘录</span>
+            <span id="subtitle">使用frp通过跳板机实现内网穿透备忘</span>
           
         </div>
 
@@ -242,8 +243,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-18 22:20" pubdate>
-          2024年12月18日 晚上
+        <time datetime="2025-01-25 01:13" pubdate>
+          2025年1月25日 凌晨
         </time>
       </span>
     
@@ -254,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          325 字
+          432 字
         
       </span>
     
@@ -265,7 +266,7 @@
         
         
         
-          4 分钟
+          5 分钟
         
       </span>
     
@@ -311,54 +312,37 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">个人主页搭建备忘录</h1>
+            <h1 id="seo-header">使用frp通过跳板机实现内网穿透备忘</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在这里记录一下主页的搭建过程，以免日后遗忘。</p>
+                <p>用很多次frp工具进行内网穿透了，在这里统一记录一下过程。尤其是在ubuntu下写入系统服务并开机自启并非我能独立写出的，我还是得把服务配置记录在此为妙。</p>
 <span id="more"></span>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">框架</th>
-<th style="text-align:center">Hexo</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">主题</td>
-<td style="text-align:center">Fluid</td>
-</tr>
-</tbody>
-</table>
-<p>搭建过程中主要存在<s>图片无法显示</s>、公式编译器等问题，下面主要记录公式编译器的安装。这里并没有使用hexo官方的<a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-math">hexo-math</a>插件，也许以后遇到问题会更换。目前使用的版本使fluid主题内置的公式渲染器，其支持katex的渲染。</p>
-<p>在这里，建议优先换源</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm config <span class="hljs-built_in">set</span> registry https://registry.npmmirror.com<br></code></pre></td></tr></table></figure>
-<div class="note note-success">
-            <blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm uninstall hexo-renderer-marked --save<br>npm install hexo-renderer-markdown-it-plus --save<br>npm install @traptitech/markdown-it-katex --save<br></code></pre></td></tr></table></figure><p>然后在<strong>站点配置</strong>中添加：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">markdown:</span><br>  <span class="hljs-attr">plugins:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;@traptitech/markdown-it-katex&quot;</span><br></code></pre></td></tr></table></figure></blockquote>
-          </div>
-<h4 id="Q1">Q1</h4>
-<p>长时间不操作，或者由于在drive里操作，会出现：</p>
-<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs subunit"><span class="hljs-keyword">ERROR </span>Cannot find module &#x27;hexo&#x27; from &#x27;xxx\xxx\xxx&#x27;<br><span class="hljs-keyword">ERROR </span>Local hexo loading failed in xxx\xxx\xxx<br><span class="hljs-keyword">ERROR </span>Try running: &#x27;rm -rf node_modules &amp;&amp; npm install --force&#x27;<br></code></pre></td></tr></table></figure>
-<p>这时候把它拷贝到本地再</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install --force<br></code></pre></td></tr></table></figure>
-<h4 id="Q2">Q2</h4>
-<p>出现<code>TypeError: Cannot read properties of undefined (reading 'enable_sync')</code></p>
-<p>删除 <code>your_path_to/Blog/node_modules/hexo-leancloud-counter-security</code>这个文件夹即可。</p>
-<h4 id="Q3">Q3</h4>
-<p>显示图片</p>
-<p>把config.yml中的内容做一些修改</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">post_asset_folder:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">marked:</span><br>  <span class="hljs-attr">prependRoot:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">postAsset:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-<p>然后可以通过这两种方式插入图片：</p>
-<p><code>![test](fig1.png)</code><br>
-<code>&lt;img src=&quot;/2024/12/18/buildhelp/fig1.png&quot;  alt=&quot;test&quot; width=&quot;500&quot;/&gt;</code></p>
-<p>如果依然无效记得检查是否<code>hexo clean</code>,另外在draft状态时似乎图片不会被部署，所以看不到也正常。</p>
-<!-- ：[hexo-renderer-marked](https://github.com/hexojs/hexo-renderer-marked)
+<h2 id="安装frp">安装frp</h2>
+<p>frp的安装非常简单，直接下载<a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">frp</a>的release版本，解压后即可使用。我最常用的是0.59.0版本，以下也均以该版本为例。<br>
+解压后应该得到一个文件夹，里面包含frps和frpc两个可执行文件，还有两个配置文件模板。</p>
+<h2 id="配置文件">配置文件</h2>
+<p>配置文件分别为frps.toml和frpc.toml，对应服务端和客户端。</p>
+<h3 id="服务端配置">服务端配置</h3>
+<p>暂无，等我服务器到期之后补全这一节</p>
+<h3 id="客户端配置">客户端配置</h3>
+<p>在frpc.toml中，配置文件的格式如下：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[common]</span><br><span class="hljs-attr">server_addr</span> = <span class="hljs-string">&quot;frp.example.com&quot;</span><br><span class="hljs-attr">server_port</span> = <span class="hljs-number">7000</span><br><span class="hljs-attr">token</span> = <span class="hljs-string">&quot;your_token&quot;</span><br><br><span class="hljs-section">[ssh]</span><br><span class="hljs-attr">type</span> = <span class="hljs-string">&quot;tcp&quot;</span><br><span class="hljs-attr">local_ip</span> = <span class="hljs-string">&quot;127.0.0.1&quot;</span><br><span class="hljs-attr">local_port</span> = <span class="hljs-number">22</span><br><span class="hljs-attr">remote_port</span> = <span class="hljs-number">6000</span><br></code></pre></td></tr></table></figure>
+<p>其中，server_addr是服务器的地址，server_port是服务器绑定的端口，token是连接服务器的令牌，用于验证客户端的身份。<br>
+下面可以自定义多个端口转发，不过不能重复。配置好之后，使用<code>./frpc -c ./frpc.toml</code>启动客户端。</p>
+<h2 id="配置系统服务">配置系统服务</h2>
+<h3 id="服务端服务配置">服务端服务配置</h3>
+<h3 id="客户端服务配置">客户端服务配置</h3>
+<p>为了实现开机自启，需要将frpc配置为系统服务。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo vim <span class="hljs-regexp">/etc/</span>systemd<span class="hljs-regexp">/system/</span>frpc.service<br></code></pre></td></tr></table></figure>
+<p>在frpc.service中，写入以下内容：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[Unit]</span><br><span class="hljs-attr">Description</span>=frpc<br><span class="hljs-attr">After</span>=network.target<br><span class="hljs-attr">Wants</span>=network.target<br> <br><span class="hljs-section">[Service]</span><br><span class="hljs-attr">Restart</span>=<span class="hljs-literal">on</span>-failure<br><span class="hljs-attr">RestartSec</span>=<span class="hljs-number">5</span>s<br><span class="hljs-attr">ExecStart</span>=/path/to/frpc -c /path/to/frpc.toml<br><br><span class="hljs-section">[Install]</span><br><span class="hljs-attr">WantedBy</span>=multi-user.target<br></code></pre></td></tr></table></figure>
+<p>配置好之后，使用以下命令启动服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl daemon-reload<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> frpc<br><span class="hljs-built_in">sudo</span> systemctl start frpc<br><span class="hljs-comment"># 查看状态</span><br><span class="hljs-built_in">sudo</span> systemctl status frpc<br></code></pre></td></tr></table></figure>
+<h2 id="常见问题">常见问题</h2>
+<p>注意开放服务器的防火墙端口！</p>
 
-```bash
-npm install hexo-renderer-marked --save
-``` -->
                 
               </div>
             
@@ -393,7 +377,9 @@ npm install hexo-renderer-marked --save
       
         <a href="/tags/%E6%8A%80%E6%9C%AF/" class="print-no-link">#技术</a>
       
-        <a href="/tags/%E5%8D%9A%E5%AE%A2/" class="print-no-link">#博客</a>
+        <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" class="print-no-link">#内网穿透</a>
+      
+        <a href="/tags/frp/" class="print-no-link">#frp</a>
       
     </div>
   
@@ -405,8 +391,8 @@ npm install hexo-renderer-marked --save
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>个人主页搭建备忘录</div>
-      <div>http://dufolk.github.io/2024/12/18/buildhelp/</div>
+      <div>使用frp通过跳板机实现内网穿透备忘</div>
+      <div>http://dufolk.github.io/2025/01/25/frp/</div>
     </div>
     <div class="license-meta">
       
@@ -418,7 +404,7 @@ npm install hexo-renderer-marked --save
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月18日</div>
+          <div>2025年1月25日</div>
         </div>
       
       
@@ -450,18 +436,12 @@ npm install hexo-renderer-marked --save
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/19/snake-0/" title="基于强化学习的贪吃蛇游戏(一)——强化学习基础">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">基于强化学习的贪吃蛇游戏(一)——强化学习基础</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/11/29/linprog/" title="使用线性规划求解Minimax问题">
-                        <span class="hidden-mobile">使用线性规划求解Minimax问题</span>
+                      <a href="/2025/01/24/bye2024/" title="呼啸而过的2024年">
+                        <span class="hidden-mobile">呼啸而过的2024年</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
