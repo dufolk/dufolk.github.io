@@ -27,7 +27,7 @@
 <meta property="og:description" content="记录第一次面试">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-03-07T16:49:54.000Z">
-<meta property="article:modified_time" content="2025-03-07T17:55:01.602Z">
+<meta property="article:modified_time" content="2025-03-09T15:21:16.034Z">
 <meta property="article:author" content="Dufolk">
 <meta property="article:tag" content="理论学习">
 <meta property="article:tag" content="面经">
@@ -256,7 +256,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.3k 字
+          5k 字
         
       </span>
     
@@ -267,7 +267,7 @@
         
         
         
-          37 分钟
+          56 分钟
         
       </span>
     
@@ -387,8 +387,7 @@ PPO也使用熵正则化，但作为辅助机制而非核心组件。在PPO的�
 </ul>
 <p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo>≈</mo><mi>L</mi><mo stretchy="false">(</mo><msub><mi>θ</mi><mrow><mi>o</mi><mi>l</mi><mi>d</mi></mrow></msub><mo stretchy="false">)</mo><mo>+</mo><msub><mi mathvariant="normal">∇</mi><mi>θ</mi></msub><mi>L</mi><mo stretchy="false">(</mo><msub><mi>θ</mi><mrow><mi>o</mi><mi>l</mi><mi>d</mi></mrow></msub><msup><mo stretchy="false">)</mo><mi>T</mi></msup><mo stretchy="false">(</mo><mi>θ</mi><mo>−</mo><msub><mi>θ</mi><mrow><mi>o</mi><mi>l</mi><mi>d</mi></mrow></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">L(\theta) \approx L(\theta_{old}) + \nabla_\theta L(\theta_{old})^T(\theta - \theta_{old})
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">L</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">L</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.1413em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord">∇</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">L</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
-<pre><code class="hljs">- 对KL约束进行二阶近似：
-</code></pre>
+<p>对KL约束进行二阶近似：</p>
 <p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>D</mi><mrow><mi>K</mi><mi>L</mi></mrow></msub><mo stretchy="false">(</mo><msub><mi>π</mi><msub><mi>θ</mi><mrow><mi>o</mi><mi>l</mi><mi>d</mi></mrow></msub></msub><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><msub><mi>π</mi><mi>θ</mi></msub><mo stretchy="false">)</mo><mo>≈</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo stretchy="false">(</mo><mi>θ</mi><mo>−</mo><msub><mi>θ</mi><mrow><mi>o</mi><mi>l</mi><mi>d</mi></mrow></msub><msup><mo stretchy="false">)</mo><mi>T</mi></msup><mi>H</mi><mo stretchy="false">(</mo><mi>θ</mi><mo>−</mo><msub><mi>θ</mi><mrow><mi>o</mi><mi>l</mi><mi>d</mi></mrow></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">D_{KL}(\pi_{\theta_{old}} || \pi_\theta) \approx \frac{1}{2}(\theta - \theta_{old})^T H (\theta - \theta_{old})
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0059em;vertical-align:-0.2559em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">K</span><span class="mord mathnormal mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3488em;margin-left:-0.0278em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2559em;"><span></span></span></span></span></span></span><span class="mord">∣∣</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.1413em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></p>
 <p>其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi></mrow><annotation encoding="application/x-tex">H</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span></span></span></span>是KL散度关于<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span></span></span></span>的Hessian矩阵。最终通过共轭梯度和线搜索方法求解这个近似问题。<br>
@@ -423,18 +422,95 @@ TRPO的核心创新在于，它不仅指出了策略梯度中可能的不稳定�
 <div class="note note-info">
             <p>Q：RNN和Transformer的区别<br>A：RNN由于把输入序列化，导致越往后越会忘记前文。而Transformer从全局计算注意力矩阵，很好的考虑到了上下文信息。为了解决位置的独特影响，Transformer加入了位置编码。</p>
           </div>
+<p>分析：</p>
+<ol>
+<li>
+<p><strong>序列处理方式</strong>：</p>
+<ul>
+<li><strong>RNN</strong>：采用循环结构，按时间步顺序处理输入，当前时刻状态依赖于前一时刻状态。基本公式：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>h</mi><mi>t</mi></msub><mo>=</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>W</mi><mi>h</mi></msub><msub><mi>h</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><msub><mi>W</mi><mi>x</mi></msub><msub><mi>x</mi><mi>t</mi></msub><mo>+</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h_t = f(W_h h_{t-1} + W_x x_t + b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">h</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span></span></span></span></li>
+<li><strong>Transformer</strong>：基于自注意力机制，同时处理整个序列，每个位置直接与所有位置交互。核心公式：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Attention</mtext><mo stretchy="false">(</mo><mi>Q</mi><mo separator="true">,</mo><mi>K</mi><mo separator="true">,</mo><mi>V</mi><mo stretchy="false">)</mo><mo>=</mo><mtext>softmax</mtext><mo stretchy="false">(</mo><mfrac><mrow><mi>Q</mi><msup><mi>K</mi><mi>T</mi></msup></mrow><msqrt><msub><mi>d</mi><mi>k</mi></msub></msqrt></mfrac><mo stretchy="false">)</mo><mi>V</mi></mrow><annotation encoding="application/x-tex">\text{Attention}(Q, K, V) = \text{softmax}(\frac{QK^T}{\sqrt{d_k}})V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Attention</span></span><span class="mopen">(</span><span class="mord mathnormal">Q</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.6275em;vertical-align:-0.538em;"></span><span class="mord text"><span class="mord">softmax</span></span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0895em;"><span style="top:-2.5864em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord sqrt mtight"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8622em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mtight" style="padding-left:0.833em;"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3488em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1512em;"><span></span></span></span></span></span></span></span></span><span style="top:-2.8222em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail mtight" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1778em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4461em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">Q</span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9191em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.538em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span></li>
+</ul>
+</li>
+<li>
+<p><strong>长程依赖</strong>：</p>
+<ul>
+<li><strong>RNN</strong>：存在长期依赖问题 - 信息在序列传递过程中会逐渐衰减（梯度消失）或爆炸。LSTM/GRU等变体通过门控机制缓解但未完全解决此问题。</li>
+<li><strong>Transformer</strong>：通过自注意力机制建立任意距离位置间的直接连接，序列长度不影响信息传递距离，理论上能捕获无限长的依赖关系。</li>
+</ul>
+</li>
+<li>
+<p><strong>计算并行性</strong>：</p>
+<ul>
+<li><strong>RNN</strong>：本质上是顺序计算，第t步必须等待第t-1步完成，无法并行。</li>
+<li><strong>Transformer</strong>：所有位置的计算可完全并行化，极大提高训练和推理速度，特别适合现代GPU/TPU加速。</li>
+</ul>
+</li>
+<li>
+<p><strong>位置信息</strong>：</p>
+<ul>
+<li><strong>RNN</strong>：位置信息隐式编码在序列处理顺序中。</li>
+<li><strong>Transformer</strong>：需要显式添加位置编码（如正弦/余弦位置编码或可学习位置嵌入），否则模型无法区分不同位置的token。</li>
+</ul>
+</li>
+</ol>
 <div class="note note-info">
-            <p>Q：在一个POMDP中，如果相对观测进行全局信息的估计，你会使用LSTM还是Transformer？<br>A：其实我更倾向于LSTM，因为在RL问题中，往往越近的观测更具有可信度，那么遗忘就不是一件坏事了。这也就是为什么我们需要折扣因子的原因。</p>
+            <p>Q：在一个POMDP中，如果需要使用局部观测观测进行全局信息的估计，你会使用LSTM还是Transformer？<br>A：其实我更倾向于LSTM，因为在RL问题中，往往越近的观测更具有可信度，那么遗忘就不是一件坏事了。这也就是为什么我们需要折扣因子的原因。</p>
           </div>
+<p>分析：</p>
+<ol>
+<li>LSTM对序列数据有天然的处理能力，特别适合POMDP中需要从历史观测推断当前状态的场景</li>
+<li>计算效率方面，LSTM处理增量观测很高效，不需要每次都重新计算整个历史的注意力，这在实时决策环境中很重要</li>
+<li>LSTM的门控机制能够学习什么信息该记住、什么该忘记，这对处理有噪声的观测很有用</li>
+<li>在RL环境中，LSTM产生的状态表示通常比较稳定，这对策略学习有好处</li>
+</ol>
+<p>Transformer的优势：</p>
+<ol>
+<li>如果历史观测中有关键信息，但出现顺序不规则，Transformer的全局注意力机制可能表现更好</li>
+<li>对于超长序列依赖的环境，理论上Transformer不会像LSTM那样受到梯度消失的限制</li>
+<li>训练速度上，Transformer的并行计算有优势</li>
+</ol>
 <div class="note note-info">
-            <p>Q：RNN的主要问题以及后续GRE和LSTM如何解决<br>A：RNN主要问题就是长程依赖性问题，GRE和LSTM通过加入门控机制来解决，但这一块原理我有些淡忘了。</p>
+            <p>Q：RNN的主要问题以及后续GRU和LSTM如何解决<br>A：RNN主要问题就是长程依赖性问题，GRU和LSTM通过加入门控机制来解决，但这一块原理我有些淡忘了。</p>
           </div>
+<p>分析：这里确实忘了，毕竟没有经常使用RNN，基本不记得了。<br>
+首先，RNN的核心问题有两个方面：</p>
+<ol>
+<li>梯度消失问题：在反向传播时，梯度会沿着时间步骤连乘，由于权重通常小于1，连乘后梯度会接近于0，导致远距离的信息几乎无法影响当前输出。这就是为什么vanilla RNN很难学习长距离依赖关系。</li>
+<li>梯度爆炸问题：相反，如果权重大于1，梯度会随着时间步呈指数增长，导致训练不稳定。虽然梯度裁剪可以部分缓解这个问题，但并不能从根本上解决。<br>
+针对这些问题，LSTM和GRU提出了不同的门控机制：<br>
+LSTM引入了三个门：</li>
+</ol>
+<ul>
+<li>遗忘门：决定丢弃多少上一状态的信息</li>
+<li>输入门：决定更新多少新信息到细胞状态</li>
+<li>输出门：决定输出多少细胞状态的信息</li>
+</ul>
+<p>这种设计的核心创新是细胞状态（cell state）通道，它可以不受门控直接传递信息，避免了反向传播中的连乘效应，从而解决梯度消失问题。<br>
+GRU则是LSTM的简化版本，它只使用两个门：</p>
+<ul>
+<li>更新门：相当于LSTM的输入门和遗忘门的组合</li>
+<li>重置门：控制使用多少前一状态的信息</li>
+</ul>
+<p>GRU计算更高效，参数更少，在很多任务上表现与LSTM相当，特别是在数据量较小时可能更不容易过拟合。<br>
+这些门控机制的本质是让网络学会选择性地记住有用信息、遗忘无关信息，从而能够捕获长距离依赖。以语言模型为例，如果序列开头出现&quot;我来自中国&quot;，即使在很多词之后，当需要用代词时，网络依然能&quot;记得&quot;说话者是&quot;我&quot;而非&quot;他&quot;。</p>
 <h2 id="现场编程环节">现场编程环节</h2>
 <ol>
-<li><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/edit-distance/description/">编辑距离</a></li>
+<li><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/edit-distance/description/">编辑距离</a><br>
+分析：经典的DP题，在这里再过一遍。<br>
+给你两个单词 word1 和 word2， 请返回将 word1 转换成 word2 所使用的最少操作数。<br>
+你可以对一个单词进行如下三种操作：</li>
 </ol>
-<p>给你两个单词 word1 和 word2， 请返回将 word1 转换成 word2 所使用的最少操作数。<br>
-你可以对一个单词进行如下三种操作：</p>
 <ul>
 <li>插入一个字符</li>
 <li>删除一个字符</li>
@@ -442,14 +518,36 @@ TRPO的核心创新在于，它不仅指出了策略梯度中可能的不稳定�
 </ul>
 <figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xl">示例 <span class="hljs-number">1</span>：<br>输入：word1 = <span class="hljs-string">&quot;horse&quot;</span>, word2 = <span class="hljs-string">&quot;ros&quot;</span><br>输出：<span class="hljs-number">3</span><br>解释：<br><span class="hljs-function"><span class="hljs-title">horse</span> -&gt;</span> rorse (将 <span class="hljs-string">&#x27;h&#x27;</span> 替换为 <span class="hljs-string">&#x27;r&#x27;</span>)<br><span class="hljs-function"><span class="hljs-title">rorse</span> -&gt;</span> rose (删除 <span class="hljs-string">&#x27;r&#x27;</span>)<br><span class="hljs-function"><span class="hljs-title">rose</span> -&gt;</span> ros (删除 <span class="hljs-string">&#x27;e&#x27;</span>)<br></code></pre></td></tr></table></figure>
 <figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xl">示例 <span class="hljs-number">2</span>：<br>输入：word1 = <span class="hljs-string">&quot;intention&quot;</span>, word2 = <span class="hljs-string">&quot;execution&quot;</span><br>输出：<span class="hljs-number">5</span><br>解释：<br><span class="hljs-function"><span class="hljs-title">intention</span> -&gt;</span> inention (删除 <span class="hljs-string">&#x27;t&#x27;</span>)<br><span class="hljs-function"><span class="hljs-title">inention</span> -&gt;</span> enention (将 <span class="hljs-string">&#x27;i&#x27;</span> 替换为 <span class="hljs-string">&#x27;e&#x27;</span>)<br><span class="hljs-function"><span class="hljs-title">enention</span> -&gt;</span> exention (将 <span class="hljs-string">&#x27;n&#x27;</span> 替换为 <span class="hljs-string">&#x27;x&#x27;</span>)<br><span class="hljs-function"><span class="hljs-title">exention</span> -&gt;</span> exection (将 <span class="hljs-string">&#x27;n&#x27;</span> 替换为 <span class="hljs-string">&#x27;c&#x27;</span>)<br><span class="hljs-function"><span class="hljs-title">exection</span> -&gt;</span> execution (插入 <span class="hljs-string">&#x27;u&#x27;</span>)<br></code></pre></td></tr></table></figure>
-<p>分析：<br>
-2. <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-islands/description/">岛屿数量</a></p>
+<p>重点就是dp如何设计，这里直接使用二维dp。dp的size为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>×</mo><mo stretchy="false">(</mo><mi>m</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(n+1)\times (m+1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>，<code>dp[i][j]</code>为word1的前<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span>个单词与word2的前<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span>个单词的最小编辑距离。这样就成功构造了规模更小的子问题。<br>
+考虑dp的状态转移方程：</p>
+<ul>
+<li>如果<code>word1[i] == word2[j]</code>
+<ul>
+<li>此时这两个词的末尾字母相同，无需修改。那么最小编辑距离就等于去掉这个末尾字母的最小编辑距离<code>dp[i-1][j-1]</code></li>
+</ul>
+</li>
+<li>如果<code>word1[i] != word2[j]</code>，这时两个词的末尾不同：
+<ul>
+<li>如果使用插入操作，即出现<code>'ros'</code>和<code>'love'</code>的情况，通过插入<code>'e'</code>来使<code>'ros'</code>变成<code>'rose'</code>以使末尾位相同，那么最小编辑距离就是<code>dp[i][j-1]</code>，即<code>'ros'</code>和<code>'lov'</code>的最小编辑距离加1。</li>
+<li>如果使用删除操作，即出现<code>'love'</code>和<code>'dev'</code>的情况，通过删除<code>'e'</code>来使<code>'love'</code>变成<code>'lov'</code>以使末尾位相同，那么最小编辑距离就是<code>dp[i-1][j]</code>，即<code>'lov'</code>和<code>'dev'</code>的最小编辑距离加1。</li>
+<li>如果使用替换操作，即出现<code>'love'</code>和<code>'bash'</code>的情况，通过替换<code>'e'</code>来使<code>'love'</code>变成<code>'lovh'</code>以使末尾位相同，那么最小编辑距离就是<code>dp[i-1][j-1]</code>，即<code>'lov'</code>和<code>'bas'</code>的最小编辑距离加1。</li>
+<li>即：<code>dp[i][j] = min(dp[i][j-1], dp[i-1][j], dp[i-1][j-1]) + 1</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs [python3]">n, m = len(word1), len(word2)<br>dp = [[0 for i in range(m+1)] for j in range(n+1)]<br>for i in range(n+1):<br>   dp[i][0] = i<br><br>for i in range(m+1):<br>   dp[0][i] = i<br><br>for i in range(1, n+1):<br>   for j in range(1, m+1):<br>         if word1[i-1] == word2[j-1]:<br>            dp[i][j] = dp[i-1][j-1]<br>         else:<br>            dp[i][j] = min(dp[i][j-1], dp[i-1][j], dp[i-1][j-1]) + 1<br><br>dp[-1][-1]<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-islands/description/">岛屿数量</a></li>
+</ol>
 <p>给你一个由 ‘1’（陆地）和 ‘0’（水）组成的的二维网格，请你计算网格中岛屿的数量。<br>
 岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。<br>
 此外，你可以假设该网格的四条边均被水包围。</p>
 <figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs prolog">示例 <span class="hljs-number">1</span>：<br>输入：grid = [<br>  [<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>],<br>  [<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>],<br>  [<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>],<br>  [<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>]<br>]<br>输出：<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 <figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs prolog">示例 <span class="hljs-number">2</span>：<br>输入：grid = [<br>  [<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>],<br>  [<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>],<br>  [<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>],<br>  [<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>]<br>]<br>输出：<span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
-<p>分析：</p>
+<p>分析：我们可以将二维网格看成一个无向图，竖直或水平相邻的 1 之间有边相连。<br>
+为了求出岛屿的数量，我们可以扫描整个二维网格。如果一个位置为 1，则以其为起始节点开始进行深度优先搜索。在深度优先搜索的过程中，每个搜索到的 1 都会被重新标记为 0。<br>
+最终岛屿的数量就是我们进行深度优先搜索的次数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs [python3]">m,n = len(grid), len(grid[0])<br>if m == 0:<br>   return 0<br>ans = 0<br>def dfs(i,j):<br>   grid[i][j] = &#x27;0&#x27;<br>   for x, y in [(i+1,j),(i-1,j),(i,j+1),(i,j-1)]:<br>         if 0&lt;=x&lt;m and 0&lt;=y&lt;n and grid[x][y] == &#x27;1&#x27;:<br>            dfs(x,y)<br>for i in range(m):<br>   for j in range(n):<br>         if grid[i][j] == &#x27;1&#x27;:<br>            ans += 1<br>            dfs(i,j)<br>ans<br></code></pre></td></tr></table></figure>
 <ol start="3">
 <li>Transformer的self-attention计算怎么写</li>
 </ol>
@@ -478,6 +576,27 @@ A：（没问什么，就问了工作内容）</p>
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B1%82%E8%81%8C%E4%B9%8B%E8%B7%AF/" class="category-chain-item">求职之路</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
     <div class="post-meta">
@@ -541,6 +660,12 @@ A：（没问什么，就问了工作内容）</p>
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2025/03/12/rl-11/" title="强化学习基础巩固（十）——SAC">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">强化学习基础巩固（十）——SAC</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
