@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://dufolk.github.io/2025/05/15/COMAE/as.png">
 <meta property="og:image" content="http://dufolk.github.io/2025/05/15/COMAE/456.png">
 <meta property="article:published_time" content="2025-05-15T06:15:57.000Z">
-<meta property="article:modified_time" content="2025-05-15T06:38:28.721Z">
+<meta property="article:modified_time" content="2025-05-15T06:41:04.472Z">
 <meta property="article:author" content="Dufolk">
 <meta property="article:tag" content="强化学习">
 <meta property="article:tag" content="多智能体">
@@ -261,7 +261,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          1.5k 字
         
       </span>
     
@@ -272,7 +272,7 @@
         
         
         
-          18 分钟
+          17 分钟
         
       </span>
     
@@ -343,8 +343,7 @@
 <h3 id="1-协作导向观察（COO）">1. 协作导向观察（COO）</h3>
 <p>要让智能体协作，首先得让它们“看得更清楚”。COO通过构建协作导向的节点特征和交互图，帮助智能体理解彼此的关系和环境的全貌。</p>
 <p>具体来说，我们将环境抽象为一个连接图 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>G</mi><mi>c</mi></msub><mo>=</mo><mo stretchy="false">{</mo><mi>V</mi><mo separator="true">,</mo><msub><mi>E</mi><mi>c</mi></msub><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">G_c = \{V, E_c\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">}</span></span></span></span>，其中节点 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span> 在自由区域均匀采样，并连接到最近的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> 个邻居（无碰撞时）。在此基础上，COO引入了手动特征和交互图，捕捉智能体间的动态信息。这种设计让每个智能体不仅知道自己在哪里，还能感知队友的位置和行动意图。</p>
-<p><img src="coo.png" srcset="/img/loading.gif" lazyload alt="COO结构"><br>
-<em>图1: COO的结构示意图，展示连接图和交互图如何增强协作观察</em></p>
+<p><img src="coo.png" srcset="/img/loading.gif" lazyload alt="图1: COO的结构示意图，展示连接图和交互图如何增强协作观察"></p>
 <h3 id="2-基于注意力的序列网络（ASN）">2. 基于注意力的序列网络（ASN）</h3>
 <p>有了清晰的观察，下一步是让智能体做出聪明决策。ASN利用注意力机制，聚焦于环境和队友的关键信息，并通过序列决策解码器生成战略性动作。</p>
 <p>ASN包含编码器和解码器两部分：</p>
@@ -353,8 +352,7 @@
 <li><strong>解码器</strong>：结合其他智能体的动作，输出每个智能体的下一步移动概率。</li>
 </ul>
 <p>这种序列决策机制避免了同步决策中的不确定性。例如，当一个智能体决定向左移动时，其他智能体可以参考这一动作，选择不同的方向，从而减少重叠。</p>
-<p><img src="asn.png" srcset="/img/loading.gif" lazyload alt="ASN框架"><br>
-<em>图2: ASN架构示意图，注意力机制如何优化协作决策</em></p>
+<p><img src="asn.png" srcset="/img/loading.gif" lazyload alt="图2: ASN架构示意图，注意力机制如何优化协作决策"></p>
 <h3 id="3-协作探索奖励（CER）">3. 协作探索奖励（CER）</h3>
 <p>光靠观察和决策还不够，我们需要激励智能体协作。CER通过奖励函数 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="script">R</mi></mrow><annotation encoding="application/x-tex">\mathcal{R}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathcal">R</span></span></span></span> 鼓励智能体分散探索，避免扎堆。奖励包括四部分：</p>
 <ul>
@@ -364,8 +362,7 @@
 <li><strong>完成奖励 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">r_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span></strong>：在任务完成时给予固定奖励。</li>
 </ul>
 <p>例如，如果两个智能体同时靠近同一前沿，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">r_c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 会施加惩罚，促使它们分头行动。这种机制显著降低了探索重叠率。</p>
-<p><img src="cer.png" srcset="/img/loading.gif" lazyload alt="CER例"><br>
-<em>图3: CER中重叠探索区域的惩罚示意图</em></p>
+<p><img src="cer.png" srcset="/img/loading.gif" lazyload alt="图3: CER中重叠探索区域的惩罚示意图"></p>
 <h2 id="实验验证">实验验证</h2>
 <p>我们在一系列模拟和真实环境中测试了COMAE，并与主流方法进行了对比。以下是关键实验结果。</p>
 <h3 id="实验设置">实验设置</h3>
@@ -376,12 +373,10 @@
 </ul>
 <h3 id="消融研究">消融研究</h3>
 <p>我们通过消融实验验证了COO、ASN和CER的贡献。</p>
-<p><img src="as.png" srcset="/img/loading.gif" lazyload alt="消融实验"><br>
-<em>图4: 消融研究结果，展示各组件对性能的提升</em></p>
+<p><img src="as.png" srcset="/img/loading.gif" lazyload alt="图4: 消融研究结果，展示各组件对性能的提升"></p>
 <h3 id="鲁棒性测试">鲁棒性测试</h3>
 <p>我们测试了COMAE在不同智能体数量（2至6个）下的表现。结果显示，COMAE能适应多种配置，保持高效。例如，在6个智能体时，任务完成时间虽因场地限制不再显著缩短，但重叠率始终较低。</p>
-<p><img src="456.png" srcset="/img/loading.gif" lazyload alt="鲁棒性测试"><br>
-<em>图5: 不同智能体数量下的探索轨迹</em></p>
+<p><img src="456.png" srcset="/img/loading.gif" lazyload alt="图5: 不同智能体数量下的探索轨迹"></p>
 <h2 id="结论">结论</h2>
 <p>COMAE通过协作导向观察、注意力序列网络和协作奖励，解决了多智能体探索中的冗余问题。实验证明，它不仅缩短了探索距离，还大幅降低了重叠率，展现了强大的实用潜力。</p>
 <p>未来，我们计划将COMAE应用于更复杂场景，如动态环境或异构智能体系统，进一步挖掘其在现实任务中的价值。</p>
