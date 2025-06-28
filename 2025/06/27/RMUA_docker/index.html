@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://dufolk.github.io/img/common/docker.png">
 <meta property="article:published_time" content="2025-06-26T17:13:28.000Z">
-<meta property="article:modified_time" content="2025-06-28T08:41:51.609Z">
+<meta property="article:modified_time" content="2025-06-28T08:43:48.023Z">
 <meta property="article:author" content="Dufolk">
 <meta property="article:tag" content="技术">
 <meta property="article:tag" content="容器技术">
@@ -327,8 +327,8 @@
 完成fork后，笔者创建了RMUA4Docker仓库，用于打包RMUA仓库及其他依赖环境。这里可以很方便的使用 git 中的 submodule 管理子模块，目前我们只需要Roborts-base和RMUA这两个仓库作为子模块。</p>
 
     <div class="fold">
-      <div class="fold-title fold-info 什么是 Git Submodule？ collapsed" data-toggle="collapse" href="#collapse-311bfa33" role="button" aria-expanded="false" aria-controls="collapse-311bfa33">
-        <div class="fold-arrow">▶</div>
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-311bfa33" role="button" aria-expanded="false" aria-controls="collapse-311bfa33">
+        <div class="fold-arrow">▶</div>什么是 Git Submodule？
       </div>
       <div class="fold-collapse collapse" id="collapse-311bfa33">
         <div class="fold-content">
@@ -355,8 +355,8 @@
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs Dockerfile"><span class="hljs-comment"># 基础镜像</span><br><span class="hljs-keyword">ARG</span> BASE_IMAGE=ros:noetic-ros-base-focal <br><span class="hljs-keyword">FROM</span> $&#123;BASE_IMAGE&#125;<br><span class="hljs-comment"># 安装ROS依赖</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y --no-install-recommends \</span><br><span class="language-bash">    ros-<span class="hljs-variable">$&#123;ROS_DISTRO&#125;</span>-tf ros-<span class="hljs-variable">$&#123;ROS_DISTRO&#125;</span>-nav-msgs ros-<span class="hljs-variable">$&#123;ROS_DISTRO&#125;</span>-geometry-msgs ros-<span class="hljs-variable">$&#123;ROS_DISTRO&#125;</span>-rplidar-ros libgoogle-glog-dev python3-pip \</span><br><span class="language-bash">    &amp;&amp; <span class="hljs-built_in">rm</span> -rf /var/lib/apt/lists/*</span><br><span class="hljs-comment"># 拷贝roborts工作空间和RMUA工作空间</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> ./RMUA /root/RMUA</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> ./roborts /root/roborts</span><br><br><span class="hljs-comment"># 编译roborts</span><br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /root/roborts</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> /bin/bash -c <span class="hljs-string">&quot;source /opt/ros/<span class="hljs-variable">$&#123;ROS_DISTRO&#125;</span>/setup.bash &amp;&amp; catkin_make&quot;</span></span><br><br><span class="hljs-comment"># 编译RMUA</span><br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /root/RMUA/src</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> /bin/bash -c <span class="hljs-string">&quot;source /root/roborts/devel/setup.bash &amp;&amp; \</span></span><br><span class="hljs-string"><span class="language-bash">    catkin_init_workspace &amp;&amp; \</span></span><br><span class="hljs-string"><span class="language-bash">    cd vision &amp;&amp; \</span></span><br><span class="hljs-string"><span class="language-bash">    pip install -r requirements.txt &amp;&amp; \</span></span><br><span class="hljs-string"><span class="language-bash">    cd ../.. &amp;&amp; \</span></span><br><span class="hljs-string"><span class="language-bash">    catkin_make --only-pkg-with-deps sentry&quot;</span></span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="hljs-string">&quot;decision;navigation;vision&quot;</span></span><br><br><span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">&quot;bash&quot;</span>]</span><br><br></code></pre></td></tr></table></figure>
 
     <div class="fold">
-      <div class="fold-title fold-info 什么是 Dockerfile？ collapsed" data-toggle="collapse" href="#collapse-50944602" role="button" aria-expanded="false" aria-controls="collapse-50944602">
-        <div class="fold-arrow">▶</div>
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-50944602" role="button" aria-expanded="false" aria-controls="collapse-50944602">
+        <div class="fold-arrow">▶</div>什么是 Dockerfile？
       </div>
       <div class="fold-collapse collapse" id="collapse-50944602">
         <div class="fold-content">
