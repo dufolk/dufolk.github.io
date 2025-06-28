@@ -19,12 +19,12 @@
   <meta name="author" content="Dufolk">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 客户端生成公私钥 本地客户端生成公私钥（一路回车默认即可）： 1ssh-keygen 该命令会在用户目录的.ssh文件夹下创建公私钥： 12cd ~&#x2F;.sshls 将看到两个密钥文件：  id_rsa（私钥） id_rsa.pub（公钥）  2. 上传公钥到服务器 这里假设：  服务器地址：192.168.235.22 用户名：root  执行命令上传公钥： 1ssh-copy-id -i">
+    <meta name="description" content="1. 客户端生成公私钥 本地客户端生成公私钥（一路回车默认即可）： 1ssh-keygen 该命令会在用户目录的.ssh文件夹下创建公私钥： 12cd ~&#x2F;.sshls 将看到两个密钥文件：  id_rsa（私钥） id_rsa.pub（公钥）   2. 上传公钥到服务器 这里假设：  服务器地址：192.168.235.22 用户名：root  执行命令上传公钥： 1ssh-copy-id">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SSH免密登录三步走">
 <meta property="og:url" content="http://dufolk.github.io/2025/06/16/ssh/index.html">
 <meta property="og:site_name" content="随机过程集">
-<meta property="og:description" content="1. 客户端生成公私钥 本地客户端生成公私钥（一路回车默认即可）： 1ssh-keygen 该命令会在用户目录的.ssh文件夹下创建公私钥： 12cd ~&#x2F;.sshls 将看到两个密钥文件：  id_rsa（私钥） id_rsa.pub（公钥）  2. 上传公钥到服务器 这里假设：  服务器地址：192.168.235.22 用户名：root  执行命令上传公钥： 1ssh-copy-id -i">
+<meta property="og:description" content="1. 客户端生成公私钥 本地客户端生成公私钥（一路回车默认即可）： 1ssh-keygen 该命令会在用户目录的.ssh文件夹下创建公私钥： 12cd ~&#x2F;.sshls 将看到两个密钥文件：  id_rsa（私钥） id_rsa.pub（公钥）   2. 上传公钥到服务器 这里假设：  服务器地址：192.168.235.22 用户名：root  执行命令上传公钥： 1ssh-copy-id">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-06-16T02:17:28.000Z">
 <meta property="article:modified_time" content="2025-06-16T02:33:23.000Z">
@@ -318,7 +318,7 @@
               <div class="markdown-body">
                 
                 <span id="more"></span>
-<h2 id="1-客户端生成公私钥">1. 客户端生成公私钥</h2>
+<h2 id="1-客户端生成公私钥"><a class="markdownIt-Anchor" href="#1-客户端生成公私钥"></a> 1. 客户端生成公私钥</h2>
 <p>本地客户端生成公私钥（一路回车默认即可）：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh-keygen<br></code></pre></td></tr></table></figure>
 <p>该命令会在用户目录的<code>.ssh</code>文件夹下创建公私钥：</p>
@@ -328,7 +328,7 @@
 <li><code>id_rsa</code>（私钥）</li>
 <li><code>id_rsa.pub</code>（公钥）</li>
 </ul>
-<h2 id="2-上传公钥到服务器">2. 上传公钥到服务器</h2>
+<h2 id="2-上传公钥到服务器"><a class="markdownIt-Anchor" href="#2-上传公钥到服务器"></a> 2. 上传公钥到服务器</h2>
 <p>这里假设：</p>
 <ul>
 <li>服务器地址：<code>192.168.235.22</code></li>
@@ -339,7 +339,7 @@
 <p>登录服务器验证公钥已写入：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh root@192.168.235.22<br><span class="hljs-built_in">cd</span> ~/.ssh<br><span class="hljs-built_in">cat</span> authorized_keys<br></code></pre></td></tr></table></figure>
 <p>可以看到客户端公钥<code>id_rsa.pub</code>的内容。</p>
-<h2 id="3-测试免密登录">3. 测试免密登录</h2>
+<h2 id="3-测试免密登录"><a class="markdownIt-Anchor" href="#3-测试免密登录"></a> 3. 测试免密登录</h2>
 <p>客户端直接连接远程服务器（无需密码）：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh root@192.168.235.22<br></code></pre></td></tr></table></figure>
                 

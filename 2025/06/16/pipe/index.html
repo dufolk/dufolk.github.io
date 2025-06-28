@@ -27,7 +27,7 @@
 <meta property="og:description" content="工作中经常用到管道技术，这里整体做一个学习和摘要，转载了此博客">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-06-16T02:32:21.000Z">
-<meta property="article:modified_time" content="2025-06-16T02:33:37.000Z">
+<meta property="article:modified_time" content="2025-06-27T05:22:15.000Z">
 <meta property="article:author" content="Dufolk">
 <meta property="article:tag" content="技术">
 <meta property="article:tag" content="Linux">
@@ -319,7 +319,7 @@
                 
                 <p>工作中经常用到管道技术，这里整体做一个学习和摘要，转载了<a target="_blank" rel="noopener" href="https://www.cnblogs.com/orion-orion/p/17328082.html">此博客</a></p>
 <span id="more"></span>
-<h2 id="1-管道命令-pipe-介绍">1 管道命令(pipe)介绍</h2>
+<h2 id="1-管道命令pipe介绍"><a class="markdownIt-Anchor" href="#1-管道命令pipe介绍"></a> 1 管道命令(pipe)介绍</h2>
 <p>众所周知，bash命令执行的时候会输出信息，但有时这些信息必须要经过几次处理之后才能得到我们想要的格式，此时应该如何处置？这就牵涉到**管道命令(pipe)**了。管道命令使用的是 <code>|</code> 这个界定符号。另外，管道命令与连续执行命令是不一样的，这点下面我们会说明。</p>
 <p>我们先来看一个管道命令的例子。假设我们需要看 <code>/etc</code> 目录下有多少文件，那么可以利用 <code>ls /etc</code> 来查看，不过由于文件数量太多，导致一口气就将屏幕塞满了，而不知道前面输出的内容是啥：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ <span class="hljs-built_in">ls</span> -al /etc<br>total 944<br>drwxr-xr-x  1 root root   4096 Feb 19 11:38 .<br>drwxr-xr-x  1 root root   4096 Nov 23  2021 ..<br>drwxr-xr-x  3 root root   4096 Jun  5  2021 .java<br>...<br>drwxr-xr-x  2 root root   4096 Jul 24  2018 xfce4<br></code></pre></td></tr></table></figure>
@@ -336,7 +336,7 @@
 </ol>
 <p>如果我们强行让标准错误为管道命令所用，那么可以使用 <code>2&gt;&amp;1</code> 将标准错误 <code>2&gt;</code> 重定向到标准输出 <code>1&gt;</code>。</p>
 <p>接下来我们选取 <code>grep</code>、<code>sed</code>、<code>awk</code> 这三个用于文本处理的管道命令来进行介绍。这三个命令可谓是Linux下操作文本的三大利器，合称 <strong>Linux文本处理三剑客</strong>。</p>
-<h2 id="2-行选取命令-grep">2 行选取命令 grep</h2>
+<h2 id="2-行选取命令-grep"><a class="markdownIt-Anchor" href="#2-行选取命令-grep"></a> 2 行选取命令 grep</h2>
 <p><code>grep</code> 命令可以<strong>一行一行</strong>地分析信息，若<strong>某行含有我们所需要的信息，则就将该行拿出来</strong>。简单的语法如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">grep [-acinv] [--color=auto] <span class="hljs-string">&#x27;查找字符&#x27;</span> filename<br></code></pre></td></tr></table></figure>
 <p>它的选项与参数如下：</p>
@@ -359,7 +359,7 @@
 <p><strong>范例四</strong>：取出 <code>/etc/adduser.conf</code> 内含 <code>UID</code> 的那几行，且将找到的关键字部分用特殊颜色显示出来：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ grep --color=auto <span class="hljs-string">&quot;UID&quot;</span> /etc/adduser.conf<br><span class="hljs-comment"># FIRST_SYSTEM_[GU]ID to LAST_SYSTEM_[GU]ID inclusive is the range for UIDs</span><br><span class="hljs-comment"># package, may assume that UIDs less than 100 are unallocated.</span><br>FIRST_SYSTEM_UID=100<br>LAST_SYSTEM_UID=999<br><span class="hljs-comment"># FIRST_[GU]ID to LAST_[GU]ID inclusive is the range of UIDs of dynamically</span><br>FIRST_UID=1000<br>LAST_UID=29999<br></code></pre></td></tr></table></figure>
 <p>可以看到找到的关键字部分用红色显示（当然这里的代码块看不出来效果，需要在终端进行渲染）。注意，在我的Ubuntu 18.04系统中<strong>默认的 <code>grep</code> 已经主动使用 <code>--color=auto</code> 选项在 <code>alias</code> 中了</strong>，因此不用手动加 <code>--color=auto</code> 也会标红（事实上，在我本地的Mac系统中也是如此）。</p>
-<h2 id="3-行操作命令-sed">3 行操作命令 sed</h2>
+<h2 id="3-行操作命令-sed"><a class="markdownIt-Anchor" href="#3-行操作命令-sed"></a> 3 行操作命令 sed</h2>
 <p>前面我们说过，<code>grep</code> 命令可以解析一行文字，若该行含有某关键词就会将其整行列出来。接下来我们要讲的 <code>sed</code> 命令也是一个管道命令（可以分析标准输入），它还可以<strong>对特定行进行新增、删除、替换等</strong>。</p>
 <p><code>sed</code> 的用法如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sed [-nefr] [操作]<br></code></pre></td></tr></table></figure>
@@ -384,10 +384,10 @@
 <li><code>s</code>：替换，可以直接进行替换的工作，通常这个 <code>s</code> 的操作可以搭配正则表达式。</li>
 </ul>
 <p>下面我们来举几个例子进行说明。</p>
-<h3 id="以行为单位的新增-删除功能">以行为单位的新增/删除功能</h3>
+<h3 id="以行为单位的新增删除功能"><a class="markdownIt-Anchor" href="#以行为单位的新增删除功能"></a> 以行为单位的新增/删除功能</h3>
 <p><strong>范例一</strong>：查看 <code>/etc/passwd</code> 文件的内容并且在每一行前面加上行号，同时将 2-5 行删除。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ <span class="hljs-built_in">cat</span> -n /etc/passwd | sed <span class="hljs-string">&#x27;2,5d&#x27;</span><br>     1  root:x:0:0:root:/root:/bin/zsh<br>     6  games:x:5:60:games:/usr/games:/usr/sbin/nologin<br>     7  man:x:6:12:man:/var/cache/man:/usr/sbin/nologin<br>     8  lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin<br>     ...<br></code></pre></td></tr></table></figure>
-<p>可以看到 <code>sed</code> 的操作为 <code>2,5d</code>，也即删除2~5行，所以显示的数据就没有2~5行。此外，请注意原本应该是要执行 <code>sed -e</code> 才对，不过这里没有 <code>-e</code> 也行，因为已经默认选了。同时也要注意 <code>sed</code> 后面接的操作务必以两个单引号 <code>''</code> 括住。</p>
+<p>可以看到 <code>sed</code> 的操作为 <code>2,5d</code>，也即删除2<sub>5行，所以显示的数据就没有2</sub>5行。此外，请注意原本应该是要执行 <code>sed -e</code> 才对，不过这里没有 <code>-e</code> 也行，因为已经默认选了。同时也要注意 <code>sed</code> 后面接的操作务必以两个单引号 <code>''</code> 括住。</p>
 <p>我们将范例变一下，如果要删除第2行，那么可以使用 <code>cat -n /etc/passwd | sed '2d'</code>；如果是要删除第3到最后一行，则是 <code>cat -n /etc/passwd | sed '3,$d'</code>，这里美元符号 <code>$</code> 代表最后一行。</p>
 <p><strong>范例二</strong>：承接上题，在第2行后（亦即是第3行）加上 <code>drink tea</code> 字样。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ <span class="hljs-built_in">cat</span> -n /etc/passwd | sed <span class="hljs-string">&#x27;2a Drink tea?&#x27;</span><br>     1  root:x:0:0:root:/root:/bin/zsh<br>     2  daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin<br>Drink tea?<br>     3  bin:x:2:2:bin:/bin:/usr/sbin/nologin<br>     ...<br></code></pre></td></tr></table></figure>
@@ -395,7 +395,7 @@
 <p><strong>范例三</strong>：继续承接上题，现在我们想要在第2行后面加上两行字，例如 <code>Drink tea or...</code> 与 <code>Drink beer?</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ <span class="hljs-built_in">cat</span> -n /etc/passwd | sed <span class="hljs-string">&#x27;2a Drink tea or...\ </span><br><span class="hljs-string">\ Drink beer?&#x27;</span><br>     1  root:x:0:0:root:/root:/bin/zsh<br>     2  daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin<br>Drink tea or...<br>Drink beer?<br>     3  bin:x:2:2:bin:/bin:/usr/sbin/nologin<br></code></pre></td></tr></table></figure>
 <p>这里的重点在于我们可以不只增加一行，可以增加很多行，但每一行之间必须以反斜杠 <code>\</code> 来进行新行的增加。</p>
-<h3 id="以行为单位的替换与显示功能">以行为单位的替换与显示功能</h3>
+<h3 id="以行为单位的替换与显示功能"><a class="markdownIt-Anchor" href="#以行为单位的替换与显示功能"></a> 以行为单位的替换与显示功能</h3>
 <p>刚刚是介绍如何新增与删除行。接下来我们看看如何进行整行的替换。</p>
 <p><strong>范例四</strong>：我想将2~5行的内容替换为 <code>No 2-5 number</code>。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ <span class="hljs-built_in">cat</span> -n /etc/passwd | sed <span class="hljs-string">&#x27;2,5c No 2-5 number`</span><br><span class="hljs-string">     1  root:x:0:0:root:/root:/bin/zsh</span><br><span class="hljs-string">No 2-5 number</span><br><span class="hljs-string">     6  games:x:5:60:games:/usr/games:/usr/sbin/nologin</span><br><span class="hljs-string">     ...</span><br></code></pre></td></tr></table></figure>
@@ -404,7 +404,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ <span class="hljs-built_in">cat</span> -n /etc/passwd | sed -n <span class="hljs-string">&#x27;5,7p&#x27;</span><br>     5  <span class="hljs-built_in">sync</span>:x:4:65534:<span class="hljs-built_in">sync</span>:/bin:/bin/sync<br>     6  games:x:5:60:games:/usr/games:/usr/sbin/nologin<br>     7  man:x:6:12:man:/var/cache/man:/usr/sbin/nologin<br></code></pre></td></tr></table></figure>
 <p>注意，这里必须要加 <code>-n</code> 表示安静模式。如果不加 <code>-n</code> 改为 <code>sed 5,7p</code>，那么第5-7行会重复输出：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ <span class="hljs-built_in">cat</span> -n /etc/passwd | sed <span class="hljs-string">&#x27;5,7p&#x27;</span><br>     1  root:x:0:0:root:/root:/bin/zsh<br>     2  daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin<br>     3  bin:x:2:2:bin:/bin:/usr/sbin/nologin<br>     4  sys:x:3:3:sys:/dev:/usr/sbin/nologin<br>     5  <span class="hljs-built_in">sync</span>:x:4:65534:<span class="hljs-built_in">sync</span>:/bin:/bin/sync<br>     5  <span class="hljs-built_in">sync</span>:x:4:65534:<span class="hljs-built_in">sync</span>:/bin:/bin/sync<br>     6  games:x:5:60:games:/usr/games:/usr/sbin/nologin<br>     6  games:x:5:60:games:/usr/games:/usr/sbin/nologin<br>     7  man:x:6:12:man:/var/cache/man:/usr/sbin/nologin<br>     7  man:x:6:12:man:/var/cache/man:/usr/sbin/nologin<br>     8  lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin<br>     ...<br></code></pre></td></tr></table></figure>
-<h3 id="部分数据的查找并替换的功能">部分数据的查找并替换的功能</h3>
+<h3 id="部分数据的查找并替换的功能"><a class="markdownIt-Anchor" href="#部分数据的查找并替换的功能"></a> 部分数据的查找并替换的功能</h3>
 <p>除了整行的处理模式之外，<code>sed</code> 还可以对某行进行部分数据的查找和替换。基本上 <code>sed</code> 的查找与替换与 <code>vi</code> 相当的类似，它的格式如下所示：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sed <span class="hljs-string">&#x27;s/要被替换的字符/新的字符/g&#x27;</span><br></code></pre></td></tr></table></figure>
 <p>接下来我们来看一个取得IP数据的范例，我们将该任务拆解为多步，一段一段地处理。</p>
@@ -428,7 +428,7 @@
 <p>这样原本注释的内容都变成了空白行，接下来我们删除空白行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ <span class="hljs-built_in">cat</span> /etc/adduser.conf | grep <span class="hljs-string">&#x27;UID&#x27;</span> | sed <span class="hljs-string">&#x27;s/#.*$//g&#x27;</span> | sed <span class="hljs-string">&#x27;/^$/d&#x27;</span><br>FIRST_SYSTEM_UID=100<br>LAST_SYSTEM_UID=999<br>FIRST_UID=1000<br>LAST_UID=29999<br></code></pre></td></tr></table></figure>
 <p>注意这里的 <code>^$</code> 表示行首 <code>^</code> 和行尾 <code>$</code> 之间没有字符，也即空白行。</p>
-<h3 id="直接修改文件内容（危险操作）">直接修改文件内容（危险操作）</h3>
+<h3 id="直接修改文件内容危险操作"><a class="markdownIt-Anchor" href="#直接修改文件内容危险操作"></a> 直接修改文件内容（危险操作）</h3>
 <p><code>sed</code> 的能耐可不止于我们上面所说的，它甚至可以直接修改文件的内容，而不必使用管道命令或数据流重定向。不过这个操作会修改到原始的文件，所以请你千万不要随便拿系统配置文件来测试。我们下面使用 <code>regular_express.txt</code> 文件来测试（文件可以去鸟哥的官网下载：<a target="_blank" rel="noopener" href="https://linux.vbird.org/linux_basic/0330regularex/regular_express.txt">regular_express.txt</a>）。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ <span class="hljs-built_in">cat</span> regular_express.txt<br><span class="hljs-string">&quot;Open Source&quot;</span> is a good mechanism to develop programs.<br>apple is my favorite food.<br>Football game is not use feet only.<br>this dress doesn<span class="hljs-string">&#x27;t fit me.</span><br><span class="hljs-string">...</span><br><span class="hljs-string">go! go! Let&#x27;</span>s go.<br><span class="hljs-comment"># I am VBird</span><br></code></pre></td></tr></table></figure>
 <p><strong>范例六</strong>：利用 <code>sed</code> 将 <code>regular_express.txt</code> 内每一行结尾若为 <code>.</code> 则换成 <code>!</code>。</p>
@@ -438,7 +438,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ sed -i <span class="hljs-string">&#x27;$a # This is a test&#x27;</span> regular_express.txt<br>root@orion-orion:~ <span class="hljs-built_in">tail</span> regular_express.txt<br>...<br>go! go! Let<span class="hljs-string">&#x27;s go.</span><br><span class="hljs-string"># I am VBird</span><br><span class="hljs-string"># This is a test</span><br></code></pre></td></tr></table></figure>
 <p>由于 <code>$</code> 代表的是最后一行，而 <code>a</code> 的操作是新增，因此是该文件最后新增。</p>
 <p><code>sed</code> 的 <code>-i</code> 选项可以直接修改文件内容，因此这功能非常有帮助。比如如果你有一个100万行的文件，你要在第100行加某些文字，此时使用vim可能会疯掉，因为文件太大了。此时就可以利用 <code>sed</code> 来直接修改与替换，而不需要使用 <code>vim</code> 去修改了。</p>
-<h2 id="4-字段操作命令-awk">4 字段操作命令 awk</h2>
+<h2 id="4-字段操作命令-awk"><a class="markdownIt-Anchor" href="#4-字段操作命令-awk"></a> 4 字段操作命令 awk</h2>
 <p>相较于 <code>sed</code> 常常对一整行进行操作，<code>awk</code> 则倾向于<strong>将一行分为多个字段来处理</strong>。因此，<code>awk</code> 相当适合处理小型的文本数据，其运行模式通常是这样的：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">awk <span class="hljs-string">&#x27;&#123;条件类型1&#123;操作1&#125; 条件类型2&#123;操作2&#125; ...&#125;&#x27;</span> filename<br></code></pre></td></tr></table></figure>
 <p><code>awk</code> 后接两个<strong>单引号</strong>并加上大括号 <code>&#123;&#125;</code> 来设置想要对数据进行的处理操作。<code>awk</code> 可以处理后续接的文件，也可以读取来自前一个命令的标准输出。如前面所说，<code>awk</code> 主要是将每一行分为多个字段来处理，而默认的字段分隔符为<strong>空格键</strong>或 <strong>[Tab]键</strong>。举例来说，我们用 <code>last</code> 将登陆者的数据取出来（仅取出前3行）：</p>
@@ -485,7 +485,7 @@
 <p>则可以这样：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ last -n 5 | awk <span class="hljs-string">&#x27;&#123;print $1 &quot;\t lines: &quot; NR &quot;\t columns: &quot; NF&#125;&#x27;</span><br>root     lines: 1    columns: 10<br>root     lines: 2    columns: 10<br>root     lines: 3    columns: 10<br>         lines: 4    columns: 0<br>wtmp     lines: 5    columns: 7<br></code></pre></td></tr></table></figure>
 <p>注意，在 <code>awk</code> 内的 <code>NR</code>、<code>NF</code> 等变量要用大写，且不需要有美元符号 <code>$</code>。</p>
-<h3 id="awk-的逻辑运算字符">awk 的逻辑运算字符</h3>
+<h3 id="awk-的逻辑运算字符"><a class="markdownIt-Anchor" href="#awk-的逻辑运算字符"></a> awk 的逻辑运算字符</h3>
 <p>既然要用到“条件”的类别，那么自然就需要一些逻辑运算，如下所示：</p>
 <table>
 <thead>
@@ -532,7 +532,7 @@
 <p>假设我们有一个薪资数据表文件为<code>pay.txt</code>，内容如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ <span class="hljs-built_in">cat</span> pay.txt<br>Name    1st     2nd     3th<br>VBird   23000   24000   25000<br>DMTsai  21000   20000   23000<br>Bird2   43000   42000   41000<br></code></pre></td></tr></table></figure>
 <p>如何来计算每个人<code>1st</code>、<code>2nd</code>、<code>3th</code>的总额呢？而且我们还需要格式化输出。我们可以这样考虑：</p>
-<p>第一行只是表头，所以第一行不进行求和而仅需要对表头进行打印（也即<code>NR==1</code>时处理）。<br>
+<p>第一行只是表头，所以第一行不进行求和而仅需要对表头进行打印（也即<code>NR==1</code>时处理）。<br />
 第二行以后进行求和（<code>NR&gt;=2</code>以后处理）。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ <span class="hljs-built_in">cat</span> pay.txt | \<br>awk <span class="hljs-string">&#x27;NR == 1 &#123;printf &quot;%10s %10s %10s %10s %10s\n&quot;, $1, $2, $3, $4, &quot;Total&quot;&#125; \</span><br><span class="hljs-string">NR &gt;= 2 &#123;total = $2 + $3 + $4; \</span><br><span class="hljs-string">printf &quot;%10s %10d %10d %10d %10.2f\n&quot;, $1, $2, $3, $4, total&#125;&#x27;</span><br>      Name        1st        2nd        3th      Total<br>     VBird      23000      24000      25000   72000.00<br>    DMTsai      21000      20000      23000   64000.00<br>     Bird2      43000      42000      41000  126000.00<br></code></pre></td></tr></table></figure>
 <p>上面的例子有几个重要事项应该要先说明：</p>
@@ -546,8 +546,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ <span class="hljs-built_in">cat</span> pay.txt | \<br>awk <span class="hljs-string">&#x27;&#123;if (NR == 1) printf &quot;%10s %10s %10s %10s %10s\n&quot;, $1, $2, $3, $4, &quot;Total&quot;&#125; \</span><br><span class="hljs-string">NR &gt;= 2 &#123;total = $2 + $3 + $4; \</span><br><span class="hljs-string">printf &quot;%10s %10d %10d %10d %10.2f\n&quot;, $1, $2, $3, $4, total&#125;&#x27;</span><br>      Name        1st        2nd        3th      Total<br>     VBird      23000      24000      25000   72000.00<br>    DMTsai      21000      20000      23000   64000.00<br>     Bird2      43000      42000      41000  126000.00<br></code></pre></td></tr></table></figure>
 <p>第一种写法相较于第二种写法更好，因为比较有统一性。</p>
 <p>除此之外，<code>awk</code>还可以帮我们进行循环计算，不过那属于比较高级的单独课程了，这里就不再多加以介绍。</p>
-<h2 id="5-习题">5 习题</h2>
-<h3 id="情景模拟题一">情景模拟题一</h3>
+<h2 id="5-习题"><a class="markdownIt-Anchor" href="#5-习题"></a> 5 习题</h2>
+<h3 id="情景模拟题一"><a class="markdownIt-Anchor" href="#情景模拟题一"></a> 情景模拟题一</h3>
 <p>通过<code>grep</code>配合子命令<code>$(command)</code>来从大量文件中查找含有星号*的文件与内容。</p>
 <ol>
 <li>我们先来看如何在<code>/etc</code>下面找出含有星号<code>*</code>的文件与内容。</li>
@@ -563,14 +563,14 @@
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ grep <span class="hljs-string">&#x27;\*&#x27;</span> $(find / -<span class="hljs-built_in">type</span> f) 2&gt; /dev/null  <br></code></pre></td></tr></table></figure>
 <p>芜湖，一运行这个命令，由于要打印的东西太多，终端直接卡死。这下该如何是好呢？此时我们可以通过管道命令以及xargs来处理。比如，让<code>grep</code>每次仅能处理<code>10</code>个文件名，我们可以：</p>
-<p>a. 先用<code>find</code>去找出文件；<br>
-b. 用<code>xargs</code>将这些文件每次丢10个给<code>grep</code>来作为参数处理；<br>
+<p>a. 先用<code>find</code>去找出文件；<br />
+b. 用<code>xargs</code>将这些文件每次丢10个给<code>grep</code>来作为参数处理；<br />
 c. <code>grep</code>实际开始查找文件内容；</p>
 <p>所以整个做法会变成这样：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ find / -<span class="hljs-built_in">type</span> f 2&gt; /dev/null | xargs -n 10 grep <span class="hljs-string">&#x27;\*&#x27;</span><br>Binary file /sbin/chcpu matches<br>Binary file /sbin/sulogin matches<br>Binary file /sbin/pivot_root matches<br>...<br></code></pre></td></tr></table></figure>
 <p>然而，从输出的结果看，数据量实在非常庞大，如果我们只想知道文件名的话也可以给<code>grep</code>加上<code>-l</code>参数：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ find / -<span class="hljs-built_in">type</span> f 2&gt; /dev/null | xargs -n 10 grep -l <span class="hljs-string">&#x27;\*&#x27;</span><br>/sbin/chcpu<br>/sbin/sulogin<br>/sbin/pivot_root<br>...<br></code></pre></td></tr></table></figure>
-<h3 id="情景模拟题二">情景模拟题二</h3>
+<h3 id="情景模拟题二"><a class="markdownIt-Anchor" href="#情景模拟题二"></a> 情景模拟题二</h3>
 <p>使用管道命令配合正则表达式建立新命令与新变量。我们想要建立一个名为<code>myip</code>的新命令，这个命令能够将我系统的IP识别出来并显示。而且我们想要有个新变量<code>MYIP</code>来记录我们的IP。</p>
 <p>处理的方式如下所示：</p>
 <p>首先根据我们前面所讲的<code>ifconfig</code>、<code>sed</code>与<code>awk</code>来取得我们的IP：</p>
@@ -580,7 +580,9 @@ c. <code>grep</code>实际开始查找文件内容；</p>
 <p>最终，我们可以通过变量设置来处理<code>MYIP</code>。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@orion-orion:~ MYIP=$(myip) <br>root@orion-orion:~ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$MYIP</span><br>addr:172.17.0.12<br></code></pre></td></tr></table></figure>
 <p>如果每次登陆都要生效，可以将<code>alias</code>与<code>MYIP</code>设置的那两行写入你的<code>~/.bashrc</code>即可。</p>
-
+<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
+<section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/orion-orion/p/17328082.html">https://www.cnblogs.com/orion-orion/p/17328082.html</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
               </div>
             

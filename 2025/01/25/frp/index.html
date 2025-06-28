@@ -319,28 +319,28 @@
                 
                 <p>用很多次frp工具进行内网穿透了，在这里统一记录一下过程。尤其是在ubuntu下写入系统服务并开机自启并非我能独立写出的，我还是得把服务配置记录在此为妙。</p>
 <span id="more"></span>
-<h2 id="安装frp">安装frp</h2>
-<p>frp的安装非常简单，直接下载<a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">frp</a>的release版本，解压后即可使用。我最常用的是0.59.0版本，以下也均以该版本为例。<br>
+<h2 id="安装frp"><a class="markdownIt-Anchor" href="#安装frp"></a> 安装frp</h2>
+<p>frp的安装非常简单，直接下载<a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">frp</a>的release版本，解压后即可使用。我最常用的是0.59.0版本，以下也均以该版本为例。<br />
 解压后应该得到一个文件夹，里面包含frps和frpc两个可执行文件，还有两个配置文件模板。</p>
-<h2 id="配置文件">配置文件</h2>
+<h2 id="配置文件"><a class="markdownIt-Anchor" href="#配置文件"></a> 配置文件</h2>
 <p>配置文件分别为frps.toml和frpc.toml，对应服务端和客户端。</p>
-<h3 id="服务端配置">服务端配置</h3>
+<h3 id="服务端配置"><a class="markdownIt-Anchor" href="#服务端配置"></a> 服务端配置</h3>
 <p>暂无，等我服务器到期之后补全这一节</p>
-<h3 id="客户端配置">客户端配置</h3>
+<h3 id="客户端配置"><a class="markdownIt-Anchor" href="#客户端配置"></a> 客户端配置</h3>
 <p>在frpc.toml中，配置文件的格式如下：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[common]</span><br><span class="hljs-attr">server_addr</span> = <span class="hljs-string">&quot;frp.example.com&quot;</span><br><span class="hljs-attr">server_port</span> = <span class="hljs-number">7000</span><br><span class="hljs-attr">token</span> = <span class="hljs-string">&quot;your_token&quot;</span><br><br><span class="hljs-section">[ssh]</span><br><span class="hljs-attr">type</span> = <span class="hljs-string">&quot;tcp&quot;</span><br><span class="hljs-attr">local_ip</span> = <span class="hljs-string">&quot;127.0.0.1&quot;</span><br><span class="hljs-attr">local_port</span> = <span class="hljs-number">22</span><br><span class="hljs-attr">remote_port</span> = <span class="hljs-number">6000</span><br></code></pre></td></tr></table></figure>
-<p>其中，server_addr是服务器的地址，server_port是服务器绑定的端口，token是连接服务器的令牌，用于验证客户端的身份。<br>
+<p>其中，server_addr是服务器的地址，server_port是服务器绑定的端口，token是连接服务器的令牌，用于验证客户端的身份。<br />
 下面可以自定义多个端口转发，不过不能重复。配置好之后，使用<code>./frpc -c ./frpc.toml</code>启动客户端。</p>
-<h2 id="配置系统服务">配置系统服务</h2>
-<h3 id="服务端服务配置">服务端服务配置</h3>
-<h3 id="客户端服务配置">客户端服务配置</h3>
+<h2 id="配置系统服务"><a class="markdownIt-Anchor" href="#配置系统服务"></a> 配置系统服务</h2>
+<h3 id="服务端服务配置"><a class="markdownIt-Anchor" href="#服务端服务配置"></a> 服务端服务配置</h3>
+<h3 id="客户端服务配置"><a class="markdownIt-Anchor" href="#客户端服务配置"></a> 客户端服务配置</h3>
 <p>为了实现开机自启，需要将frpc配置为系统服务。</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo vim <span class="hljs-regexp">/etc/</span>systemd<span class="hljs-regexp">/system/</span>frpc.service<br></code></pre></td></tr></table></figure>
 <p>在frpc.service中，写入以下内容：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[Unit]</span><br><span class="hljs-attr">Description</span>=frpc<br><span class="hljs-attr">After</span>=network.target<br><span class="hljs-attr">Wants</span>=network.target<br> <br><span class="hljs-section">[Service]</span><br><span class="hljs-attr">Restart</span>=<span class="hljs-literal">on</span>-failure<br><span class="hljs-attr">RestartSec</span>=<span class="hljs-number">5</span>s<br><span class="hljs-attr">ExecStart</span>=/path/to/frpc -c /path/to/frpc.toml<br><br><span class="hljs-section">[Install]</span><br><span class="hljs-attr">WantedBy</span>=multi-user.target<br></code></pre></td></tr></table></figure>
 <p>配置好之后，使用以下命令启动服务：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl daemon-reload<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> frpc<br><span class="hljs-built_in">sudo</span> systemctl start frpc<br><span class="hljs-comment"># 查看状态</span><br><span class="hljs-built_in">sudo</span> systemctl status frpc<br></code></pre></td></tr></table></figure>
-<h2 id="常见问题">常见问题</h2>
+<h2 id="常见问题"><a class="markdownIt-Anchor" href="#常见问题"></a> 常见问题</h2>
 <p>注意开放服务器的防火墙端口！</p>
 
                 
@@ -446,8 +446,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/01/24/bye2024/" title="呼啸而过的2024年">
-                        <span class="hidden-mobile">呼啸而过的2024年</span>
+                      <a href="/2025/01/25/RMUA_docker/" title="使用Docker打包RMUA仓库以方便部署">
+                        <span class="hidden-mobile">使用Docker打包RMUA仓库以方便部署</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

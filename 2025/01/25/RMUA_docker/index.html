@@ -1,0 +1,795 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dufolk">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="考虑到目前笔者参与的项目常常出现设备损坏等问题，重新刷机并部署RMUA仓库需要花费大量时间，因此考虑使用Docker打包RMUA仓库以方便部署。本文笔者用一个周末时间，将从如何fork原始仓库到打包镜像再到托管到阿里云镜像服务的完整过程记录下来，尽可能保留所有细节以及延伸学习，以供自我学习与备忘。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Docker打包RMUA仓库以方便部署">
+<meta property="og:url" content="http://dufolk.github.io/2025/01/25/RMUA_docker/index.html">
+<meta property="og:site_name" content="随机过程集">
+<meta property="og:description" content="考虑到目前笔者参与的项目常常出现设备损坏等问题，重新刷机并部署RMUA仓库需要花费大量时间，因此考虑使用Docker打包RMUA仓库以方便部署。本文笔者用一个周末时间，将从如何fork原始仓库到打包镜像再到托管到阿里云镜像服务的完整过程记录下来，尽可能保留所有细节以及延伸学习，以供自我学习与备忘。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://dufolk.github.io/img/common/docker.png">
+<meta property="article:published_time" content="2025-01-24T17:13:28.000Z">
+<meta property="article:modified_time" content="2025-06-28T08:20:39.810Z">
+<meta property="article:author" content="Dufolk">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="容器技术">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://dufolk.github.io/img/common/docker.png">
+  
+  
+  
+  <title>使用Docker打包RMUA仓库以方便部署 - 随机过程集</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/scrollAnimation.css">
+<link rel="stylesheet" href="/css/selection.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dufolk.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"a5SSXXtCxO91qRKFkjVQMkDi-MdYXbMMI","app_key":"4AKbD6prikTmwFEX320HpvXv","server_url":null,"path":"window.location.pathname","ignore_local":false,"security":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>随机过程集</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>本人</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/page_banner.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">使用Docker打包RMUA仓库以方便部署</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-25 01:13" pubdate>
+          2025年1月25日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">使用Docker打包RMUA仓库以方便部署</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>考虑到目前笔者参与的项目常常出现设备损坏等问题，重新刷机并部署RMUA仓库需要花费大量时间，因此考虑使用Docker打包RMUA仓库以方便部署。本文笔者用一个周末时间，将从如何fork原始仓库到打包镜像再到托管到阿里云镜像服务的完整过程记录下来，尽可能保留所有细节以及延伸学习，以供自我学习与备忘。</p>
+<span id="more"></span>
+<h2 id="创建docker仓库"><a class="markdownIt-Anchor" href="#创建docker仓库"></a> 创建Docker仓库</h2>
+<h4 id="fork原始仓库"><a class="markdownIt-Anchor" href="#fork原始仓库"></a> fork原始仓库</h4>
+<p>截至笔者写下文章的时间，RMUA仓库在Yue-0的主页中，为构建完整的代码镜像，需要先fork仓库（防止原始仓库被Yue-0删除😂）。<br />
+完成fork后，笔者创建了RMUA4Docker仓库，用于打包RMUA仓库及其他依赖环境。这里可以很方便的使用 git 中的 submodule 管理子模块，目前我们只需要Roborts-base和RMUA这两个仓库作为子模块。</p>
+
+    <div class="fold">
+      <div class="fold-title fold-info 什么是 Git Submodule？ collapsed" data-toggle="collapse" href="#collapse-311bfa33" role="button" aria-expanded="false" aria-controls="collapse-311bfa33">
+        <div class="fold-arrow">▶</div>
+      </div>
+      <div class="fold-collapse collapse" id="collapse-311bfa33">
+        <div class="fold-content">
+          <p>Git Submodule 是 Git 提供的<strong>子模块管理功能</strong>，允许将一个 Git 仓库作为另一个仓库的子目录嵌入。它保持父仓库与子模块的独立版本控制历史，解决以下场景：</p><ul><li>在项目中包含第三方库（如组件库、框架）</li><li>维护多个有依赖关系的独立项目</li><li>需要引用特定版本的外部代码</li></ul><h4 id="核心概念"><a class="markdownIt-Anchor" href="#核心概念"></a> 核心概念</h4><ol><li><strong>父仓库（Superproject）</strong>：包含子模块的主项目</li><li><strong>子模块（Submodule）</strong>：独立 Git 仓库，嵌入在父仓库中</li><li><strong>.gitmodules 文件</strong>：记录子模块路径、URL 和版本信息</li></ol><h4 id="常用命令"><a class="markdownIt-Anchor" href="#常用命令"></a> 常用命令</h4><table><thead><tr><th>命令</th><th>作用</th><th>示例</th></tr></thead><tbody><tr><td><strong>添加子模块</strong></td><td>添加外部仓库作为子模块</td><td><code>git submodule add &lt;URL&gt; &lt;路径&gt;</code><br><code>git submodule add https://github.com/Yue-0/RMUA.git src/RMUA</code></td></tr><tr><td><strong>初始化子模块</strong></td><td>克隆父仓库后首次初始化子模块</td><td><code>git submodule init</code><br><code>git submodule init -- &lt;特定路径&gt;</code></td></tr><tr><td><strong>更新子模块</strong></td><td>获取最新子模块内容（默认签出提交记录版本）</td><td><code>git submodule update</code><br><code>git submodule update --remote</code>（获取最新提交）</td></tr><tr><td><strong>递归操作</strong></td><td>处理嵌套子模块</td><td><code>git clone --recurse-submodules &lt;URL&gt;</code><br><code>git submodule update --init --recursive</code></td></tr><tr><td><strong>查看状态</strong></td><td>检查子模块状态</td><td><code>git submodule status</code><br><code>git diff --submodule</code></td></tr><tr><td><strong>更新引用</strong></td><td>修改指向的子模块提交</td><td>进入子模块目录后：<br><code>git checkout main</code><br><code>git pull</code><br>返回父目录：<br><code>git add &lt;子模块路径&gt;</code><br><code>git commit -m &quot;更新子模块引用&quot;</code></td></tr><tr><td><strong>删除子模块</strong></td><td>移除不再需要的子模块</td><td><code>git rm --cached &lt;路径&gt;</code><br>删除 .gitmodules 中的对应条目<br>删除 .git/modules/&lt;名称&gt;</td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+<p>首先<code>git clone https://github.com/dufolk/RMUA4Docker.git</code>并进入仓库，然后添加子模块。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">git submodule add https://github.com/dufolk/RMUA.git RMUA <span class="hljs-comment"># 加入RMUA子模块</span><br>git submodule add https://github.com/RoboMaster/RoboRTS-Base.git roborts/src/ <span class="hljs-comment"># 加入Robots-base子模块</span><br><br>git commit -m <span class="hljs-string">&quot;first commit&quot;</span> <span class="hljs-comment"># 提交代码</span><br>git push <span class="hljs-comment"># 将代码推送到远程仓库</span><br></code></pre></td></tr></table></figure>
+<p>这样就完成了RMUA4Docker仓库的创建。现在我们尝试重新拉取RMUA4Docker仓库，会发现RMUA仓库及其他子模块下是空的。这里我们需要手动更新子模块。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git submodule update --init --recursive<br></code></pre></td></tr></table></figure>
+<p>即可成功拉取完整的RMUA4Docker仓库。</p>
+<div class="note note-primary">
+            <p>这里有一些文件（如<code>client.py</code>）并非Yue-0维护，所以我单独上传了。</p>
+          </div>
+<h2 id="打包镜像"><a class="markdownIt-Anchor" href="#打包镜像"></a> 打包镜像</h2>
+<p>我们参考Roborts-base仓库中的Dockerfile文件和，将其修改为RMUA4Docker仓库的Dockerfile文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">touch</span> Dockerfile build_image.sh<br></code></pre></td></tr></table></figure>
+<h4 id="build_imagesh"><a class="markdownIt-Anchor" href="#build_imagesh"></a> build_image.sh</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>DIR=<span class="hljs-string">&quot;<span class="hljs-subst">$( cd <span class="hljs-string">&quot;<span class="hljs-subst">$( dirname <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;BASH_SOURCE[0]&#125;</span>&quot;</span> )</span>&quot;</span> &gt;/dev/null 2&gt;&amp;1 &amp;&amp; pwd )</span>&quot;</span> <span class="hljs-comment"># 获取当前脚本所在目录</span><br>IMAGE_REPO=<span class="hljs-string">&quot;roborts_ros&quot;</span> <span class="hljs-comment"># 镜像仓库名称</span><br>ARCH_TYPE=<span class="hljs-string">&quot;<span class="hljs-subst">$(arch)</span>&quot;</span> <span class="hljs-comment"># 架构类型</span><br>ROS_VERSION=<span class="hljs-string">&quot;noetic&quot;</span> <span class="hljs-comment"># ROS版本</span><br><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$ARCH_TYPE</span> == <span class="hljs-string">&quot;x86_64&quot;</span> -o <span class="hljs-variable">$&#123;ARCH_TYPE&#125;</span> == <span class="hljs-string">&quot;aarch64&quot;</span> ] <span class="hljs-comment"># 判断架构类型</span><br><span class="hljs-keyword">then</span><br>    IMAGE_TAG=<span class="hljs-string">&quot;roborts_base_<span class="hljs-variable">$&#123;ARCH_TYPE&#125;</span>&quot;</span> <span class="hljs-comment"># 镜像标签</span><br>    <span class="hljs-keyword">if</span> [ <span class="hljs-variable">$ARCH_TYPE</span> == <span class="hljs-string">&quot;x86_64&quot;</span> ] <span class="hljs-comment"># 根据架构类型选择基础镜像</span><br>    <span class="hljs-keyword">then</span><br>        BASE_IMAGE=<span class="hljs-string">&quot;ros:<span class="hljs-variable">$&#123;ROS_VERSION&#125;</span>-ros-base-focal&quot;</span><br>    <span class="hljs-keyword">else</span><br>        BASE_IMAGE=<span class="hljs-string">&quot;arm64v8/ros:<span class="hljs-variable">$&#123;ROS_VERSION&#125;</span>-ros-base-focal&quot;</span><br>    <span class="hljs-keyword">fi</span><br><span class="hljs-keyword">else</span><br>    <span class="hljs-comment"># echo &quot;ARCH_TYPE $ARCH_TYPE is supported. Valid architecture is [aarch64, x86_64]&quot;</span><br>    <span class="hljs-comment"># exit 1</span><br>    <span class="hljs-comment"># 我们车上的架构是aarch64，所以这里直接默认使用aarch64</span><br>    IMAGE_TAG=<span class="hljs-string">&quot;roborts_base_aarch64&quot;</span><br>    BASE_IMAGE=<span class="hljs-string">&quot;arm64v8/ros:<span class="hljs-variable">$&#123;ROS_VERSION&#125;</span>-ros-base-focal&quot;</span><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-built_in">cd</span> <span class="hljs-variable">$&#123;DIR&#125;</span><br><br><span class="hljs-comment"># 构建镜像</span><br><span class="hljs-comment"># --build-arg BASE_IMAGE=$&#123;BASE_IMAGE&#125; 基础镜像</span><br><span class="hljs-comment"># -t $&#123;IMAGE_REPO&#125;:$&#123;IMAGE_TAG&#125; 镜像名称</span><br><span class="hljs-comment"># -f Dockerfile 选择Dockerfile</span><br><span class="hljs-comment"># . 当前目录</span><br><span class="hljs-built_in">sudo</span> docker build \<br>    --build-arg BASE_IMAGE=<span class="hljs-variable">$&#123;BASE_IMAGE&#125;</span> \<br>    -t <span class="hljs-variable">$&#123;IMAGE_REPO&#125;</span>:<span class="hljs-variable">$&#123;IMAGE_TAG&#125;</span> \<br>    -f Dockerfile .<br></code></pre></td></tr></table></figure>
+<p>在这里，我们将所有源代码都通过Dockerfile拷贝到镜像中，包括RMUA仓库及Robots-base仓库，从而避免在运行时再拉取和部署代码。Dockerfile是打包镜像的关键文件，它包含了所有打包镜像所需的指令和说明。通过分享Dockerfile，我们可以轻松的将环境在任何地方打包。打包好镜像后，也可以在任何地方部署镜像。</p>
+<p><a target="_blank" rel="noopener" href="https://developer.nvidia.com/embedded/jetpack-archive">nvidia 官方 docker 与 jetpack 版本对应关系</a></p>
+<h4 id="dockerfile"><a class="markdownIt-Anchor" href="#dockerfile"></a> Dockerfile</h4>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs Dockerfile"><span class="hljs-comment"># 基础镜像</span><br><span class="hljs-keyword">ARG</span> BASE_IMAGE=ros:noetic-ros-base-focal <br><span class="hljs-keyword">FROM</span> $&#123;BASE_IMAGE&#125;<br><span class="hljs-comment"># 安装ROS依赖</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y --no-install-recommends \</span><br><span class="language-bash">    ros-<span class="hljs-variable">$&#123;ROS_DISTRO&#125;</span>-tf ros-<span class="hljs-variable">$&#123;ROS_DISTRO&#125;</span>-nav-msgs ros-<span class="hljs-variable">$&#123;ROS_DISTRO&#125;</span>-geometry-msgs ros-<span class="hljs-variable">$&#123;ROS_DISTRO&#125;</span>-rplidar-ros libgoogle-glog-dev python3-pip \</span><br><span class="language-bash">    &amp;&amp; <span class="hljs-built_in">rm</span> -rf /var/lib/apt/lists/*</span><br><span class="hljs-comment"># 拷贝roborts工作空间和RMUA工作空间</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> ./RMUA /root/RMUA</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> ./roborts /root/roborts</span><br><br><span class="hljs-comment"># 编译roborts</span><br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /root/roborts</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> /bin/bash -c <span class="hljs-string">&quot;source /opt/ros/<span class="hljs-variable">$&#123;ROS_DISTRO&#125;</span>/setup.bash &amp;&amp; catkin_make&quot;</span></span><br><br><span class="hljs-comment"># 编译RMUA</span><br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /root/RMUA/src</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> /bin/bash -c <span class="hljs-string">&quot;source /root/roborts/devel/setup.bash &amp;&amp; \</span></span><br><span class="hljs-string"><span class="language-bash">    catkin_init_workspace &amp;&amp; \</span></span><br><span class="hljs-string"><span class="language-bash">    cd vision &amp;&amp; \</span></span><br><span class="hljs-string"><span class="language-bash">    pip install -r requirements.txt &amp;&amp; \</span></span><br><span class="hljs-string"><span class="language-bash">    cd ../.. &amp;&amp; \</span></span><br><span class="hljs-string"><span class="language-bash">    catkin_make --only-pkg-with-deps sentry&quot;</span></span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="hljs-string">&quot;decision;navigation;vision&quot;</span></span><br><br><span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">&quot;bash&quot;</span>]</span><br><br></code></pre></td></tr></table></figure>
+
+    <div class="fold">
+      <div class="fold-title fold-info 什么是 Dockerfile？ collapsed" data-toggle="collapse" href="#collapse-50944602" role="button" aria-expanded="false" aria-controls="collapse-50944602">
+        <div class="fold-arrow">▶</div>
+      </div>
+      <div class="fold-collapse collapse" id="collapse-50944602">
+        <div class="fold-content">
+          <p>Dockerfile 是一个用来构建镜像的文本文件，文本内容包含了一条条构建镜像所需的指令和说明。通过定义一系列命令和参数，Dockerfile 指导 Docker 构建一个自定义的镜像。</p><h4 id="from-和-run-指令的作用"><a class="markdownIt-Anchor" href="#from-和-run-指令的作用"></a> FROM 和 RUN 指令的作用</h4><p><strong>FROM</strong>：定制的镜像都是基于 FROM 的镜像。<br /><strong>RUN</strong>：用于执行后面跟着的命令行命令。有以下俩种格式：<br />shell 格式：</p><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Dockerfile"><span class="hljs-keyword">RUN</span><span class="language-bash"> &lt;命令行命令&gt;</span><br><span class="hljs-comment"># &lt;命令行命令&gt; 等同于，在终端操作的 shell 命令。</span><br></code></pre></td></tr></table></figure><p>exec 格式：</p><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Dockerfile"><span class="hljs-keyword">RUN</span><span class="language-bash"> [<span class="hljs-string">&quot;可执行文件&quot;</span>, <span class="hljs-string">&quot;参数1&quot;</span>, <span class="hljs-string">&quot;参数2&quot;</span>]</span><br><span class="hljs-comment"># 例如：</span><br><span class="hljs-comment"># RUN [&quot;./test.php&quot;, &quot;dev&quot;, &quot;offline&quot;] 等价于 RUN ./test.php dev offline</span><br></code></pre></td></tr></table></figure><p><strong>注意</strong>：Dockerfile 的指令每执行一次都会在 docker 上新建一层。所以过多无意义的层，会造成镜像膨胀过大。例如：</p><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Dockerfile"><span class="hljs-keyword">FROM</span> centos<br><span class="hljs-keyword">RUN</span><span class="language-bash"> yum -y install wget</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> wget -O redis.tar.gz <span class="hljs-string">&quot;http://download.redis.io/releases/redis-5.0.3.tar.gz&quot;</span></span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> tar -xvf redis.tar.gz</span><br></code></pre></td></tr></table></figure><p>以上执行会创建 3 层镜像。可简化为以下格式：</p><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Dockerfile"><span class="hljs-keyword">FROM</span> centos<br><span class="hljs-keyword">RUN</span><span class="language-bash"> yum -y install wget \</span><br><span class="language-bash">    &amp;&amp; wget -O redis.tar.gz <span class="hljs-string">&quot;http://download.redis.io/releases/redis-5.0.3.tar.gz&quot;</span> \</span><br><span class="language-bash">    &amp;&amp; tar -xvf redis.tar.gz</span><br></code></pre></td></tr></table></figure><p>如上，以 <code>&amp;&amp;</code> 符号连接命令，这样执行后，只会创建 1 层镜像。</p><h4 id="指令"><a class="markdownIt-Anchor" href="#指令"></a> 指令</h4><table><thead><tr><th>Dockerfile 指令</th><th>说明</th></tr></thead><tbody><tr><td><code>FROM</code></td><td>指定基础镜像，用于后续的指令构建。</td></tr><tr><td><code>MAINTAINER</code></td><td>指定 Dockerfile 的作者/维护者。（已弃用，推荐使用 <code>LABEL</code> 指令）</td></tr><tr><td><code>LABEL</code></td><td>添加镜像的元数据，使用键值对的形式。</td></tr><tr><td><code>RUN</code></td><td>在构建过程中在镜像中执行命令。</td></tr><tr><td><code>CMD</code></td><td>指定容器创建时的默认命令。（可以被覆盖）</td></tr><tr><td><code>ENTRYPOINT</code></td><td>设置容器创建时的主要命令。（不可被覆盖）</td></tr><tr><td><code>EXPOSE</code></td><td>声明容器运行时监听的特定网络端口。</td></tr><tr><td><code>ENV</code></td><td>在容器内部设置环境变量。</td></tr><tr><td><code>ADD</code></td><td>将文件、目录或远程 URL 复制到镜像中。</td></tr><tr><td><code>COPY</code></td><td>将文件或目录复制到镜像中。</td></tr><tr><td><code>VOLUME</code></td><td>为容器创建挂载点或声明卷。</td></tr><tr><td><code>WORKDIR</code></td><td>设置后续指令的工作目录。</td></tr><tr><td><code>USER</code></td><td>指定后续指令的用户上下文。</td></tr><tr><td><code>ARG</code></td><td>定义在构建过程中传递给构建器的变量，可使用 <code>docker build</code> 命令设置。</td></tr><tr><td><code>ONBUILD</code></td><td>当该镜像被用作另一个构建过程的基础时，添加触发器。</td></tr><tr><td><code>STOPSIGNAL</code></td><td>设置发送给容器以退出的系统调用信号。</td></tr><tr><td><code>HEALTHCHECK</code></td><td>定义周期性检查容器健康状态的命令。</td></tr><tr><td><code>SHELL</code></td><td>覆盖 Docker 中默认的 shell，用于 <code>RUN</code>、<code>CMD</code> 和 <code>ENTRYPOINT</code> 指令。</td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+<h3 id="使用-qemu-模拟-arm64-环境如果在amd64机器上测试景象镜像"><a class="markdownIt-Anchor" href="#使用-qemu-模拟-arm64-环境如果在amd64机器上测试景象镜像"></a> 使用 QEMU 模拟 arm64 环境（如果在amd64机器上测试景象镜像）</h3>
+<p>由于jetpack是arm64系统架构，而我们的宿主机器一般为amd64，因此需要使用QEMU模拟arm64环境，才可以正常编译和使用jetpack镜像环境。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install qemu-user-static<br></code></pre></td></tr></table></figure>
+<h3 id="构建镜像"><a class="markdownIt-Anchor" href="#构建镜像"></a> 构建镜像</h3>
+<p>在RMUA4Docker仓库中，执行以下命令构建镜像：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> +x build_image.sh <span class="hljs-comment"># 赋予脚本可执行权限</span><br>./build_image.sh <span class="hljs-comment"># 执行脚本构建镜像</span><br></code></pre></td></tr></table></figure>
+<p>此处可能会遇到网络问题，导致无法下载依赖包。可以尝试更换源、用国内镜像加速服务或使用代理。我这边用了国内的付费加速服务轩辕镜像加速服务。</p>
+<h2 id="拉取镜像"><a class="markdownIt-Anchor" href="#拉取镜像"></a> 拉取镜像</h2>
+<p>目前笔者已将镜像打包并托管到阿里云镜像服务中，因此可以直接拉取镜像。</p>
+<h2 id="启动命令"><a class="markdownIt-Anchor" href="#启动命令"></a> 启动命令</h2>
+<p>创建一个脚本<code>launch.sh</code>，用于启动容器。<code>launch.sh</code>内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>DIR=<span class="hljs-string">&quot;<span class="hljs-subst">$( cd <span class="hljs-string">&quot;<span class="hljs-subst">$( dirname <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;BASH_SOURCE[0]&#125;</span>&quot;</span> )</span>&quot;</span> &gt;/dev/null 2&gt;&amp;1 &amp;&amp; pwd )</span>&quot;</span><br><span class="hljs-comment"># get the IMAGE_REPO and IMAGE_TAG</span><br>IMAGE_REPO=<span class="hljs-string">&quot;roborts_ros&quot;</span><br>ARCH_TYPE=<span class="hljs-string">&quot;<span class="hljs-subst">$(arch)</span>&quot;</span><br><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$&#123;ARCH_TYPE&#125;</span> == <span class="hljs-string">&quot;x86_64&quot;</span> -o <span class="hljs-variable">$&#123;ARCH_TYPE&#125;</span> == <span class="hljs-string">&quot;aarch64&quot;</span> ]<br><span class="hljs-keyword">then</span><br>    IMAGE_TAG=<span class="hljs-string">&quot;roborts_base_<span class="hljs-variable">$&#123;ARCH_TYPE&#125;</span>&quot;</span><br><span class="hljs-keyword">else</span><br>    &gt;&amp;2 <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;[ERROR] ARCH_TYPE <span class="hljs-variable">$&#123;ARCH_TYPE&#125;</span> is supported. Valid architecture is [aarch64, x86_64]&quot;</span><br>    <span class="hljs-built_in">read</span> -p <span class="hljs-string">&quot;[INFO] Build Process Failed&quot;</span> var<br>    <span class="hljs-built_in">exit</span> 1<br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># check if the image exists, if not, build the expected image</span><br><span class="hljs-keyword">while</span> [[ <span class="hljs-string">&quot;<span class="hljs-subst">$(sudo docker images -q $&#123;IMAGE_REPO&#125;:$&#123;IMAGE_TAG&#125; 2&gt; /dev/null)</span>&quot;</span> == <span class="hljs-string">&quot;&quot;</span> ]]<br><span class="hljs-keyword">do</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;[INFO] Image <span class="hljs-variable">$&#123;IMAGE_REPO&#125;</span>:<span class="hljs-variable">$&#123;IMAGE_TAG&#125;</span> does not exist, start to build the image.&quot;</span><br>    sh -c <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;DIR&#125;</span>/build_image.sh&quot;</span><br><span class="hljs-keyword">done</span><br><br><br>HOST_BASE_DIR=<span class="hljs-string">&quot;<span class="hljs-subst">$( cd <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;DIR&#125;</span>/..&quot;</span> &gt;/dev/null 2&gt;&amp;1 &amp;&amp; pwd )</span>&quot;</span><br><span class="hljs-comment"># config the udev rule in the host machine</span><br><span class="hljs-comment">#sh -c &quot;$&#123;HOST_BASE_DIR&#125;/scripts/udev.sh status&quot;</span><br><span class="hljs-keyword">if</span> [ $? -ne 0 ]; <span class="hljs-keyword">then</span><br>   <span class="hljs-built_in">exit</span> 1<br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># create the container</span><br>DOCKER_CATKIN_WS_DIR=<span class="hljs-string">&quot;/root/catkin_ws&quot;</span><br>CONTAINER_NAME=<span class="hljs-string">&quot;roborts_ros&quot;</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;[INFO] Run the Container <span class="hljs-variable">$&#123;CONTAINER_NAME&#125;</span> from image <span class="hljs-variable">$&#123;IMAGE_REPO&#125;</span>:<span class="hljs-variable">$&#123;IMAGE_TAG&#125;</span>&quot;</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;[INFO] Mapping the ros directory from local path <span class="hljs-variable">$&#123;HOST_BASE_DIR&#125;</span> to docker path <span class="hljs-variable">$&#123;DOCKER_CATKIN_WS_DIR&#125;</span>/src &quot;</span><br><span class="hljs-built_in">sudo</span> docker run \<br>     -d \<br>     --net=host \<br>     --name <span class="hljs-variable">$&#123;CONTAINER_NAME&#125;</span> \<br>     --privileged \<br>     --volume /dev:/dev  \<br>     --volume <span class="hljs-variable">$&#123;HOST_BASE_DIR&#125;</span>/roborts_base:<span class="hljs-variable">$&#123;DOCKER_CATKIN_WS_DIR&#125;</span>/src/roborts_base \<br>     --volume <span class="hljs-variable">$&#123;HOST_BASE_DIR&#125;</span>/roborts_msgs:<span class="hljs-variable">$&#123;DOCKER_CATKIN_WS_DIR&#125;</span>/src/roborts_msgs \<br>     --volume <span class="hljs-variable">$&#123;HOST_BASE_DIR&#125;</span>/scripts:<span class="hljs-variable">$&#123;DOCKER_CATKIN_WS_DIR&#125;</span>/src/scripts           \<br>     --volume <span class="hljs-variable">$&#123;HOST_BASE_DIR&#125;</span>/docker/tmp/build:<span class="hljs-variable">$&#123;DOCKER_CATKIN_WS_DIR&#125;</span>/build        \<br>     --volume <span class="hljs-variable">$&#123;HOST_BASE_DIR&#125;</span>/docker/tmp/devel:<span class="hljs-variable">$&#123;DOCKER_CATKIN_WS_DIR&#125;</span>/devel        \<br>     <span class="hljs-variable">$&#123;IMAGE_REPO&#125;</span>:<span class="hljs-variable">$&#123;IMAGE_TAG&#125;</span> \<br>     /bin/bash -c <span class="hljs-string">&quot;tail -f /dev/null&quot;</span><br><span class="hljs-comment"># check docker run result</span><br><span class="hljs-keyword">if</span> [ $? != 0 ]<br><span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;[WARN] Container already exists. Please wait for stopping and restarting the current container. &quot;</span><br>    <span class="hljs-built_in">sudo</span> docker stop <span class="hljs-variable">$&#123;CONTAINER_NAME&#125;</span> &gt;/dev/null 2&gt;&amp;1<br>    <span class="hljs-built_in">sudo</span> docker <span class="hljs-built_in">rm</span> <span class="hljs-variable">$&#123;CONTAINER_NAME&#125;</span> &gt;/dev/null 2&gt;&amp;1<br>    <span class="hljs-built_in">sudo</span> docker run \<br>         -d \<br>         --net=host \<br>         --name <span class="hljs-variable">$&#123;CONTAINER_NAME&#125;</span> \<br>         --privileged \<br>         --volume /dev:/dev  \<br>         --volume <span class="hljs-variable">$&#123;HOST_BASE_DIR&#125;</span>/roborts_base:<span class="hljs-variable">$&#123;DOCKER_CATKIN_WS_DIR&#125;</span>/src/roborts_base \<br>         --volume <span class="hljs-variable">$&#123;HOST_BASE_DIR&#125;</span>/roborts_msgs:<span class="hljs-variable">$&#123;DOCKER_CATKIN_WS_DIR&#125;</span>/src/roborts_msgs \<br>         --volume <span class="hljs-variable">$&#123;HOST_BASE_DIR&#125;</span>/scripts:<span class="hljs-variable">$&#123;DOCKER_CATKIN_WS_DIR&#125;</span>/src/scripts           \<br>         --volume <span class="hljs-variable">$&#123;HOST_BASE_DIR&#125;</span>/docker/tmp/build:<span class="hljs-variable">$&#123;DOCKER_CATKIN_WS_DIR&#125;</span>/build        \<br>         --volume <span class="hljs-variable">$&#123;HOST_BASE_DIR&#125;</span>/docker/tmp/devel:<span class="hljs-variable">$&#123;DOCKER_CATKIN_WS_DIR&#125;</span>/devel        \<br>         <span class="hljs-variable">$&#123;IMAGE_REPO&#125;</span>:<span class="hljs-variable">$&#123;IMAGE_TAG&#125;</span> \<br>         /bin/bash -c <span class="hljs-string">&quot;tail -f /dev/null&quot;</span><br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF%E6%97%A5%E8%AE%B0/" class="category-chain-item">技术日记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%8A%80%E6%9C%AF/" class="print-no-link">#技术</a>
+      
+        <a href="/tags/%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF/" class="print-no-link">#容器技术</a>
+      
+        <a href="/tags/Docker/" class="print-no-link">#Docker</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>使用Docker打包RMUA仓库以方便部署</div>
+      <div>http://dufolk.github.io/2025/01/25/RMUA_docker/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Dufolk</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/25/frp/" title="使用frp通过跳板机实现内网穿透备忘">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">使用frp通过跳板机实现内网穿透备忘</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/24/bye2024/" title="呼啸而过的2024年">
+                        <span class="hidden-mobile">呼啸而过的2024年</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://registry.npmmirror.com/@waline/client/2.15.8/files/dist/waline.css')
+      Fluid.utils.createScript('https://registry.npmmirror.com/@waline/client/2.15.8/files/dist/waline.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://waline-six-iota.vercel.app","path":"window.location.pathname","meta":["nick","mail"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.2.0/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/scrollAnimation.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
