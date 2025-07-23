@@ -27,7 +27,7 @@
 <meta property="og:description" content="教育背景 2023.09 - 至今 大连理工大学-计算机科学与技术 硕士在读 研究方向：强化学习、机器人、多智能体。 2019.09 - 2023.06 大连理工大学-人工智能 本科  专业技能  编程语言与框架：熟悉 Python;熟悉Pytorch框架；熟悉 Opencv 的常用图像处理方法；掌握Matplotlib数据可视化方法；熟悉机器人框架ROS的基本原理与操作方法。 算法技术：熟悉强">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-11-27T06:07:01.000Z">
-<meta property="article:modified_time" content="2025-07-01T16:35:02.789Z">
+<meta property="article:modified_time" content="2025-07-23T17:50:29.110Z">
 <meta property="article:author" content="Dufolk">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -314,13 +314,19 @@
 </ul>
 <h3 id="实习经历"><a class="markdownIt-Anchor" href="#实习经历"></a> 实习经历</h3>
 <div style="float: right">2025.05 - 至今</div>
-<p><strong>腾讯科技（深圳）有限公司</strong>-应用研究</p>
+<p><strong>腾讯科技（深圳）有限公司</strong>-应用研究<br />
+<strong>概述</strong>:在《王者荣耀》游戏中，提升5v5对抗环境下的Al bot综合表现与拟人化工作。<br />
+<strong>工作内容</strong>:</p>
 <ul>
-<li><strong>概述</strong>：在《王者荣耀》游戏中，提升5v5对抗环境下的AI bot表现与拟人化工作。</li>
-<li><strong>技术栈</strong>：深度学习、强化学习、离线强化学习。</li>
-<li>实现基于 AWR 离线强化学习的 AI bot 训练框架，完成对 AI bot 的训练与测试，提升了 AI bot 在 5v5 对抗环境下的拟人化表现。</li>
-<li>实现复杂策略空间下的行为克隆方法，并作为在线强化学习的预训练模型，成功在自对弈场景中开展智能体训练。</li>
-<li>实现基于 MOE 的多分路英雄统一策略学习方法，并与基于蒸馏各分路模型的方法开展一系列对比研究，数次完成复杂数据的分析与模型提升。</li>
+<li><strong>数据建模与标签系统优化</strong>:基于对行为轨迹与动作标签的动态规划解析，形成高质量训练样本</li>
+<li><strong>基于 AWR 离线强化学习的 Al bot 训练框架</strong>:完成对离线强化学习的训练与测试，提升 Al bot在 5v5 对抗环境下的拟人化表现。</li>
+<li><strong>蒸馏与预训练强化</strong>:通过集成多策略教师模型优化统一策略网络，在满足训练稳定性的前提下兼顾拟人化与强度指标。</li>
+<li><strong>分布式在线RL训练框架搭建</strong>:实现对训练样本流的异步采样与并行调度，支撑大规模RL训练任务<br />
+<strong>工作产出</strong>:</li>
+<li>提出并实现基于轨迹结构的动作建模方法，大幅提升策略输入样本的结构化程度和训练稳定性，为RL算法提供更精确的状态-动作分布。模型已正式上线 5-6月版本，点赞率和被举报率相比上一版模型均有大幅度优化</li>
+<li>为离线强化学习调优奖励分布，有效缓解Bot激进问题，提高了多个离线拟人化指标;模型已灰度上线7月版本，点赞率和被举报率均有优化</li>
+<li>实现全英雄统一模型实验框架，完成MoE建模。在自对弈情况下完成模型在线RL训练，强度达到最高段位水平</li>
+<li>搭建基于分路lane结构的分布式强化学习样本采集系统，重构Actor模块以支持多路并行推送与训练节点解耦，有效支撑多策略并行训练与分布式扩展。该框架已支持高并发分布式模型训练，实现超数千个环境同时交互采样。</li>
 </ul>
 <div style="float: right">2024.08 - 2024.11</div>
 <p><strong>中国科学院自动化研究所</strong>-算法实习生</p>
