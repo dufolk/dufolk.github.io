@@ -1,0 +1,196 @@
+/* =========================================================
+ * Fluid Theme Modern Beautification CSS
+ * 
+ * Includes:
+ * 1. Glassmorphism navigation bar (毛玻璃导航栏)
+ * 2. Enhanced card hover effects (卡片悬浮动效)
+ * 3. Reading progress bar (阅读进度条)
+ * 4. Refined typography and shadows (精细化阴影与排版)
+ * 5. Animated scroll down button (呼吸灯滚动按钮)
+ * ========================================================= */
+
+/* 1. 毛玻璃导航栏 (Glassmorphism Navbar) */
+.navbar {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+[data-user-color-scheme="dark"] .navbar {
+  background-color: rgba(30, 30, 30, 0.85) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+/* 导航栏链接底部滑动线条动画 */
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary, #29d);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.navbar-nav .nav-item:hover .nav-link::after {
+  width: 70%;
+}
+
+/* 2. 高级卡片悬浮动效 (Advanced Card Hover Effects) */
+.index-card {
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: var(--board-bg-color, #fff);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  margin-bottom: 2rem !important;
+  overflow: hidden;
+}
+
+.index-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+[data-user-color-scheme="dark"] .index-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 文章封面图缩放动效 */
+.index-img img {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.index-card:hover .index-img img {
+  transform: scale(1.08);
+}
+
+/* 文章标题悬浮渐变色 */
+.index-header a {
+  transition: color 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.index-header a:hover {
+  color: var(--color-primary, #29d) !important;
+  text-decoration: none;
+}
+
+/* 3. 标签与分类的药丸风格 (Pill Style Tags & Categories) */
+.post-meta a, .category-chain-item {
+  display: inline-block;
+  padding: 2px 10px;
+  background: rgba(41, 21, 21, 0.05);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+[data-user-color-scheme="dark"] .post-meta a, 
+[data-user-color-scheme="dark"] .category-chain-item {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.post-meta a:hover, .category-chain-item:hover {
+  background: var(--color-primary, #29d);
+  color: #fff !important;
+  transform: translateY(-2px);
+}
+
+/* 4. 顶部 Banner 文字打字机光标动画增强 */
+.banner-text .h2 {
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+/* 5. 向下滚动箭头呼吸灯动效 (Breathing Scroll Down Arrow) */
+.scroll-down-bar i {
+  animation: breathe 2s infinite ease-in-out;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+@keyframes breathe {
+  0% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(10px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0.6; }
+}
+
+/* 6. 回到顶部按钮优化 */
+#scroll-top-button {
+  background: var(--color-primary, #29d);
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(41, 21, 21, 0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#scroll-top-button:hover {
+  transform: scale(1.1) translateY(-5px);
+  background: #1a7bb9;
+}
+
+/* 7. 文章详情页排版优化 (Post Details Typography) */
+.markdown-body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+  position: relative;
+  padding-bottom: 0.5rem;
+  margin-top: 2.5rem;
+}
+
+/* 标题左侧色块强调 */
+.markdown-body h2::before, .markdown-body h3::before {
+  content: "";
+  position: absolute;
+  left: -15px;
+  top: 20%;
+  height: 60%;
+  width: 4px;
+  background-color: var(--color-primary, #29d);
+  border-radius: 2px;
+}
+
+/* 8. 选中文字高亮颜色 */
+::selection {
+  background: rgba(41, 21, 21, 0.2);
+  color: inherit;
+}
+[data-user-color-scheme="dark"] ::selection {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 9. 侧边栏 TOC 目录样式优化 */
+.toc-item.active > .toc-link {
+  color: var(--color-primary, #29d);
+  font-weight: 600;
+  position: relative;
+}
+
+.toc-item.active > .toc-link::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 20%;
+  height: 60%;
+  width: 3px;
+  background: var(--color-primary, #29d);
+  border-radius: 2px;
+}
