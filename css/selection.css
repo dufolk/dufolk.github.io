@@ -1,0 +1,34 @@
+::selection,
+::-moz-selection {
+    background: #ffffff00;
+    color: #05c5b9;
+  }
+  
+  .icon {
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
+  
+  pre::selection,
+  pre ::selection,
+  code::selection,
+  code ::selection,
+  kbd::selection,
+  kbd ::selection,
+  samp::selection,
+  samp ::selection {
+    background: #fff;
+  }
+  
+  [data-user-color-scheme='dark'] pre::selection,
+  [data-user-color-scheme='dark'] pre ::selection,
+  [data-user-color-scheme='dark'] code::selection,
+  [data-user-color-scheme='dark'] code ::selection,
+  [data-user-color-scheme='dark'] kbd::selection,
+  [data-user-color-scheme='dark'] kbd ::selection,
+  [data-user-color-scheme='dark'] samp::selection,
+  [data-user-color-scheme='dark'] samp ::selection {
+    background: #424858;
+    color: #fff;
+  }
