@@ -1,0 +1,814 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Dufolk">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言 入职到现在半年多，我的工作基本围绕着同一件事：在一套大规模分布式强化学习框架上，为射击类对战游戏训练 Bot。这半年我写过状态特征、设计过奖励、拉过很多训练，也踩了不少坑。趁着记忆还热，我想把这段时间的方法和教训整理成一篇笔记。文中不涉及任何具体的项目、产品、地图和内部实现，只保留可以公开讨论的通用经验。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="入职半年：游戏 AI 强化学习的实践笔记">
+<meta property="og:url" content="http://dufolk.github.io/2026/09/17/game-ai-rl-notes/index.html">
+<meta property="og:site_name" content="随机过程集">
+<meta property="og:description" content="前言 入职到现在半年多，我的工作基本围绕着同一件事：在一套大规模分布式强化学习框架上，为射击类对战游戏训练 Bot。这半年我写过状态特征、设计过奖励、拉过很多训练，也踩了不少坑。趁着记忆还热，我想把这段时间的方法和教训整理成一篇笔记。文中不涉及任何具体的项目、产品、地图和内部实现，只保留可以公开讨论的通用经验。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-16T16:54:00.000Z">
+<meta property="article:modified_time" content="2026-09-17T06:38:27.640Z">
+<meta property="article:author" content="Dufolk">
+<meta property="article:tag" content="多智能体">
+<meta property="article:tag" content="强化学习">
+<meta property="article:tag" content="2026">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>入职半年：游戏 AI 强化学习的实践笔记 - 随机过程集</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/scrollAnimation.css">
+<link rel="stylesheet" href="/css/selection.css">
+<link rel="stylesheet" href="/css/animations.css">
+<link rel="stylesheet" href="/css/font.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"dufolk.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"a5SSXXtCxO91qRKFkjVQMkDi-MdYXbMMI","app_key":"4AKbD6prikTmwFEX320HpvXv","server_url":null,"path":"window.location.pathname","ignore_local":false,"security":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>随机过程集</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>本人</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/page_banner.jpg') no-repeat center center; background-size: cover;">
+  
+  
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        
+          <div class="h2">
+            
+              <span id="subtitle">入职半年：游戏 AI 强化学习的实践笔记</span>
+            
+          </div>
+        
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Dufolk
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-17 00:54" pubdate>
+          2026年9月17日凌晨12点54分
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">入职半年：游戏 AI 强化学习的实践笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p>入职到现在半年多，我的工作基本围绕着同一件事：在一套大规模分布式强化学习框架上，为射击类对战游戏训练 Bot。这半年我写过状态特征、设计过奖励、拉过很多训练，也踩了不少坑。趁着记忆还热，我想把这段时间的方法和教训整理成一篇笔记。文中不涉及任何具体的项目、产品、地图和内部实现，只保留可以公开讨论的通用经验。</p>
+<span id="more"></span>
+<hr />
+<h3 id="一-上手一套陌生的训练框架"><a class="markdownIt-Anchor" href="#一-上手一套陌生的训练框架"></a> 一、上手一套陌生的训练框架</h3>
+<p>刚进组的时候，我面对的是一套已经跑了很久的强化学习训练框架：环境侧有游戏服务器和协议，算法侧有特征、奖励、网络、训练编排，工程侧还有模型管理、推理服务和评估链路。一开始我习惯性地想先读完代码再动手，后来发现这条路很慢，也很容易读完就忘。</p>
+<p>真正让我建立起整体认知的，是完整地跑通一次链路：从游戏服务器发来的协议里取出一个字段，把它写成状态特征，接进网络，配上一条奖励，拉起一次训练，产出模型，再把模型送进评估里看胜率和行为。这一圈走下来，框架里每一层的职责和边界就都清楚了。后来再接新需求，我基本都是按这条链路去拆解：这件事影响的是环境数据、特征、奖励、网络、训练编排，还是评估口径？</p>
+<p>所以如果要给刚接触大型 RL 工程的人一个建议，我会说：不要试图先理解全部，先让一个最小的改动端到端地生效。</p>
+<h3 id="二-零和奖励从我打得好到我比对手打得好"><a class="markdownIt-Anchor" href="#二-零和奖励从我打得好到我比对手打得好"></a> 二、零和奖励：从「我打得好」到「我比对手打得好」</h3>
+<p>对抗类游戏的奖励通常只统计己方行为：我造成了多少伤害、击杀了几个人、死了几次。问题在于，这种奖励描述的是绝对收益，而不是相对优势。双方都打得很凶和双方都苟着不动，模型感受到的信号差异并不一定符合对局的真实胜负逻辑。</p>
+<p>我做的第一件比较完整的工作，就是设计并实现了一套零和奖励机制。核心思路不复杂：对伤害、击杀、死亡这类<strong>对抗结果型</strong>事件，把敌方队伍的人均事件值作为扣减项引进来，让奖励反映双方的相对差值；而对移动、利用掩体、团队协同这类<strong>行为塑形型</strong>事件，保持原有逻辑不动。实现上采用了逐事件白名单加跨队事件缓存的方式，只让白名单内的事件参与零和计算。</p>
+<p>之所以要做这个区分，是因为塑形奖励本来就是人为加的引导项，如果也做零和处理，等于把引导信号变成了噪声。</p>
+<p>结论比我预想的更耐人寻味。数百局的对照评估显示，零和奖励基本保持了模型强度，但明显改变了动作分布——某些位移动作的使用频率和时长都有显著提升，在回放里肉眼可辨。而我原本期待的「减少无效进攻、降低苟活倾向」并没有实现。</p>
+<p>这件事让我意识到：**奖励改造更容易改变模型的行为风格，而不是它的绝对强度。**如果目标是提升强度，光调奖励往往是不够的。</p>
+<h3 id="三-纯自博弈与联盟训练"><a class="markdownIt-Anchor" href="#三-纯自博弈与联盟训练"></a> 三、纯自博弈与联盟训练</h3>
+<p>联盟训练的常规做法是维护一个模型池，从池里按分布采样对手。这种方式稳定，但模型容易长期适应固定的历史快照，形成对特定对手的过拟合。于是我做了一套纯自博弈的训练设定，让对手按比例直接使用当前正在训练的模型。</p>
+<p>几个印象比较深的结论：</p>
+<ul>
+<li>从零开始的纯自博弈，几个小时就能形成基础的对战能力，并且会自发出现角色分化和绕后一类的战术行为，完全没有人工引导；</li>
+<li>多版本之间的胜率矩阵显示模型能力在训练过程中稳步提升，较优的自博弈模型对已有的基线模型能取得相当可观的胜率；</li>
+<li>自博弈对多样化策略有一定泛化能力，但训练后期存在退化风险——模型可能通过降低命中率、拖长对局这类方式去刷累计奖励；</li>
+<li>模型强度必须区分「基础能力」和「战术策略」，单一胜率数字是会骗人的：一个模型可能只是克制了某类对手，而不是真的更强。</li>
+</ul>
+<p>在联盟训练这边，我维护过多条并行的训练主线，也完整走了一遍天梯评估、Elo、风格画像和能力雷达的流程。评估体系的价值在这里体现得很明显：没有一套多维度的评估，你很难判断一次训练到底是变强了，还是只是换了一种打法。</p>
+<h3 id="四-躲藏追击一次非对称交替训练"><a class="markdownIt-Anchor" href="#四-躲藏追击一次非对称交替训练"></a> 四、躲藏—追击：一次非对称交替训练</h3>
+<p>有一类场景对 Bot 特别困难：对手躲在建筑里不出来，需要主动搜索、上楼、跨楼层接敌。直接训练往往学不会，因为正反馈太稀疏。</p>
+<p>我们设计了一组非对称的交替训练：hide 一方只保留存活的时间正奖励和掉血惩罚，seek 一方则面对一个持续变强的躲藏对手。两边轮流迭代。结果是 seek 模型确实学会了上楼搜寻并歼灭对手；更有意思的是，hide 模型虽然没有任何战斗相关的奖励，却涌现出了基础的还击行为。</p>
+<p>这个实验里最有价值的其实是中间那次排障。开启团队奖赏之后，训练曲线上的 reward 一路增长，但胜率十几个小时纹丝不动。我用消融的方式定位问题：分别跑全量团队奖赏、筛选后的子集、以及全部置零三组实验，最后确认只保留必要的那部分团队奖赏，模型就能稳定上楼击败躲藏方，平局率压到了 1% 以下。原因是部分团队奖赏被模型过度利用了——它找到了一种既能拿到奖励、又不必真正取胜的活法。</p>
+<p>所以有两条经验我现在会反复提醒自己：<strong>reward 曲线上涨不等于能力提升</strong>；<strong>定位奖励相关的退化，消融几乎是唯一可靠的手段</strong>。</p>
+<p>顺带一提，我们还通过对照实验推翻了一个直觉假设：占据高处对人类玩家可能是优势，但对当前的 AI 不一定天然构成优势。以后再听到「这个战术对 AI 应该有用」，我都会先要一组对照数据。</p>
+<h3 id="五-支持一个新玩法从-0-到-1-的工程账"><a class="markdownIt-Anchor" href="#五-支持一个新玩法从-0-到-1-的工程账"></a> 五、支持一个新玩法：从 0 到 1 的工程账</h3>
+<p>后来组里的重心转向了一个新玩法——一种以争夺控制点为目标的多人对抗模式。我成了这个方向算法实验的主要负责人，也第一次体会到「支持一个新模式」远不只是改改奖励那么简单。这半程做的事情大致是：</p>
+<ul>
+<li><strong>环境与数据</strong>：打通游戏服务器到训练侧的协议链路，补齐地图的静态资产（障碍物轮廓、楼层与房间栅格、楼梯、高度图等）；</li>
+<li><strong>状态特征</strong>：新增当前激活的控制点、点位归属状态、双方占领进度、全场比分、到点位边缘的距离、换点倒计时等特征；</li>
+<li><strong>团队共享信息</strong>：把「队友是否在点内」接进已有的队友注意力模块；</li>
+<li><strong>奖励风格</strong>：以 overlay 的方式实现了进攻抢点、占据制高、游走牵制、隐蔽偷点四种风格，并配套了贡献门控、争夺限时、归属落定即停发等防刷分设计；</li>
+<li><strong>Episode 切分</strong>：把一整场对局拆成「点级」的 episode 并提前结算，消除跨点的信用分配问题，也顺手消灭了「领先之后拖时间刷奖励」这种退化激励；</li>
+<li><strong>胜负口径</strong>：改成按全场大比分判定，让训练目标和玩法目标对齐；</li>
+<li><strong>训练编排</strong>：支持同一支队伍挂载多套独立的策略网络、按槽位绑定不同风格、相同风格的槽位共享 Learner，并加了配置校验；</li>
+<li><strong>评估</strong>：支持按槽位指定对手、多模型同时 serving、按槽位出评估结果，建立了个人行为、团队点权、终态结果三类共二十余项指标。</li>
+</ul>
+<p>算法上还独立做了一版多智能体全局 Critic（CTDE）的设计：在统一的全局表征上同时估计个体价值和团队价值，用加权后的优势去驱动策略更新，目的是让「为团队做贡献但个人收益不明显」的行为也能被正确评价。</p>
+<p>训练层面，通过实验对四种风格做了筛选，最终形成了一套「多个抢点位 + 一个占制高」的阵容配置。<strong>这件事让我对「算法工作」的理解发生了变化</strong>：在真实业务里，能不能训出好模型，往往取决于环境数据是否干净、episode 定义是否合理、评估口径是否可信，而不只是取决于损失函数写得对不对。</p>
+<h3 id="六-一些比较通用的体会"><a class="markdownIt-Anchor" href="#六-一些比较通用的体会"></a> 六、一些比较通用的体会</h3>
+<ul>
+<li>**先跑通链路，再谈算法。**一个最小改动端到端生效带来的认知，比读三天代码更多。</li>
+<li>**奖励要分类型。**结果型事件和塑形型事件的处理方式应该不同，混在一起改，很容易引入噪声。</li>
+<li>**不要只看训练曲线。**reward 上涨、熵下降都不等于变强，最终要靠对照评估和回放里的实际行为来判断。</li>
+<li>**消融是定位退化最可靠的工具。**怀疑某组奖励有问题时，与其反复微调系数，不如直接置零跑一组。</li>
+<li>**警惕人类直觉。**对人类有效的战术，对 AI 不一定成立，要用实验说话。</li>
+<li>**简化有时比增加更有效。**去掉一些引导和约束之后，模型反而能自己找到合理的行为。</li>
+</ul>
+<h3 id="七-需要改进的地方"><a class="markdownIt-Anchor" href="#七-需要改进的地方"></a> 七、需要改进的地方</h3>
+<p>写总结如果只写做成了什么，那基本等于没写。这半年我自己比较清楚的几个问题：</p>
+<p>一是工程纪律不够好。赶进度的时候容易攒一大批改动一起提交，自测和 Review 都不充分，风险都压在了最后。后面要坚持小步提交、及时关联需求。</p>
+<p>二是实验记录质量不高。很多实验是先跑起来再想怎么解释，事后回看常常说不清当时改了哪些变量。正确的做法应该是在开始之前就把变量、对照组、验收指标和停止条件写清楚，并统一记录配置和模型版本。</p>
+<p>三是有时候过于关注结果。时间紧的时候会牺牲过程校验和可复现材料，短期看是快了，但一旦结论被质疑，就得重新跑一遍，反而更慢。</p>
+<p>四是结论的量化支撑还不够。胜率之外，还应该结合 Elo、行为指标、训练稳定性和回放观察，才能形成别人可以复核的结论。</p>
+<hr />
+<p>从「熟悉框架、执行训练」到「拆解问题、设计方案、组织实验、输出结论」，这半年的变化大概就在这里。强化学习这件事，越做越觉得它一半是算法，一半是工程，剩下一半是耐心——虽然加起来超过了一，但确实是这么回事。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF%E6%97%A5%E8%AE%B0/" class="category-chain-item">技术日记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93/" class="print-no-link">#多智能体</a>
+      
+        <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" class="print-no-link">#强化学习</a>
+      
+        <a href="/tags/2026/" class="print-no-link">#2026</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>入职半年：游戏 AI 强化学习的实践笔记</div>
+      <div>http://dufolk.github.io/2026/09/17/game-ai-rl-notes/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Dufolk</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/09/17/MEAES/" title="Less Repetition, Less Energy Cost, A Reinforcement Learning-based Multi-agent Energy-saving Autonomous Exploration System">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Less Repetition, Less Energy Cost, A Reinforcement Learning-based Multi-agent Energy-saving Autonomous Exploration System</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/06/06/graduated/" title="2026，我开始人生的第二个章节">
+                        <span class="hidden-mobile">2026，我开始人生的第二个章节</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://registry.npmmirror.com/@waline/client/2.15.8/files/dist/waline.css')
+      Fluid.utils.createScript('https://registry.npmmirror.com/@waline/client/2.15.8/files/dist/waline.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://waline-six-iota.vercel.app","path":"window.location.pathname","meta":["nick","mail"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.2.0/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  
+<script src="/js/scrollAnimation.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

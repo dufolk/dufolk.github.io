@@ -1,0 +1,94 @@
+.index-card {
+  --state: 1;
+  position: relative;
+  margin-bottom: 1.25rem;
+  padding: 1.35rem 1.15rem;
+  overflow: hidden;
+  border: 1px solid rgba(88, 119, 148, 0.14);
+  border-radius: 20px;
+  background: var(--board-bg-color);
+  box-shadow: 0 14px 44px rgba(36, 55, 82, 0.08);
+  opacity: var(--state);
+  transform: translateY(calc((1 - var(--state)) * 34px)) scale(calc(0.98 + 0.02 * var(--state)));
+  transform-origin: center top;
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.65s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.index-card::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  content: '';
+  background: linear-gradient(180deg, #4eeaff, #7f7cff, transparent);
+  opacity: 0;
+  transform: scaleY(0.35);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.index-card:hover {
+  border-color: rgba(78, 207, 233, 0.32);
+  box-shadow: 0 22px 58px rgba(24, 55, 86, 0.14);
+  transform: translateY(-5px) scale(1);
+}
+
+.index-card:hover::after {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.index-img img {
+  margin: 0;
+  border-radius: 14px;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, filter 0.4s ease;
+}
+
+.index-card:hover .index-img img {
+  transform: scale(1.035);
+  filter: saturate(1.08) contrast(1.03);
+}
+
+.index-card .post-meta {
+  line-height: 1.8;
+}
+
+.index-card .post-meta a {
+  transition: color 0.25s ease;
+}
+
+[data-user-color-scheme='dark'] .index-card {
+  border-color: rgba(123, 216, 255, 0.1);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+}
+
+@media (max-width: 767.98px) {
+  .index-card {
+    margin-bottom: 0.85rem;
+    padding: 1rem 0.7rem;
+    border-radius: 16px;
+  }
+
+  .index-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .index-img img {
+    height: 12rem;
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .index-card {
+    --state: 1;
+    opacity: 1;
+    transform: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .index-img img {
+    transform: none !important;
+    transition: none;
+  }
+}
