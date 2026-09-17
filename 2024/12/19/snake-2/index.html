@@ -116,6 +116,15 @@
 <body>
   
 
+  <div class="site-ambient" aria-hidden="true">
+    <i class="site-ambient-orb site-ambient-orb-a"></i>
+    <i class="site-ambient-orb site-ambient-orb-b"></i>
+    <i class="site-ambient-grid"></i>
+  </div>
+  
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+  
+
   <header>
     
 
@@ -318,7 +327,7 @@
     
       
 
-<div class="container-fluid nopadding-x">
+<div class="container-fluid nopadding-x reading-shell" data-motion-page="post">
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
@@ -328,11 +337,11 @@
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
-          <article class="post-content mx-auto">
+          <article class="post-content mx-auto" data-reading-content>
             <h1 id="seo-header">基于强化学习的贪吃蛇游戏(三)——基于Q-learning算法的智能体</h1>
             
             
-              <div class="markdown-body">
+              <div class="markdown-body" data-motion-content>
                 
                 <p>在完成了贪吃蛇游戏的基本功能后，我们将尝试实现一个能自主学习玩贪吃蛇的AI智能体。本节我们通过实现<a href="https://dufolk.github.io/2024/12/19/snake-1/">前文</a>提到的Q-learning算法，进一步直接体会强化学习的实现与训练过程。</p>
 <span id="more"></span>
@@ -680,6 +689,10 @@ Q-learning算法的初始化主要包括<span class="katex"><span class="katex-m
 
 
 
+<!-- Unified motion runtime -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
 
   
     <script  src="/js/img-lazyload.js" ></script>
@@ -791,7 +804,7 @@ Q-learning算法的初始化主要包括<span class="katex"><span class="katex-m
 
 
   
-<script src="/js/scrollAnimation.js"></script>
+<script src="/js/site-motion.js"></script>
 
 
 

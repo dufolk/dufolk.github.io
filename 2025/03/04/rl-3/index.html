@@ -119,6 +119,15 @@
 <body>
   
 
+  <div class="site-ambient" aria-hidden="true">
+    <i class="site-ambient-orb site-ambient-orb-a"></i>
+    <i class="site-ambient-orb site-ambient-orb-b"></i>
+    <i class="site-ambient-grid"></i>
+  </div>
+  
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+  
+
   <header>
     
 
@@ -321,7 +330,7 @@
     
       
 
-<div class="container-fluid nopadding-x">
+<div class="container-fluid nopadding-x reading-shell" data-motion-page="post">
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
@@ -331,11 +340,11 @@
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
-          <article class="post-content mx-auto">
+          <article class="post-content mx-auto" data-reading-content>
             <h1 id="seo-header">强化学习基础巩固（三）——DQN</h1>
             
             
-              <div class="markdown-body">
+              <div class="markdown-body" data-motion-content>
                 
                 <p>本节介绍强化学习经典方法——DQN。</p>
 <span id="more"></span>
@@ -709,6 +718,10 @@ A：在神经网络中通常使用随机梯度下降法。随机的意思是我�
 
 
 
+<!-- Unified motion runtime -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
 
   
     <script  src="/js/img-lazyload.js" ></script>
@@ -820,7 +833,7 @@ A：在神经网络中通常使用随机梯度下降法。随机的意思是我�
 
 
   
-<script src="/js/scrollAnimation.js"></script>
+<script src="/js/site-motion.js"></script>
 
 
 

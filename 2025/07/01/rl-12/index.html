@@ -117,6 +117,15 @@
 <body>
   
 
+  <div class="site-ambient" aria-hidden="true">
+    <i class="site-ambient-orb site-ambient-orb-a"></i>
+    <i class="site-ambient-orb site-ambient-orb-b"></i>
+    <i class="site-ambient-grid"></i>
+  </div>
+  
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+  
+
   <header>
     
 
@@ -319,7 +328,7 @@
     
       
 
-<div class="container-fluid nopadding-x">
+<div class="container-fluid nopadding-x reading-shell" data-motion-page="post">
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
@@ -329,11 +338,11 @@
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
-          <article class="post-content mx-auto">
+          <article class="post-content mx-auto" data-reading-content>
             <h1 id="seo-header">强化学习基础巩固（十二）——离线强化学习</h1>
             
             
-              <div class="markdown-body">
+              <div class="markdown-body" data-motion-content>
                 
                 <p>本文<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="[离线强化学习（Offline RL）](https://zhuanlan.zhihu.com/p/22555468625)">[1]</span></a></sup>转载自知乎专栏《硅基进化》，作者为@tomsheep。</p>
 <span id="more"></span>
@@ -755,6 +764,10 @@
 
 
 
+<!-- Unified motion runtime -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
 
   
     <script  src="/js/img-lazyload.js" ></script>
@@ -866,7 +879,7 @@
 
 
   
-<script src="/js/scrollAnimation.js"></script>
+<script src="/js/site-motion.js"></script>
 
 
 

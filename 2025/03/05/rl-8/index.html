@@ -117,6 +117,15 @@
 <body>
   
 
+  <div class="site-ambient" aria-hidden="true">
+    <i class="site-ambient-orb site-ambient-orb-a"></i>
+    <i class="site-ambient-orb site-ambient-orb-b"></i>
+    <i class="site-ambient-grid"></i>
+  </div>
+  
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+  
+
   <header>
     
 
@@ -319,7 +328,7 @@
     
       
 
-<div class="container-fluid nopadding-x">
+<div class="container-fluid nopadding-x reading-shell" data-motion-page="post">
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
@@ -329,11 +338,11 @@
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
-          <article class="post-content mx-auto">
+          <article class="post-content mx-auto" data-reading-content>
             <h1 id="seo-header">强化学习基础巩固（八）——近端策略优化算法（PPO）</h1>
             
             
-              <div class="markdown-body">
+              <div class="markdown-body" data-motion-content>
                 
                 <p>上一篇介绍的 TRPO 算法在很多场景上的应用都很成功，但是我们也发现它的计算过程非常复杂，每一步更新的运算量非常大。于是，TRPO 算法的改进版——PPO 算法在 2017 年被提出，PPO 基于 TRPO 的思想，但是其算法实现更加简单。并且大量的实验结果表明，与 TRPO 相比，PPO 能学习得一样好（甚至更快），这使得 PPO 成为非常流行的强化学习算法。如果我们想要尝试在一个新的环境中使用强化学习算法，那么 PPO 就属于可以首先尝试的算法。</p>
 <span id="more"></span>
@@ -724,6 +733,10 @@ J^{\theta^k}(\theta) &amp;\approx \sum_{(s_t,a_t)}\frac{p_\theta(a_t|s_t)}{p_{\t
 
 
 
+<!-- Unified motion runtime -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
 
   
     <script  src="/js/img-lazyload.js" ></script>
@@ -835,7 +848,7 @@ J^{\theta^k}(\theta) &amp;\approx \sum_{(s_t,a_t)}\frac{p_\theta(a_t|s_t)}{p_{\t
 
 
   
-<script src="/js/scrollAnimation.js"></script>
+<script src="/js/site-motion.js"></script>
 
 
 

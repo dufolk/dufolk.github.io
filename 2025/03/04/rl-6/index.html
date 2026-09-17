@@ -118,6 +118,15 @@
 <body>
   
 
+  <div class="site-ambient" aria-hidden="true">
+    <i class="site-ambient-orb site-ambient-orb-a"></i>
+    <i class="site-ambient-orb site-ambient-orb-b"></i>
+    <i class="site-ambient-grid"></i>
+  </div>
+  
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+  
+
   <header>
     
 
@@ -320,7 +329,7 @@
     
       
 
-<div class="container-fluid nopadding-x">
+<div class="container-fluid nopadding-x reading-shell" data-motion-page="post">
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
@@ -330,11 +339,11 @@
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
-          <article class="post-content mx-auto">
+          <article class="post-content mx-auto" data-reading-content>
             <h1 id="seo-header">强化学习基础巩固（六）——演员-评论员算法（AC）</h1>
             
             
-              <div class="markdown-body">
+              <div class="markdown-body" data-motion-content>
                 
                 <p>之前的章节复习了基于值函数的方法（DQN）和基于策略的方法（REINFORCE），其中基于值函数的方法只学习一个价值函数，而基于策略的方法只学习一个策略函数。那么，一个很自然的问题是，有没有什么方法既学习价值函数，又学习策略函数呢？答案就是 Actor-Critic。Actor-Critic 是囊括一系列算法的整体架构，目前很多高效的前沿算法都属于 Actor-Critic 算法，本章接下来将会介绍一种最简单的 Actor-Critic 算法。需要明确的是，Actor-Critic 算法本质上是基于策略的算法，因为这一系列算法的目标都是优化一个带参数的策略，只是会额外学习价值函数，从而帮助策略函数更好地学习。</p>
 <span id="more"></span>
@@ -705,6 +714,10 @@ A：</p>
 
 
 
+<!-- Unified motion runtime -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
 
   
     <script  src="/js/img-lazyload.js" ></script>
@@ -816,7 +829,7 @@ A：</p>
 
 
   
-<script src="/js/scrollAnimation.js"></script>
+<script src="/js/site-motion.js"></script>
 
 
 

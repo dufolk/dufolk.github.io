@@ -118,6 +118,15 @@
 <body>
   
 
+  <div class="site-ambient" aria-hidden="true">
+    <i class="site-ambient-orb site-ambient-orb-a"></i>
+    <i class="site-ambient-orb site-ambient-orb-b"></i>
+    <i class="site-ambient-grid"></i>
+  </div>
+  
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+  
+
   <header>
     
 
@@ -320,7 +329,7 @@
     
       
 
-<div class="container-fluid nopadding-x">
+<div class="container-fluid nopadding-x reading-shell" data-motion-page="post">
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
@@ -330,11 +339,11 @@
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
-          <article class="post-content mx-auto">
+          <article class="post-content mx-auto" data-reading-content>
             <h1 id="seo-header">基于强化学习的贪吃蛇游戏(四)——基于DQN算法的智能体</h1>
             
             
-              <div class="markdown-body">
+              <div class="markdown-body" data-motion-content>
                 
                 <p>在上一节中，我们通过Q-learning算法实现了一个能够自主学习玩贪吃蛇的强化学习智能体。虽然Q-learning算法在小规模的状态空间中表现良好，但它的局限性也非常明显。由于Q-table的大小随状态空间的增长呈指数级扩展，在面对更复杂或连续的环境时，Q-learning会因存储和计算的限制而难以适用。而贪吃蛇游戏的状态空间虽然经过简化，但仍然存在较大的扩展潜力。</p>
 <p>在本章中，我们将基于<a href="https://dufolk.github.io/2024/12/19/snake-1/">前文</a>提到的DQN算法设计一个智能体，并将其嵌入到贪吃蛇游戏中。我们会详细讲解DQN的实现步骤以及如何利用深度神经网络对贪吃蛇游戏进行训练。通过DQN，智能体将能够在更复杂的状态空间中学习到合适的策略。</p>
@@ -683,6 +692,10 @@ DQN智能体在初始化过程中，需要创建评估网络和目标网络。�
 
 
 
+<!-- Unified motion runtime -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
 
   
     <script  src="/js/img-lazyload.js" ></script>
@@ -794,7 +807,7 @@ DQN智能体在初始化过程中，需要创建评估网络和目标网络。�
 
 
   
-<script src="/js/scrollAnimation.js"></script>
+<script src="/js/site-motion.js"></script>
 
 
 

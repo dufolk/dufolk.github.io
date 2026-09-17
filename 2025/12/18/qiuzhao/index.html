@@ -112,6 +112,15 @@
 <body>
   
 
+  <div class="site-ambient" aria-hidden="true">
+    <i class="site-ambient-orb site-ambient-orb-a"></i>
+    <i class="site-ambient-orb site-ambient-orb-b"></i>
+    <i class="site-ambient-grid"></i>
+  </div>
+  
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+  
+
   <header>
     
 
@@ -314,7 +323,7 @@
     
       
 
-<div class="container-fluid nopadding-x">
+<div class="container-fluid nopadding-x reading-shell" data-motion-page="post">
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
@@ -324,11 +333,11 @@
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
-          <article class="post-content mx-auto">
+          <article class="post-content mx-auto" data-reading-content>
             <h1 id="seo-header">秋招结束的随笔</h1>
             
             
-              <div class="markdown-body">
+              <div class="markdown-body" data-motion-content>
                 
                 <p>写下这篇文章的时候，我正坐在从学校飞往北京的飞机上。就在今天，我的秋招终于算是有了结论，一共60场面试，拿到了字节百度美团等10+大厂offers，最终确认了腾讯给的机会。同时给我的这三个月，这三年以及从今天往前的所有人生做了个结。这句话写的真好，为什么这么说呢？本来挺久之前我就想写点什么，有特别多想记录的，从选择这个专业到选择这个岗位，从科研的疲惫到未来生活的期待，但总感觉这样写没个纲，乱成一团。直到我今天正式在系统中点击了三方的确认，我才突然发现这种感觉就是“不可逃避的结束”在向我走来，于是纲便有了。<br />
 首先是这三个月的结果吧，或者换句话说，其实是秋招的结果。从我硕士选择了强化学习的研究方向，我就知道并不会有太多的岗位。从试错中学习，这听起来很符合人类的学习方式，但实际场景中哪来那么多试错的成本？除了游戏产业和机器人行业，我想不到特别对口的赛道，而这两个行业国内又只有寡头，让我望而生畏。整个秋招，我没法像学后端开发的同学一样投递大量的简历，我没法像学大模型的同学一样是时代的香饽饽，我只能盯着那几家公司去投，或者想方设法的在别的不太相关的算法岗上沾沾边。方向是大于努力的，但努力一定不是不重要的。秋招整体对我来说还算顺利，前文就自然变成了只有我自己懂的无病呻吟，不再赘述。从结果来说，我的秋招是非常成功的，至少我自己是满意的。命运给了我很大的惊喜，我从未想过能够在这次有多个远超期待的offer，所以我如今是心满意足。虽说很多事都是焉知非福吧，但对口的工作内容，熟悉的工作环境，我一定不会后悔。我就是这样，毕竟让我在做一百次选择也不会变，那为什么要在不可预测的未来后悔。<br />
@@ -627,6 +636,10 @@
 
 
 
+<!-- Unified motion runtime -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
 
   
     <script  src="/js/img-lazyload.js" ></script>
@@ -738,7 +751,7 @@
 
 
   
-<script src="/js/scrollAnimation.js"></script>
+<script src="/js/site-motion.js"></script>
 
 
 

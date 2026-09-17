@@ -1116,3 +1116,281 @@
     display: none;
   }
 }
+
+/* GSAP motion layer and shared ambient system. */
+.site-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.site-ambient-orb,
+.site-ambient-grid {
+  position: absolute;
+  display: block;
+}
+
+.site-ambient-orb {
+  width: min(48vw, 680px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0.16;
+  filter: blur(90px);
+  will-change: transform;
+}
+
+.site-ambient-orb-a {
+  top: 8vh;
+  left: -18vw;
+  background: var(--home-cyan);
+}
+
+.site-ambient-orb-b {
+  right: -20vw;
+  bottom: 2vh;
+  background: var(--home-violet);
+}
+
+.site-ambient-grid {
+  inset: -10vh -10vw;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(75, 117, 151, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(75, 117, 151, 0.09) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 50% 48%, black, transparent 76%);
+  will-change: transform;
+}
+
+.about-immersive .site-ambient {
+  display: none;
+}
+
+.reading-progress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1105;
+  height: 3px;
+  pointer-events: none;
+  background: rgba(78, 234, 255, 0.06);
+}
+
+.reading-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--home-cyan), var(--home-blue), var(--home-violet));
+  box-shadow: 0 0 16px rgba(78, 234, 255, 0.75);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.index-card,
+.links .card-body,
+.stat-tile,
+.about-project-grid > article {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.index-card::before,
+.links .card-body::before,
+.stat-tile::before {
+  pointer-events: none;
+}
+
+.index-card::after,
+.links .card-body::after,
+.stat-tile::after {
+  background-image: radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(78, 234, 255, 0.13), transparent 38%);
+}
+
+.site-refined main #board {
+  position: relative;
+  overflow: hidden;
+}
+
+.site-refined main #board::before {
+  position: absolute;
+  top: 0;
+  right: 7%;
+  left: 7%;
+  height: 1px;
+  content: '';
+  background: linear-gradient(90deg, transparent, rgba(78, 234, 255, 0.55), transparent);
+}
+
+.site-refined.page-post .markdown-body {
+  max-width: 860px;
+  margin-right: auto;
+  margin-left: auto;
+  text-wrap: pretty;
+}
+
+.site-refined.page-post .markdown-body a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.site-refined.page-post .markdown-body figure,
+.site-refined.page-post .markdown-body .code-wrapper,
+.site-refined.page-post .markdown-body pre {
+  transform-origin: center top;
+}
+
+.site-refined.page-post .markdown-body table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.site-refined.page-post #toc-body .tocbot-active-link {
+  box-shadow: inset 2px 0 0 var(--home-cyan);
+}
+
+.site-refined.page-archives main #board,
+.site-refined.page-categories main #board,
+.site-refined.page-tags main #board,
+.site-refined.page-links main #board {
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.site-refined.page-archives .list-group-item,
+.site-refined.page-categories .category,
+.site-refined.page-tags .tagcloud > a,
+.site-refined.page-links .card-body {
+  will-change: transform, opacity;
+}
+
+.site-refined.page-404 #banner .banner-text::after {
+  display: block;
+  margin-top: 1rem;
+  color: rgba(229, 247, 255, 0.62);
+  content: 'SIGNAL LOST · RETURNING HOME';
+  font: 600 0.68rem/1.5 "JetBrains Mono", Consolas, monospace;
+  letter-spacing: 0.2em;
+}
+
+.lost-signal {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(180px, 0.65fr) minmax(280px, 1.35fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: center;
+  width: min(1080px, calc(100% - 2rem));
+  margin: -4rem auto 5rem;
+  padding: clamp(2rem, 5vw, 4.5rem);
+  border: 1px solid var(--home-border);
+  border-radius: 28px;
+  background: var(--home-surface);
+  box-shadow: var(--home-shadow);
+  backdrop-filter: blur(24px);
+}
+
+.lost-signal-code {
+  color: transparent;
+  font-size: clamp(6rem, 17vw, 13rem);
+  font-weight: 900;
+  line-height: 0.78;
+  letter-spacing: -0.1em;
+  -webkit-text-stroke: 1px var(--home-cyan);
+  filter: drop-shadow(0 0 22px rgba(78, 234, 255, 0.25));
+}
+
+.lost-signal small {
+  color: var(--home-cyan);
+  font: 700 0.68rem/1.5 "JetBrains Mono", Consolas, monospace;
+  letter-spacing: 0.18em;
+}
+
+.lost-signal h1 {
+  margin: 0.75rem 0 1rem;
+  color: var(--text-color);
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  letter-spacing: -0.045em;
+}
+
+.lost-signal p {
+  color: var(--sec-text-color);
+}
+
+.lost-signal a {
+  display: inline-flex;
+  gap: 0.7rem;
+  align-items: center;
+  margin-top: 1rem;
+  color: var(--home-blue);
+  font-weight: 700;
+}
+
+.lost-signal a i {
+  transition: transform 0.25s ease;
+}
+
+.lost-signal a:hover i {
+  transform: translateX(5px);
+}
+
+#modalSearch .modal-content {
+  overflow: hidden;
+  border: 1px solid var(--home-border);
+  border-radius: 22px;
+  background: var(--home-surface);
+  box-shadow: var(--home-shadow);
+  backdrop-filter: blur(24px) saturate(145%);
+}
+
+#modalSearch .form-control {
+  border-radius: 12px;
+}
+
+body.motion-ready #navbar {
+  will-change: auto;
+}
+
+@media (max-width: 767.98px) {
+  .site-ambient-orb {
+    width: 80vw;
+    opacity: 0.11;
+    filter: blur(70px);
+  }
+
+  .site-ambient-grid {
+    opacity: 0.1;
+    background-size: 48px 48px;
+  }
+
+  .site-refined.page-post .markdown-body {
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+
+  .site-refined.page-post .markdown-body pre,
+  .site-refined.page-post .markdown-body .code-wrapper {
+    border-radius: 10px;
+  }
+
+  .lost-signal {
+    grid-template-columns: 1fr;
+    margin-top: -2rem;
+    border-radius: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-ambient-orb,
+  .site-ambient-grid,
+  .index-card,
+  .links .card-body,
+  .stat-tile,
+  .about-project-grid > article {
+    transform: none !important;
+    will-change: auto;
+  }
+}

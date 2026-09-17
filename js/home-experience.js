@@ -8,6 +8,96 @@
 
   if (!body.classList.contains('home-immersive')) return;
 
+  function initHomeMotion() {
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
+    if (!gsap || !ScrollTrigger || reducedMotion) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+    const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    intro
+      .from('#navbar', { y: -24, autoAlpha: 0, duration: 0.65 })
+      .from('.hero-kicker', { x: -34, autoAlpha: 0, duration: 0.65 }, '-=0.25')
+      .from('.hero-title > span', { yPercent: 105, autoAlpha: 0, rotateX: -18, stagger: 0.12, duration: 1.05 }, '-=0.35')
+      .from('.hero-copy', { y: 18, autoAlpha: 0, duration: 0.65 }, '-=0.5')
+      .from('.hero-actions .hero-button', { y: 18, autoAlpha: 0, stagger: 0.1, duration: 0.55 }, '-=0.35')
+      .from('.hero-status span', { x: 18, autoAlpha: 0, stagger: 0.08, duration: 0.5 }, '-=0.4')
+      .from('.scroll-down-bar', { y: -12, autoAlpha: 0, duration: 0.45 }, '-=0.3');
+
+    gsap.to('.hero-shell', {
+      yPercent: 20,
+      autoAlpha: 0.18,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#banner',
+        start: 'top top',
+        end: 'bottom 20%',
+        scrub: 0.9
+      }
+    });
+
+    gsap.to('.hero-webgl', {
+      yPercent: 12,
+      scale: 1.08,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#banner',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1.1
+      }
+    });
+
+    gsap.from('.home-observatory', {
+      y: 70,
+      autoAlpha: 0,
+      scale: 0.97,
+      duration: 1,
+      scrollTrigger: { trigger: '.home-observatory', start: 'top 92%', once: true }
+    });
+    gsap.from('.observatory-heading > *', {
+      y: 24,
+      autoAlpha: 0,
+      stagger: 0.08,
+      duration: 0.7,
+      scrollTrigger: { trigger: '.observatory-heading', start: 'top 88%', once: true }
+    });
+    gsap.from('.stat-tile', {
+      y: 30,
+      autoAlpha: 0,
+      stagger: 0.07,
+      duration: 0.68,
+      scrollTrigger: { trigger: '.stats-grid', start: 'top 90%', once: true }
+    });
+    gsap.from('.chart-panel', {
+      y: 34,
+      autoAlpha: 0,
+      stagger: 0.1,
+      duration: 0.75,
+      scrollTrigger: { trigger: '.charts-grid', start: 'top 91%', once: true }
+    });
+
+    gsap.utils.toArray('.index-card').forEach(function (card, index) {
+      const image = card.querySelector('.index-img img');
+      gsap.from(card, {
+        y: 24,
+        autoAlpha: 0,
+        scale: 0.99,
+        duration: 0.45,
+        delay: (index % 3) * 0.03,
+        scrollTrigger: { trigger: card, start: 'top 99%', once: true }
+      });
+      if (image) {
+        gsap.fromTo(image, { yPercent: -5, scale: 1.08 }, {
+          yPercent: 5,
+          scale: 1.08,
+          ease: 'none',
+          scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 1 }
+        });
+      }
+    });
+  }
+
   function initHeroPointer() {
     const banner = document.getElementById('banner');
     if (!banner || reducedMotion) return;
@@ -139,6 +229,18 @@
       element.textContent = value;
       return;
     }
+    if (window.gsap) {
+      const counter = { value: 0 };
+      window.gsap.to(counter, {
+        value: value,
+        duration: 1.1,
+        ease: 'power3.out',
+        onUpdate: function () {
+          element.textContent = Math.round(counter.value);
+        }
+      });
+      return;
+    }
     const start = performance.now();
     const duration = 900;
     function frame(now) {
@@ -257,6 +359,7 @@
   }
 
   initHeroPointer();
+  initHomeMotion();
   initThreeScene();
   loadArchiveData();
   window.addEventListener('resize', syncCharts, { passive: true });

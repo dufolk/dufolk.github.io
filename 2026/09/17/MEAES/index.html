@@ -124,6 +124,15 @@
 <body>
   
 
+  <div class="site-ambient" aria-hidden="true">
+    <i class="site-ambient-orb site-ambient-orb-a"></i>
+    <i class="site-ambient-orb site-ambient-orb-b"></i>
+    <i class="site-ambient-grid"></i>
+  </div>
+  
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+  
+
   <header>
     
 
@@ -326,7 +335,7 @@
     
       
 
-<div class="container-fluid nopadding-x">
+<div class="container-fluid nopadding-x reading-shell" data-motion-page="post">
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
@@ -336,11 +345,11 @@
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
-          <article class="post-content mx-auto">
+          <article class="post-content mx-auto" data-reading-content>
             <h1 id="seo-header">Less Repetition, Less Energy Cost, A Reinforcement Learning-based Multi-agent Energy-saving Autonomous Exploration System</h1>
             
             
-              <div class="markdown-body">
+              <div class="markdown-body" data-motion-content>
                 
                 <h2 id="引言"><a class="markdownIt-Anchor" href="#引言"></a> 引言</h2>
 <p>一群机器人在未知区域里执行任务，比如灾后搜救、环境巡检，能量是它们最宝贵的资源。理想情况下，每个机器人应该&quot;各走各的路&quot;，用最短的总路程把整片区域探完；但现实中由于环境只能被局部观测，机器人之间往往协作不足，要么挤在同一个分支里反复探索，要么为了&quot;帮忙&quot;跑一趟早已被别人探完的区域。结果就是——重复探索带来额外的能量消耗。更糟的是，如果采用集中式架构，单个机器人失效还可能直接拖垮整个系统。</p>
@@ -719,6 +728,10 @@
 
 
 
+<!-- Unified motion runtime -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
 
   
     <script  src="/js/img-lazyload.js" ></script>
@@ -830,7 +843,7 @@
 
 
   
-<script src="/js/scrollAnimation.js"></script>
+<script src="/js/site-motion.js"></script>
 
 
 
